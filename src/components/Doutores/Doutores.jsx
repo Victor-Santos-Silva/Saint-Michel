@@ -18,7 +18,7 @@ const DoctorCard = ({ name, specialty, image }) => {
       <div>
         <div className="card-info-doutores">
         <img src={image} alt={name} className="doctor-image" />
-
+    
           <div className="texto-doutores">
             <h3 className="card-info-h3">{name}</h3>
             <p className="card-info-p"><b>{specialty}</b></p>

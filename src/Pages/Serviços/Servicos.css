@@ -1,6 +1,3 @@
-/* General Styles */
-@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
-
 :root {
     --primary-font: "Yeseva One", serif;
     --color-dark-blue: #1F2B6C;
@@ -18,6 +15,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f8f9fa;
+    scroll-behavior: smooth;
 }
 
 .img-servicos {
@@ -28,33 +26,45 @@ body {
 /* Seção com imagem e texto lado a lado */
 .team-section {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 40px;
     background-color: #f9f9f9;
     padding: 40px 5%;
-    gap: 40px;
 }
 
 .image-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Espaçamento entre os cards */
-    justify-content: space-around; /* Distribui os cards de forma uniforme */
-  }
-  
-  .card-servico {
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-servico {
     display: flex;
-    flex-direction: row;
-    flex: 1 1 30%; /* Tamanho flexível para os cards, ocupa 30% da largura */
-    margin-bottom: 20px;
-  }
-  
-  
+    align-items: center;
+    gap: 20px;
+    background-color: var(--color-background-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card-servico:hover {
+    transform: translateY(-10px);
+}
+
+.card-servico.reversed {
+    flex-direction: row-reverse;
+}
 
 .imgCard-servico {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.image-servico {
+    flex: 1.2;
 }
 
 .content-servico {
@@ -74,51 +84,7 @@ body {
     color: #1f1f1f;
     font-size: 22px;
     margin-bottom: 10px;
-}
-
-.content-servico a {
-    color: var(--color-light-blue);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.content-servico a:hover {
-    text-decoration: underline;
-}
-
-.text-container {
-    flex: 1;
-    padding-left: 20px;
-}
-
-.tittle-contato {
-    color: var(--color-light-blue);
-    font-weight: bold;
-    font-size: 18px;
-    text-transform: uppercase;
-}
-
-.team-title {
-    color: var(--color-dark-blue);
-    font-family: var(--primary-font);
-    margin-top: 10px;
-    font-size: 32px;
-}
-
-.team-title-2 {
-    color: var(--color-dark-blue);
-    font-weight: 700;
-    font-size: 32px;
-}
-
-.team-description {
-    font-size: 1rem;
-    color: var(--color-dark-gray);
-    margin-bottom: 20px;
     line-height: 1.6;
-}
-.title-card{
-    font-size: 102px;
 }
 
 .team-button {
@@ -137,23 +103,35 @@ body {
     color: #fff;
 }
 
+.tittle-contato {
+    color: var(--color-light-blue);
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.team-title {
+    color: var(--color-dark-blue);
+    font-family: var(--primary-font);
+    margin-top: 10px;
+    font-size: 32px;
+}
+
 /* Responsividade */
 @media (max-width: 1024px) {
-    .team-section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .image-container, .text-container {
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .card-servico {
+    .card-servico, .card-servico.reversed {
         flex-direction: column;
     }
 
-    .image-servico {
+    .image-servico, .content-servico {
         width: 100%;
+    }
+
+    .content-servico h3 {
+        font-size: 28px;
+    }
+
+    .content-servico p {
+        font-size: 18px;
     }
 }
