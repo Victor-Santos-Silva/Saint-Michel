@@ -6,6 +6,7 @@ import Footer from '../../components/Footer/Footer';
 import Banner from '../../components/Banner/Banner';
 import Doutores from '../../components/Doutores/Doutores';
 import './sobrePage.css';
+import Contato from '../../components/Contato/Contato';
 
 export default function SobrePage() {
     useEffect(() => {
@@ -57,6 +58,8 @@ export default function SobrePage() {
             </div>
 
             <Doutores />
+            <br /><br /> <br />
+            <Contato/>
 
             <Footer />
         </>

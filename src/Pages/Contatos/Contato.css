@@ -20,6 +20,11 @@ body {
     background-color: #f8f9fa;
 }
 
+.map-container{
+    width: 55%;
+    margin: auto;
+}
+
 .img-servicos {
     width: 100%;
     display: block;
@@ -160,3 +165,97 @@ body {
         width: 100%;
     }
 }
+
+/*  */
+.contato-container {
+    padding: 40px 5%;
+    background-color: #008cff25;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.titulo-contato {
+    font-size: 20px;
+    color: var(--color-light-blue);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitulo-contato {
+    font-family: var(--primary-font);
+    font-size: 28px;
+    color: var(--color-dark-blue);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contato-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row input,
+.form-row textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+    border-color: var(--color-light-blue);
+    outline: none;
+}
+
+.placeholder-branco::placeholder {
+    color: #bbb;
+}
+
+textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+button[type="submit"] {
+    background-color: var(--color-dark-blue);
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-dark-hover);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+

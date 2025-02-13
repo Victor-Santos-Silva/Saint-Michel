@@ -13,9 +13,16 @@ const Medico = () => {
     <>
       <Navbar />
       <img src="../src/img/logo servico.png" className="img-servicos" alt="Logo Servicos" />
-        <Doutores/>
-        <Banner/>
-        <Contato/>
+      <br />
+      <div className='titulo-subtitulo-sobre' data-aos="fade-up">
+        <h1 className='titulo-sobre'>OS MELHORES</h1>
+        <h2 className='subTitulo-sobre-2'>Nossos Médicos</h2>
+      </div>
+      <Doutores />
+      <Doutores />
+
+      <Banner />
+      <Contato />
       <Footer />
     </>
   );

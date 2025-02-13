@@ -16,7 +16,7 @@ const Contatos = () => {
     <>
       <Navbar />
       <img src="../src/img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
-
+<br /><br />
         <div className="map-container">
           <iframe
             title="Localização"
@@ -29,6 +29,7 @@ const Contatos = () => {
           ></iframe>
         </div>
 
+<br />
       <div className="contato-container">
         <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
         <h3 className="subtitulo-contato">Contato</h3>
