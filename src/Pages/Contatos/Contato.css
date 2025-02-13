@@ -5,11 +5,7 @@
     --primary-font: "Yeseva One", serif;
     --color-dark-blue: #1F2B6C;
     --color-dark-hover: #1f2b6ca8;
-    --color-blue-card-info: #2c3e50;
-    --color-card-info: #7f8c8d;
-    --color-background-card: #7dbeff25;
     --color-light-blue: #159EEC;
-    --color-azul-calcinha: #BFD2F8;
     --color-dark-gray: #333;
 }
 
@@ -20,153 +16,16 @@ body {
     background-color: #f8f9fa;
 }
 
-.map-container{
-    width: 55%;
-    margin: auto;
-}
-
 .img-servicos {
     width: 100%;
     display: block;
 }
 
-/* Seção com imagem e texto lado a lado */
-.team-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f9f9f9;
-    padding: 40px 5%;
-    gap: 40px;
+.map-container {
+    width: 55%;
+    margin: auto;
 }
 
-.image-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Espaçamento entre os cards */
-    justify-content: space-around; /* Distribui os cards de forma uniforme */
-}
-  
-.card-servico {
-    display: flex;
-    flex-direction: row; /* Padrão: imagem à esquerda, conteúdo à direita */
-    flex: 1 1 30%; /* Tamanho flexível para os cards, ocupa 30% da largura */
-    margin-bottom: 20px;
-}
-
-/* Inversão do layout para o segundo card */
-.card-servico:nth-child(2) {
-    flex-direction: row-reverse; /* Inverte imagem e conteúdo no segundo card */
-}
-
-.imgCard-servico {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.content-servico {
-    flex: 1;
-    padding: 20px;
-    text-align: left;
-}
-
-.content-servico h3 {
-    font-size: 38px;
-    font-family: var(--primary-font);
-    font-weight: bold;
-    color: var(--color-dark-blue);
-}
-
-.content-servico p {
-    color: #000000;
-    font-size: 22px;
-    margin-bottom: 10px;
-}
-
-.content-servico a {
-    color: var(--color-light-blue);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.content-servico a:hover {
-    text-decoration: underline;
-}
-
-.text-container {
-    flex: 1;
-    padding-left: 20px;
-}
-
-.tittle-contato {
-    color: var(--color-light-blue);
-    font-weight: bold;
-    font-size: 18px;
-    text-transform: uppercase;
-}
-
-.team-title {
-    color: var(--color-dark-blue);
-    font-family: var(--primary-font);
-    margin-top: 10px;
-    font-size: 32px;
-}
-
-.team-title-2 {
-    color: var(--color-dark-blue);
-    font-weight: 700;
-    font-size: 32px;
-}
-
-.team-description {
-    font-size: 1rem;
-    color: var(--color-dark-gray);
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-.title-card {
-    font-size: 102px;
-}
-
-.team-button {
-    background-color: transparent;
-    color: var(--color-light-blue);
-    border: 2px solid var(--color-dark-gray);
-    padding: 10px 20px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.team-button:hover {
-    background-color: var(--color-light-blue);
-    color: #fff;
-}
-
-/* Responsividade */
-@media (max-width: 1024px) {
-    .team-section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .image-container, .text-container {
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .card-servico {
-        flex-direction: column;
-    }
-
-    .image-servico {
-        width: 100%;
-    }
-}
-
-/*  */
 .contato-container {
     padding: 40px 5%;
     background-color: #008cff25;
@@ -220,10 +79,6 @@ body {
     outline: none;
 }
 
-.placeholder-branco::placeholder {
-    color: #bbb;
-}
-
 textarea {
     resize: vertical;
     height: 150px;
@@ -258,4 +113,3 @@ button[type="submit"]:hover {
         font-size: 16px;
     }
 }
-

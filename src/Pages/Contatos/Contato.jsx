@@ -38,8 +38,8 @@ const Contatos = () => {
             <input type="text" name="nome" placeholder="Nome" required className="placeholder-branco" />
             <input type="email" name="email" placeholder="Email" required className="placeholder-branco" />
           </div>
-          <input type="text" name="assunto" placeholder="Assunto" required className="placeholder-branco" />
-          <textarea name="mensagem" placeholder="Mensagem" required className="placeholder-branco"></textarea>
+          <input type="text" name="assunto" placeholder="  Assunto" required className="placeholder-branco" />
+          <textarea name="mensagem" placeholder="  Mensagem" required className="placeholder-branco"></textarea>
           <button type="submit">ENVIAR</button>
         </form>
       </div>
