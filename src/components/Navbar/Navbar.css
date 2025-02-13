@@ -12,12 +12,12 @@
   --color-top-gray: #4a4a4a;
   --color-dark-gray: #333;
 }
-
+ 
 /* General Styles */
 .header {
   width: 100%;
 }
-
+ 
 /* Top Bar */
 .top-bar {
   display: flex;
@@ -28,7 +28,7 @@
   color: var(--color-top-gray);
   font-size: 14px;
 }
-
+ 
 .logo {
   display: flex;
   flex-direction: row;
@@ -36,24 +36,24 @@
   gap: 10px;
   width: 15%;
 }
-
+ 
 .logo-img {
   width: 100%;
 }
-
+ 
 .contact-info {
   display: flex;
   gap: 20px;
   color: var(--color-blue-contact);
 }
-
+ 
 .info-item {
   display: flex;
   align-items: center;
   gap: 5px;
   margin-right: 50px;
 }
-
+ 
 /* Navbar */
 .navbar {
   display: flex;
@@ -63,29 +63,29 @@
   padding: 15px 40px;
   color: white;
 }
-
+ 
 .nav-links a {
   margin: 0 15px;
   color: white;
   text-decoration: none;
   font-size: 16px;
 }
-
+ 
 .nav-links a:hover {
   color: #ccc;
 }
-
+ 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 15px;
 }
-
+ 
 .search-icon {
   cursor: pointer;
 }
-
-.login-button {
+ 
+.botao-login-cadastro, .botao-login{
   background-color: var(--color-azul-calcinha);
   border: none;
   padding: 8px 60px;
@@ -96,15 +96,19 @@
   cursor: pointer;
   text-decoration: none;
 }
-
-.login-button:hover {
+ 
+.botao-login:hover {
   background-color: var(--color-light-hover);
 }
-
+ 
+.botao-login-cadastro:hover {
+  background-color: var(--color-light-hover);
+}
+ 
 .container-login-cadastro {
   display: flex;
 }
-
+ 
 .botao-login-cadastro{
   width: 200px;
 }
