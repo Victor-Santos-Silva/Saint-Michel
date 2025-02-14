@@ -12,7 +12,7 @@ const Medico = () => {
   return (
     <>
       <Navbar />
-      <img src="../src/img/logo servico.png" className="img-servicos" alt="Logo Servicos" />
+      <img src="../src/img/nossos-medicos.png" className="img-servicos" alt="Logo Servicos" />
       <br />
       <div className='titulo-subtitulo-sobre' data-aos="fade-up">
         <h1 className='titulo-sobre'>OS MELHORES</h1>
