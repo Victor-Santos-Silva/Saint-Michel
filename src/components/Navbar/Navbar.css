@@ -88,9 +88,10 @@
 .botao-login-cadastro, .botao-login{
   background-color: var(--color-azul-calcinha);
   border: none;
-  padding: 8px 60px;
+  padding: 8px 40px;
   border-radius: 30px;
-  margin-right: 100px;
+  width: auto;
+  margin-right: 0;
   color: var(--color-dark-blue);
   font-weight: bold;
   cursor: pointer;
@@ -107,6 +108,7 @@
  
 .container-login-cadastro {
   display: flex;
+  gap: 20px;
 }
  
 .botao-login-cadastro{
