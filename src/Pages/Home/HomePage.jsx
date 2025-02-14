@@ -31,7 +31,7 @@ const services = [
 
 const especialidades = [
     { nome: "Ortopedia", img: coracaoEscuro },
-    { nome: "Ortopedia", img: coracaoEscuro },
+    { nome: "Proctologia", img: coracaoEscuro },
     { nome: "Oncologia", img: coracaoEscuro },
     { nome: "Otorrino", img: coracaoEscuro },
     { nome: "Oftalmologia", img: coracaoEscuro },

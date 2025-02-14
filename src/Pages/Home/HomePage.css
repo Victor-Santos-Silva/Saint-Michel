@@ -48,7 +48,7 @@
 }
 
 .titulo {
-    color: rgba(79, 182, 240, 255);
+    color: var(--color-light-blue);
     text-align: center;
     font-weight: bold;
     margin-top: 30px;
