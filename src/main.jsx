@@ -11,6 +11,7 @@ import ErroPage from './components/PaginaDeErro/ErrorPage.jsx'
 import Cadastro from './Pages/Cadastro/CadastroPage.jsx'
 import Login from './Pages/Login/LoginPage.jsx'
 import Agendamentos from './Pages/Agendamentos/Agendamentos.jsx'
+
 const router = createBrowserRouter([
   {
     path: "/",
