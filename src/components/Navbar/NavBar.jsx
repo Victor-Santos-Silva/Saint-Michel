@@ -49,10 +49,10 @@ export default function Navbar() {
             <FaSearch className="search-icon" />
           </div>
           <div className="nav-actions">
-            <Link to='/login' className="botao-login login-button">Login</Link>
+            <Link to='/login' className="login-button">Login</Link>
           </div>
           <div className="nav-actions">
-            <Link to='/cadastro' className="botao-login-cadastro cadastro-button">Cadastro</Link>
+            <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
           </div>
         </div>
       </nav>
