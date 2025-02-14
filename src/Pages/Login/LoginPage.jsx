@@ -21,20 +21,12 @@ function LoginPage() {
                     <div className="card-login">
                         <h1>Login</h1>
                         <div className="textfield">
-                            <label for="usuario">Usuário</label>
-                            <input type="text" name="usuario" placeholder="Usuário" />
-                        </div>
-                        <div className="textfield">
                             <label for="email">Email</label>
                             <input type="text" name="email" placeholder="Email" />
                         </div>
                         <div className="textfield">
                             <label for="senha">Senha</label>
                             <input type="text" name="senha" placeholder="Senha" />
-                        </div>
-                        <div className="textfield">
-                            <label for="cpf">Cpf</label>
-                            <input type="text" name="cpf" placeholder="Cpf" />
                         </div>
                         <button className="btn-login">Logar</button>
                     </div>

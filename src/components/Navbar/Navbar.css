@@ -4,13 +4,16 @@
   --color-dark-hover: #1f2b6ca8;
   --color-blue-card-info: #2c3e50;
   --color-card-info: #7f8c8d;
-  --color-background-card: #7dbeff25;
+  --color-background-card: #6fb7ff59;
   --color-light-blue: #159EEC;
   --color-blue-contact: #0056b3;
+  --color-cadastro-hover: #4687ff;
   --color-light-hover: #81a7ff;
   --color-azul-calcinha: #BFD2F8;
   --color-top-gray: #4a4a4a;
   --color-dark-gray: #333;
+  --color-hover: #4b5dff9d;
+  --color-text: #fff;
 }
  
 /* General Styles */
@@ -88,27 +91,67 @@
 .botao-login-cadastro, .botao-login{
   background-color: var(--color-azul-calcinha);
   border: none;
-  padding: 8px 60px;
+  padding: 8px 40px;
   border-radius: 30px;
-  margin-right: 100px;
+  width: auto;
+  margin-right: 0;
   color: var(--color-dark-blue);
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
- 
-.botao-login:hover {
-  background-color: var(--color-light-hover);
+
+.container-login-cadastro {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
- 
-.botao-login-cadastro:hover {
-  background-color: var(--color-light-hover);
+
+.login-button {
+  padding: 10px 30px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  color: var(--color-text);
+  display: inline-block;
 }
+
+.cadastro-button {
+  padding: 10px 30px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  color: var(--color-text);
+  display: inline-block;
+}
+
+.login-button {
+  background-color: var(--color-hover);
+}
+
+.cadastro-button {
+  background-color: var(--color-hover);
+}
+
+.login-button:hover,
+.cadastro-button:hover {
+  background-color: var(--color-cadastro-hover);
+  transform: translateY(-3px);
+}
+
  
 .container-login-cadastro {
   display: flex;
+  gap: 20px;
 }
  
 .botao-login-cadastro{
   width: 200px;
 }
+
