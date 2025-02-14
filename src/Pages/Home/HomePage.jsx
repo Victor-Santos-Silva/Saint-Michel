@@ -18,17 +18,6 @@ import cuidados from '../../img/cuidados.png';
 import CarouselMedico from '../../components/CarrosselMedicos/CarrosselMedicos'
 
 import coracaoEscuro from '../../img/coracaoEscuro.png';
-/* import neurologia from '../../img/neurologia.png';
-import oncologia from '../../img/oncologia.png';
-import otorrino from '../../img/otorrino.png';
-import oftalmologia from '../../img/oftalmologia.png';
-import cardiologia from '../../img/cardiologia.png';
-import pneumologia from '../../img/pneumologia.png';
-import renal from '../../img/renal.png';
-import gastro from '../../img/gastro.png';
-import urologia from '../../img/urologia.png';
-import dermatologia from '../../img/dermatologia.png';
-import ginecologia from '../../img/ginecologia.png'; */
 import { Link } from 'react-router-dom';
 import Contato from '../../components/Contato/Contato'
 
@@ -100,7 +89,7 @@ const HomePage = () => {
                 <div className="menu-servicos-homepage">
                     {services.map((service, index) => (
                         <div key={index} className={'menu-item-homepage'}>
-                            <img src={service.img} alt="Serviço" className='img-menu-servicos'/>
+                            <img src={service.img} alt="Serviço" className='img-menu-servicos' />
                         </div>))}
                     <div className="ver-tudo"><Link to='/servicos'>Ver tudo</Link></div>
                 </div>

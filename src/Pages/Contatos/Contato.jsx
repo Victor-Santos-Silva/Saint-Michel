@@ -16,7 +16,7 @@ const Contatos = () => {
     <>
       <Navbar />
       <img src="../src/img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
-
+<br /><br />
         <div className="map-container">
           <iframe
             title="Localização"
@@ -29,6 +29,7 @@ const Contatos = () => {
           ></iframe>
         </div>
 
+<br />
       <div className="contato-container">
         <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
         <h3 className="subtitulo-contato">Contato</h3>
@@ -37,8 +38,8 @@ const Contatos = () => {
             <input type="text" name="nome" placeholder="Nome" required className="placeholder-branco" />
             <input type="email" name="email" placeholder="Email" required className="placeholder-branco" />
           </div>
-          <input type="text" name="assunto" placeholder="Assunto" required className="placeholder-branco" />
-          <textarea name="mensagem" placeholder="Mensagem" required className="placeholder-branco"></textarea>
+          <input type="text" name="assunto" placeholder="  Assunto" required className="placeholder-branco" />
+          <textarea name="mensagem" placeholder="  Mensagem" required className="placeholder-branco"></textarea>
           <button type="submit">ENVIAR</button>
         </form>
       </div>

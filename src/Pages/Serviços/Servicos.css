@@ -8,6 +8,7 @@
     --color-light-blue: #159EEC;
     --color-azul-calcinha: #BFD2F8;
     --color-dark-gray: #333;
+    --color-back-service: #0026ff07;
 }
 
 body {
@@ -23,7 +24,6 @@ body {
     display: block;
 }
 
-/* Seção com imagem e texto lado a lado */
 .team-section {
     display: flex;
     flex-direction: column;
@@ -42,7 +42,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: var(--color-background-card);
+    background-color: #7dbeff25;
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -88,9 +88,9 @@ body {
 }
 
 .team-button {
-    background-color: transparent;
-    color: var(--color-light-blue);
-    border: 2px solid var(--color-dark-gray);
+    background-color:var(--color-back-service);
+    color: var(--color-dark-blue);
+    border: 2px solid var(--color-dark-blue);
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
@@ -99,7 +99,7 @@ body {
 }
 
 .team-button:hover {
-    background-color: var(--color-light-blue);
+    background-color: var(--color-dark-blue);
     color: #fff;
 }
 
@@ -108,6 +108,10 @@ body {
     font-weight: bold;
     font-size: 18px;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
 }
 
 .team-title {
@@ -115,6 +119,9 @@ body {
     font-family: var(--primary-font);
     margin-top: 10px;
     font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Responsividade */
@@ -135,3 +142,4 @@ body {
         font-size: 18px;
     }
 }
+    
