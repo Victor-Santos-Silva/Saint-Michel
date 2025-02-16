@@ -5,11 +5,14 @@ import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
 
 function CadastroPage() {
+
+
     const [formData, setFormData] = useState({
         nome: '',
         idade: '',
         email: '',
         senha: '',
+        confirmar_senha: '',
         cpf: '',
         endereco: ''
     });
@@ -17,63 +20,93 @@ function CadastroPage() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setFormData({
-            ...formData,
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: name === 'cpf' ? value.replace(/\D/g, '') : value,
-        });
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validação da senha
+        const senha = formData.senha.trim();
+        const repetir_senha = formData.confirmar_senha.trim();
+
         try {
-            await axios.post('http://localhost:3000/api/usuarios/', formData);
+            const response = await axios.post('http://localhost:5000/api/cadastro', {
+                ...formData,
+                senha,
+                repetir_senha,
+            }, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            alert('Cadastro realizado com sucesso!');
             setFormData({
                 nome: '',
                 idade: '',
                 email: '',
                 senha: '',
+                confirmar_senha: '',
                 cpf: '',
                 endereco: ''
             });
         } catch (error) {
-            console.error('Erro ao cadastrar paciente:', error.message);
+            console.error('Erro ao cadastrar:', error.response ? error.response.data : error.message);
         }
     };
+
     return (
         <>
             <Navbar />
-            
+
             <div className="maincadastro">
                 <div className="leftcadastro">
                 </div>
                 <div className="right-cadastro">
                     <div className="card-cadastro">
                         <h1>Cadastro</h1>
-                        <div className="textfield">
-                            <label for="usuario">Usuário</label>
-                            <input type="text" name="usuario" placeholder="Usuário"/>
-                        </div>
-                        <div className="textfield">
-                            <label for="senha">Senha</label>
-                            <input type="text" name="senha" placeholder="Senha"/>
-                        </div>
-                        <div className="textfield">
-                            <label for="senha">Confirmar Senha</label>
-                            <input type="text" name="senha" placeholder="Senha"/>
-                        </div>
-                        <div className="textfield">
-                            <label for="email">Email</label>
-                            <input type="text" name="email" placeholder="Email"/>
-                        </div>
-                        <div className="textfield">
-                            <label for="cpf">Cpf</label>
-                            <input type="text" name="cpf" placeholder="Cpf"/>
-                        </div>
-                        <div className="textfield">
-                            <label for="endereco">Endereço</label>
-                            <input type="text" name="endereco" placeholder="Endereco"/>
-                        </div>
-                        <button class="btn-cadastro">Cadastrar</button>
+                        <form onSubmit={handleSubmit}>
+
+                            <div className="textfield">
+                                <label htmlFor="usuario">Nome Completo</label>
+                                <input type="text" name="nome" placeholder="Nome" value={formData.nome} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="idade">Idade</label>
+                                <input type="number" name="idade" placeholder="Idade" value={formData.idade} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="email">Email</label>
+                                <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="senha">Senha</label>
+                                <input type="password" name="senha" placeholder="Senha" value={formData.senha} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="confirmar_senha">Confirmar Senha</label>
+                                <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" value={formData.confirmar_senha} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="cpf">Cpf</label>
+                                <input type="text" name="cpf" placeholder="Cpf" value={formData.cpf} onChange={handleChange} />
+                            </div>
+
+                            <div className="textfield">
+                                <label htmlFor="endereco">Endereço</label>
+                                <input type="text" name="endereco" placeholder="Endereco" value={formData.endereco} onChange={handleChange} />
+                            </div>
+
+                            <button class="btn-cadastro" type='submit'>Cadastrar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -83,5 +116,6 @@ function CadastroPage() {
 
 
 }
+
 
 export default CadastroPage;
