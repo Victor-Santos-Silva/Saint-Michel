@@ -7,32 +7,35 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-logo">
-          <img src="src/img/FooterLogo.png" alt="Logo do Hospital Saint-Michel" className="logo-footer" />
+          <img src="src/img/FooterLogo.png" alt="Logo do Hospital Saint-Michel" className="logo-footer" style={{ width: '280px' }}  />
           <p>Cuidar de você é nossa missão divina</p>
         </div>
 
         <div className="footer-links">
-          <h3>Links Importantes</h3>
+          <h3 className="sub-bold">Links Importantes</h3>
           <ul>
-            <li><a href="#">Agendamentos</a></li>
-            <li><a href="#">Doutores</a></li>
-            <li><a href="#">Serviços</a></li>
-            <li><a href="#">Sobre nós</a></li>
+            <br />
+            <li><a href="/agendamentos">Agendamentos</a></li>
+            <li><a href="/doutores">Doutores</a></li>
+            <li><a href="/servicos">Serviços</a></li>
+            <li><a href="/sobre">Sobre nós</a></li>
           </ul>
         </div>
 
         <div className="footer-contact">
-          <h3>Fale Conosco</h3>
-          <p>Telefone: (11) 6818-1255</p>
-          <p>Email: saintmichel@gmail.com</p>
-          <p>Endereço: Av. Marechal Tito, 3400</p>
+          <h3 className="sub-bold">Fale Conosco</h3>
+          <br />
+          <p><strong>Telefone:</strong> (11) 6818-1255</p>
+          <p><strong>Email:</strong> saintmichel@gmail.com</p>
+          <p><strong>Endereço:</strong> Av. Marechal Tito, 3400</p>
           <p>Brasil</p>
         </div>
 
         <div className="footer-newsletter">
-          <h3>Informações</h3>
+          <h3 className="sub-bold">Informações</h3>
+          <br />
           <div className="newsletter-box">
-            <input type="email" placeholder="Digite seu email aqui:" />
+            <input type="email" placeholder="Digite seu email aqui" />
             <button><FaPaperPlane /></button>
           </div>
         </div>
