@@ -8,7 +8,7 @@ import Servicos from './Pages/Serviços/Servicos.jsx'
 import Doutores from './Pages/Medicos/Medico.jsx'
 import Contatos from './Pages/Contatos/Contato.jsx'
 import ErroPage from './components/PaginaDeErro/ErrorPage.jsx'
-import Cadastro from './Pages/Cadastro/CadastroPage.jsx'
+import Cadastro from './Pages/Cadastro/Cadastro.jsx'
 import Login from './Pages/Login/LoginPage.jsx'
 import Agendamentos from './Pages/Agendamentos/Agendamentos.jsx'
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CadastroPage.css';
-import Navbar from '../../components/Navbar/NavBar';
-import Footer from '../../components/Footer/Footer';
 import imagemFundo from '../../img/planoDeFundo.png'
 
 function CadastroPage() {
@@ -60,7 +58,6 @@ function CadastroPage() {
 
     return (
         <>
-            <Navbar />
 
             <div className='container-page-cadastro'>
                 <img src={imagemFundo} alt="" className="container-imagem-fundo" />
@@ -112,7 +109,6 @@ function CadastroPage() {
 
                 </div>
             </div>
-            <Footer />
         </>
     );
 

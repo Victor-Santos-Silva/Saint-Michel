@@ -83,7 +83,7 @@ export default function Login() {
 
                     </div>
 
-                    <button className='btn-login'>Logar</button>
+                    <button className='btn-cadastro'>Logar</button>
 
                 </form>
             </div>
