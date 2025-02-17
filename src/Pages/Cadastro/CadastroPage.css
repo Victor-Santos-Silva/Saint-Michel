@@ -1,74 +1,54 @@
-.maincadastro {
-  height: 100vh;
-  display: flex;
-
+.container-page-cadastro {
+  position: relative;
 }
 
-.leftcadastro {
+.container-imagem-fundo {
   width: 100%;
-  height: 100%;
-  background-image: url("../../img//medicoBranco2.png");
-  background-size: cover;
 }
 
-.right-cadastro {
-  width: 50%;
-}
-
-.card-cadastro {
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 40px;
+.container-formulario-cadastro {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  width: 35%;
+  padding: 2%;
+  text-align: justify;
   background-color: #1f2b6c;
+  color: white;
   border-radius: 20px;
   box-shadow: 0px 10px 40px #1f2b6c;
+
 }
 
-.card-cadastro > h1 {
-  color: white;
+.title-cadastro {
+  text-align: center;
   font-weight: 800;
-  margin: 0 0 20px 0;
-  font-size: 1.8rem;
+  letter-spacing: 4px;
 }
 
-.textfield {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 10px 0px;
-  width: 100%;
-}
-
-.textfield > input {
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  padding: 15px;
+.input-cadastro {
+  display: block;
   background-color: #bfd2f8;
-  color: rgb(0, 0, 0);
-  font-size: 14pt;
-  box-shadow: 0px 10px 40px #1f2b6c;
-  outline: none;
-  box-sizing: border-box;
+  padding: 15px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  margin-top: 5px;
 }
 
-.textfield > label {
-  color: rgb(255, 255, 255);
-  margin-bottom: 10px;
-  font-size: 14px;
+.input-cadastro::placeholder {
+  color: black;
 }
 
-.textfield > input::placeholder {
-  color: #000000;
+
+.text-field {
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 .btn-cadastro {
   width: 100%;
-  padding: 16px 0px;
+  padding: 16px;
   margin-top: 25px;
   border: none;
   border-radius: 8px;
