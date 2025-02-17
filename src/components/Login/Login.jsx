@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import imagemFundo from '../../img/planoDeFundo.png'
+import imagemFundo from '../../img/planoDeFundo2.png'
 import './login.css';
 
 export default function Login() {
@@ -48,16 +48,17 @@ export default function Login() {
 
     return (
         <>
-            <img src={imagemFundo} alt="imagem de fundo" className='imagem-fundo-login' />
 
+            <img src={imagemFundo} alt="imagem de fundo" className='imagem-fundo-login' />
             <div className='container-login'>
 
-                <h1>Login</h1>
+                <h1 className='title-cadastro'>Login</h1>
 
                 <form onSubmit={handleSubmit} className='form-login'>
 
-                    <div className='formulario-login'>
+                    <div className='text-field'>
                         <input
+                            className='input-cadastro'
                             type="text"
                             name="email"
                             placeholder="Email"
@@ -68,9 +69,9 @@ export default function Login() {
                         {error.email && <p style={{ color: 'red', fontSize: '14px' }}>Campo obrigatório</p>}
                     </div>
 
-                    <div className='formulario-login'>
+                    <div className='text-field'>
                         <input
-                            className=''
+                            className='input-cadastro'
                             type="password"
                             name="senha"
                             placeholder="Senha"

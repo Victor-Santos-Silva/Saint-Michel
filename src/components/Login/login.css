@@ -4,8 +4,9 @@
 
 
 .container-login {
+    width: 30%;
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 10%;
     background-color: #1f2b6c;
     padding: 2%;
