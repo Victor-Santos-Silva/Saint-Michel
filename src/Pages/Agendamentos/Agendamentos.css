@@ -1,50 +1,152 @@
-:root{
+:root {
   --primary-font: "Yeseva One", serif;
-  --color-dark-blue: #1F2B6C; 
-  --color-light-blue: #159EEC;
+  --color-dark-blue: #1F2B6C;
+  --color-light-blue: #3eacec;
   --color-azul-calcinha: #BFD2F8;
   --color-dark-gray: #333;
+  --color-dark-green: #2da37c;
 }
 
+/* Centralizar o calendário e manter largura uniforme */
 .calendar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: var(--color-azul-calcinha);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-}
-
-.calendar-container h2 {
-  color: #1F2B6C;
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-.react-calendar {
+  justify-content: center;
+  text-align: center;
   width: 100%;
-  border: none;
-  background-color: #fff;
-  border-radius: 10px;
+  max-width: 420px;
+  margin: 20px auto;
 }
 
-.react-calendar__tile {
+/* Ajustar tamanho e estilo do calendário */
+.react-calendar {
+  width: 100% !important;
+  max-width: 420px;
+  background: white;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
   padding: 10px;
-  font-size: 16px;
-  transition: background-color 0.2s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.react-calendar__tile--active {
-  background: var(--color-dark-blue);
-  color: var(--color-azul-calcinha);
-  border-radius: 5px;
+/* Estilizar o título "Escolha uma data para o agendamento" */
+.calendar-container h2 {
+  font-size: 1.2rem; /* Reduzir o tamanho da fonte */
+  font-weight:100;
+  text-align: center;
+  width: 100%;
+  max-width: 350px; /* Mesma largura do calendário */
+  white-space: nowrap; /* Impede a quebra de linha */
+  overflow: hidden; /* Esconde qualquer conteúdo extra */
+  margin-bottom: 10px;
 }
 
-.react-calendar__tile:hover {
-  background: var(--color-azul-calcinha);
-  color: var(--color-dark-blue);
-  border-radius: 5px;
+
+/* Centralizar mês e ano */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Estilizar mês e ano */
+.react-calendar__navigation button {
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Estilizar setas de navegação */
+.react-calendar__navigation button:enabled {
+  color: black;
+}
+
+/* Estilizar os dias com fonte cinza e borda minimalista */
+.react-calendar__tile {
+  color: #808080;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Destacar dias com lembretes */
+.react-calendar__tile.highlight {
+  background-color: var(--color-dark-green);
+  color: black;
+  border-radius: none;
+}
+
+/* Destacar o dia atual */
+.react-calendar__tile--now {
+  background-color: var(--color-light-blue) !important;
+  color: white !important;
+  border-radius: none;
+  font-weight: bold;
+}
+
+/* Estilizar a seção de lembretes */
+.reminder-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+/* Estilizar os inputs */
+.reminder-container input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Ajustar largura dos campos */
+.reminder-container input[type="text"] {
+  flex: 2;
+}
+
+.reminder-container input[type="time"] {
+  flex: 1;
+}
+
+/* Estilizar o botão */
+.reminder-container button {
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--color-light-blue);
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.reminder-container button:hover {
+  background-color: #1178b5;
+}
+
+/* Adicionar uma linha separadora entre os dias da semana e os dias do mês */
+.react-calendar__month-view__weekdays {
+  border-bottom: 1px solid #d3d3d3;
+  border-top: 1px solid #d3d3d3;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+/* Estilizar o título "Lembretes para" */
+.reminder-display h3 {
+  font-size: 1rem; /* Reduzir o tamanho da fonte */
+  font-weight: bold;
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Esconde qualquer conteúdo extra */
+  text-overflow: ellipsis; /* Adiciona "..." caso o texto seja muito longo */
+  margin-bottom: 5px;
+}
+
