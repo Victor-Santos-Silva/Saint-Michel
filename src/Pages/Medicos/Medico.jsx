@@ -3,7 +3,6 @@ import "./Medico.css";
 import Navbar from "../../components/Navbar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import Doutores from "../../components/Doutores/Doutores";
-import Banner from '../../components/Banner/Banner'
 import Contato from '../../components/Contato/Contato'
 import Aos from "aos";
 
@@ -29,8 +28,7 @@ export default function Medico() {
       <Doutores />
       <Doutores />
 
-      <Banner />
-      <Contato />
+      {/* <Contato /> */}
       <Footer />
     </>
   );

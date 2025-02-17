@@ -3,7 +3,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
-import Banner from '../../components/Banner/Banner';
 import Doutores from '../../components/Doutores/Doutores';
 import './sobrePage.css';
 import Contato from '../../components/Contato/Contato';
@@ -50,16 +49,13 @@ export default function SobrePage() {
                 </div>
             </div>
 
-            <Banner />
 
-            <div className='titulo-subtitulo-sobre' data-aos="fade-up">
+           {/*  <div className='titulo-subtitulo-sobre' data-aos="fade-up">
                 <h1 className='titulo-sobre'>CUIDADO CONFIÁVEL</h1>
                 <h2 className='subTitulo-sobre-2'>Nossos Médicos</h2>
-            </div>
+            </div> */}
 
-            <Doutores />
-            <br /><br /> <br />
-            <Contato/>
+            {/* <Contato /> */}
 
             <Footer />
         </>

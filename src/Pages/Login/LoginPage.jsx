@@ -26,7 +26,7 @@ function LoginPage() {
                         </div>
                         <div className="textfield">
                             <label for="senha">Senha</label>
-                            <input type="text" name="senha" placeholder="Senha" />
+                            <input type="password" name="senha" placeholder="Senha" />
                         </div>
                         <button className="btn-login">Logar</button>
                     </div>

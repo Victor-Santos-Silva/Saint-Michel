@@ -55,7 +55,7 @@ export default function HealthPage() {
         </div>
       </div>
 
-      <Contato />
+      {/* <Contato /> */}
       <Footer />
     </>
   );
