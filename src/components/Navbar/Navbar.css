@@ -155,3 +155,22 @@
   width: 200px;
 }
 
+.perfil-usuario{
+  display: flex;
+
+}
+.nome-usuario{
+  margin-right: 150px;
+}
+
+.btn-sair-perfil{
+  padding: 10px 30px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  color: var(--color-cadastro-hover);
+  display: inline-block;
+}

@@ -54,6 +54,7 @@ const HomePage = () => {
             easing: "ease-in-out", // Tipo de animação
         });
     }, []);
+    
 
     return (
         <>
