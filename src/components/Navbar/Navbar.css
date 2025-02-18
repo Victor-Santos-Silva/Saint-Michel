@@ -62,7 +62,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-dark-blue);
+  background: linear-gradient(to right, #2650d8, #1F2B6C);
   padding: 15px 40px;
   color: white;
 }

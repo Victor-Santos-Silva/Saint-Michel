@@ -42,7 +42,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: #7dbeff25;
+    background: linear-gradient(to right, #ffffff, #003cff1a);
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -50,8 +50,9 @@ body {
 }
 
 .card-servico:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
 }
+
 
 .card-servico.reversed {
     flex-direction: row-reverse;
@@ -61,10 +62,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.image-servico {
-    flex: 1.2;
 }
 
 .content-servico {

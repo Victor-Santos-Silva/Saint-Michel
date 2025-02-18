@@ -1,39 +1,40 @@
 import React from "react";
 import { FaPhone, FaClock, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
- 
-import "./Navbar.css"; // Importando o CSS
- 
+import "./Navbar.css";
+
 export default function Navbar() {
   return (
     <header className="header">
       <div className="top-bar">
         <div className="logo">
-          {/* Corrigido o caminho da imagem logo, agora sem o caminho vazio */}
           <img src="../src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
         </div>
         <div className="contact-info">
-          <div className="info-item">
-            {/* Troquei a imagem por ícone do react-icons para consistência */}
+          <div className="info-item modern-item">
             <FaPhone className="icon-img" />
-            <span>EMERGÊNCIA
-              <br /> (11) 6818-1255</span>
+            <div>
+              <strong>EMERGÊNCIA</strong>
+              <br /> (11) 6818-1255
+            </div>
           </div>
-          <div className="info-item">
+          <div className="info-item modern-item">
             <FaClock className="icon-img" />
-            <span>HORÁRIO DE TRABALHO
-              <br />
-              09:00 - 20:00 Todo dia</span>
+            <div>
+              <strong>HORÁRIO DE TRABALHO</strong>
+              <br /> 09:00 - 20:00 Todo dia
+            </div>
           </div>
-          <div className="info-item">
+          <div className="info-item modern-item">
             <FaMapMarkerAlt className="icon-img" />
-            <span>LOCALIZAÇÃO
-              <br />
-              Av. Marechal Tito, 3400</span>
+            <div>
+              <strong>LOCALIZAÇÃO</strong>
+              <br /> Av. Marechal Tito, 3400
+            </div>
           </div>
         </div>
       </div>
- 
+
       <nav className="navbar">
         <div className="nav-links">
           <Link to='/'>Home</Link>
@@ -43,7 +44,6 @@ export default function Navbar() {
           <Link to='/agendamentos'>Agendamentos</Link>
           <Link to='/contato'>Contato</Link>
         </div>
- 
         <div className="container-login-cadastro">
           <div className="nav-actions">
             <FaSearch className="search-icon" />

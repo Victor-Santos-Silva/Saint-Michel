@@ -11,7 +11,7 @@ const cards = [
     img: "src/img/ClinicoGeral.jpg"
   },
   { id: 2, title: "Pediatria", description: "O serviço de Pediatria é dedicado ao cuidado da saúde infantil, oferecendo acompanhamento médico desde os primeiros dias de vida até a adolescência. Nossos pediatras são especializados no diagnóstico e tratamento de doenças comuns em crianças, como infecções, alergias, doenças respiratórias, entre outras. Além disso, o pediatra acompanha o desenvolvimento físico, emocional e social da criança, realizando check-ups regulares, monitorando o crescimento e fornecendo orientações sobre alimentação, vacinação e hábitos saudáveis. A pediatria também é essencial para a prevenção de doenças, com ênfase na imunização e no aconselhamento para uma infância saudável. Agende sua consulta e garanta o cuidado especializado para o bem-estar de seu filho!",
-    img: "src/img/pediatra-card.jpg"
+    img: "src/img/Pediatria-teste.jpg"
   },
   { id: 3, title: "Proctologista", description: "O serviço de Proctologia é especializado no cuidado da saúde do reto, ânus e do trato intestinal inferior. Nossos proctologistas estão preparados para diagnosticar e tratar uma variedade de condições, como hemorroidas, fissuras anais, doenças inflamatórias intestinais, constipação crônica, incontinência fecal, entre outras. Além disso, o proctologista realiza exames de rotina, como a avaliação do câncer colorretal, e oferece orientações sobre cuidados com a saúde intestinal, alimentação e hábitos saudáveis. Este especialista também orienta sobre a prevenção de doenças e trata desconfortos e complicações relacionadas ao sistema digestivo inferior. Agende sua consulta e cuide da sua saúde com quem é especialista no assunto!",
     img: "src/img/proctologista-card.jpg"
