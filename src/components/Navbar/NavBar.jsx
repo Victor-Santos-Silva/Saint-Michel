@@ -1,10 +1,13 @@
 import React from "react";
 import { FaPhone, FaClock, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
- 
+import { useAuth } from '../../AuthContext'; // Importando o hook de autenticação
+
 import "./Navbar.css"; // Importando o CSS
- 
+
 export default function Navbar() {
+
+  const { isLoggedIn, username, logout } = useAuth(); // Acessando o estado do usuário
   return (
     <header className="header">
       <div className="top-bar">
@@ -33,7 +36,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
- 
+
       <nav className="navbar">
         <div className="nav-links">
           <Link to='/'>Home</Link>
@@ -43,17 +46,25 @@ export default function Navbar() {
           <Link to='/agendamentos'>Agendamentos</Link>
           <Link to='/contato'>Contato</Link>
         </div>
- 
+
         <div className="container-login-cadastro">
-          <div className="nav-actions">
-            <FaSearch className="search-icon" />
-          </div>
-          <div className="nav-actions">
-            <Link to='/login' className="login-button">Login</Link>
-          </div>
-          <div className="nav-actions">
-            <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
-          </div>
+          {isLoggedIn ? (
+            <div className="perfil-usuario">
+
+              <p className="nome-usuario">Olá, {username}</p>
+              <button onClick={logout} className="btn-sair-perfil">Sair</button>
+            </div>
+          ) : (
+            <>
+              <div className="nav-actions">
+                <Link to='/login' className="login-button">Login</Link>
+              </div>
+              <div className="nav-actions">
+                <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
+              </div>
+            </>
+          )}
+
         </div>
       </nav>
     </header>

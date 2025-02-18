@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import imagemFundo from '../../img/planoDeFundo2.png'
+import { useAuth } from '../../AuthContext'; // Importando o hook de autenticação
+import imagemFundo from '../../img/planoDeFundo2.png';
 import './login.css';
 
-export default function Login() {
-
+export default function LoginPage() {
     const [formData, setFormData] = useState({
         email: '',
         senha: ''
@@ -14,6 +14,8 @@ export default function Login() {
         email: false,
         senha: false
     });
+
+    const { login } = useAuth(); // Acesso à função login do contexto
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,7 +36,11 @@ export default function Login() {
             const response = await axios.post('http://localhost:5000/api/auth/login', formData);
 
             alert(response.data.message);
-            setFormData({ email: '', senha: '' }); // Limpa os campos após login bem-sucedido
+
+            // Após o login bem-sucedido, chamamos o método login do contexto
+            login(response.data.username); // Passa o nome do usuário para o contexto
+
+            setFormData({ email: '', senha: '' }); // Limpa os campos após login
 
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
@@ -48,14 +54,11 @@ export default function Login() {
 
     return (
         <>
-
             <img src={imagemFundo} alt="imagem de fundo" className='imagem-fundo-login' />
             <div className='container-login'>
-
                 <h1 className='title-cadastro'>Login</h1>
 
                 <form onSubmit={handleSubmit} className='form-login'>
-
                     <div className='text-field'>
                         <input
                             className='input-cadastro'
@@ -80,13 +83,11 @@ export default function Login() {
                             style={{ borderColor: error.senha ? 'red' : '' }}
                         />
                         {error.senha && <p style={{ color: 'red', fontSize: '14px' }}>Campo obrigatório</p>}
-
                     </div>
 
                     <button className='btn-cadastro'>Logar</button>
-
                 </form>
             </div>
         </>
-    )
+    );
 }

@@ -12,6 +12,8 @@ import Cadastro from './Pages/Cadastro/Cadastro.jsx'
 import Login from './Pages/Login/LoginPage.jsx'
 import Agendamentos from './Pages/Agendamentos/Agendamentos.jsx'
 
+import { AuthProvider } from './AuthContext.jsx'; // Importando o AuthProvider
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,6 +58,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 )

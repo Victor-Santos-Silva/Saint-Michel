@@ -45,6 +45,8 @@ const especialidades = [
 ];
 
 const HomePage = () => {
+    
+
     return (
         <>
             <Navbar />
