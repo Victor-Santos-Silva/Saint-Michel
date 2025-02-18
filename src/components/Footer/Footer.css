@@ -1,5 +1,4 @@
-/* Footer.css */
-
+/** Footer.css */
 :root {
   --primary-font: "Yeseva One", serif;
   --color-dark-blue: #1F2B6C;
@@ -13,132 +12,66 @@
 }
 
 .footer {
-  background-color: var(--color-dark-blue);
+  background: linear-gradient(to right, #1F2B6C, #1e40af);
   color: white;
-  padding: 40px 20px;
-  font-family: Arial, sans-serif;
+  padding: 2rem 0;
 }
 
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: auto;
+.footer-logo {
+  margin-left: -20px; /* Move logo slightly to the left */
 }
-
-.logo-footer {
-  width: 210px;
-  display: block;
-  margin: 0 auto;
+.footer h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
-
-
-.footer-links{
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.footer-contact{
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.footer-newsletter {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.sub-bold{
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.footer-links ul {
+.footer ul {
   list-style: none;
   padding: 0;
 }
-
-.footer-links li a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.footer-links li a:hover {
+.footer a:hover {
   text-decoration: underline;
 }
-
-.footer-contact p {
-  font-size: 14px;
-  margin: 5px 0;
+.footer p {
+  margin: 0.5rem 0;
 }
-
 .newsletter-box {
   display: flex;
-  align-items: center;
   background-color: white;
-  border-radius: 5px;
-  padding: 5px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
-
 .newsletter-box input {
+  flex-grow: 1;
+  padding: 0.5rem;
   border: none;
   outline: none;
-  padding: 8px;
-  width: 190px;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
-
 .newsletter-box button {
-  background: none;
+  background-color: #2563eb;
+  padding: 0.75rem;
   border: none;
-  color: var(--color-dark-blue);
+  color: white;
+  border-radius: 0 0.5rem 0.5rem 0;
   cursor: pointer;
-  font-size: 18px;
 }
-
-hr {
-  border: 0.5px solid white;
-  margin: 20px 0;
+.newsletter-box button:hover {
+  background-color: #1e3a8a;
 }
-
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  max-width: 1200px;
-  margin: auto;
-  font-size: 14px;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  flex-wrap: wrap;
 }
-
-.footer-partners {
-  font-weight: bold;
-}
-
 .footer-social {
   display: flex;
-  gap: 15px;
-  font-size: 18px;
-  cursor: pointer;
+  gap: 1rem;
+  font-size: 1.5rem;
 }
-
-@media (max-width: 768px) {
-  .footer-container {
-      flex-direction: column;
-      align-items: center;
-  }
-
-  .footer-bottom {
-      flex-direction: column;
-      text-align: center;
-  }
-
-  .footer-social {
-      justify-content: center;
-      margin-top: 10px;
-  }
+.footer-social svg:hover {
+  color: #d1d5db;
 }
