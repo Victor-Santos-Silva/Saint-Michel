@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'aos/dist/aos.css'; // Não se esqueça de importar o CSS do AOS!
+import Aos from 'aos'; // Importando a biblioteca AOS
 import './HomePage.css';
 
 import medicos from '../../img/medicos.png';
@@ -15,12 +17,11 @@ import dna from '../../img/dna.png';
 import bancoSangue from '../../img/bancoSangue.png';
 import grupo from '../../img/grupo.png';
 import cuidados from '../../img/cuidados.png';
-import CarouselMedico from '../../components/CarrosselMedicos/CarrosselMedicos'
+import CarouselMedico from '../../components/CarrosselMedicos/CarrosselMedicos';
 
 import coracaoEscuro from '../../img/coracaoEscuro.png';
 import { Link } from 'react-router-dom';
-import Contato from '../../components/Contato/Contato'
-
+import Contato from '../../components/Contato/Contato';
 
 const services = [
     { img: checkup },
@@ -45,12 +46,20 @@ const especialidades = [
 ];
 
 const HomePage = () => {
+
+    useEffect(() => {
+        Aos.init({
+            duration: 1000, // Duração da animação
+            once: true, // A animação só ocorrerá uma vez
+            easing: "ease-in-out", // Tipo de animação
+        });
+    }, []);
+
     return (
         <>
             <Navbar />
-
             {/* Carrossel */}
-            <div className='carrossel'>
+            <div className='carrossel' data-aos="fade-up">
                 <Carousel>
                     <Carousel.Item>
                         <img className='imagem' src={medicosFelizes} alt="Imagem dois" />
@@ -65,7 +74,7 @@ const HomePage = () => {
             </div>
 
             {/* Começo da página */}
-            <div className="homepage-container">
+            <div className="homepage-container" data-aos="fade-up">
                 <p className='titulo'>BEM VINDO A SAINT-MICHEL</p>
                 <h4 className='segundoTitulo'>Um ótimo lugar para receber cuidados</h4>
                 <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
@@ -73,31 +82,28 @@ const HomePage = () => {
                     <img className='seta' src="../src/img/seta.png" />
                 </p>
 
-                {/*   Primeira Imagem */}
-                <img className='medico' src={medicos} />
-
-
+                {/* Primeira Imagem */}
+                <img className='medico' src={medicos} data-aos="fade-right" />
             </div>
 
-
             {/* Subtitulo */}
-            <p className='titulo'>CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
-            <h4 className='segundoTitulo'>Nossos Serviços</h4>
+            <p className='titulo' data-aos="fade-up">CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
+            <h4 className='segundoTitulo' data-aos="fade-up">Nossos Serviços</h4>
 
             <div className='conjunto-nossos-servicos'>
                 {/* Serviços */}
-                <div className="menu-servicos-homepage">
+                <div className="menu-servicos-homepage" data-aos="fade-up">
                     {services.map((service, index) => (
                         <div key={index} className={'menu-item-homepage'}>
                             <img src={service.img} alt="Serviço" className='img-menu-servicos' />
-                        </div>))}
+                        </div>
+                    ))}
                     <div className="ver-tudo"><Link to='/servicos'>Ver tudo</Link></div>
                 </div>
 
-
                 <div className=''>
-                    {/*  Frase Principal */}
-                    <h1 className='frase-homepage'><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
+                    {/* Frase Principal */}
+                    <h1 className='frase-homepage' data-aos="fade-up"><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
                     {/* Lista de Serviços */}
                     <div className='lista-homepage'>
                         <ul>
@@ -112,58 +118,45 @@ const HomePage = () => {
                         </ul>
                     </div>
                     {/* Segundo Paragrafo */}
-                    <div className='segundoParagrafoHome'>
-                        <p>Na Rede Hospitalar Saint Michel, temos uma paixão pela cura que guia cada passo do nosso trabalho, sustentada por um legado de excelência em cuidados médicos. Contamos com profissionais capacitados e dedicados, prontos para oferecer o melhor atendimento em um ambiente seguro e moderno. Nossa prioridade é o atendimento humanizado, colocando o paciente no centro de tudo, enquanto utilizamos tecnologia de ponta para diagnósticos precisos e tratamentos eficazes. Aqui, sua saúde está em boas mãos..</p>
+                    <div className='segundoParagrafoHome' data-aos="fade-up">
+                        <p>Na Rede Hospitalar Saint Michel, temos uma paixão pela cura que guia cada passo do nosso trabalho, sustentada por um legado de excelência em cuidados médicos...</p>
                     </div>
                 </div>
 
                 {/* Imagens Laterais */}
                 <div className='imgLateral'>
-                    <img src={grupo} alt="Grupo" />
-                    <img src={cuidados} alt="Cuidados" />
+                    <img src={grupo} alt="Grupo" data-aos="fade-left"/>
+                    <img src={cuidados} alt="Cuidados" data-aos="fade-left"/>
                 </div>
             </div>
 
-
-
-
-
             {/* Subtitulos */}
-            <div className='subtitulosHome'>
+            <div className='subtitulosHome' data-aos="fade-up">
                 <p className='titulo'>SEMPRE CUIDANDO</p>
                 <h4 className='segundoTitulo'>Nossas Especialidades</h4>
             </div>
 
-
-
-            {/*  Especialidades  */}
-            <div className="especialidades-grid">
+            {/* Especialidades */}
+            <div className="especialidades-grid" data-aos="fade-up">
                 {especialidades.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`especialidade`}
-                    >
+                    <div key={index} className={`especialidade`}>
                         <img src={item.img} alt={item.nome} />
                         <p>{item.nome}</p>
                     </div>
                 ))}
-                <div>
-                </div>
             </div>
 
-            {/* Segunda Imagem*/}
-            <img className='medicoBranco' src="../src/img/medicoBranco.png" />
-
+            {/* Segunda Imagem */}
+            <img className='medicoBranco' src="../src/img/medicoBranco.png" data-aos="fade-up" />
 
             {/* Titulos finais */}
-            <div className='titulosFinais'>
+            <div className='titulosFinais' data-aos="fade-up">
                 <p className='titulo'>CUIDADO CONFIÁVEL</p>
                 <h4 className='segundoTitulo'>Nossos Médicos</h4>
             </div>
             <CarouselMedico />
             <Contato />
             <Footer />
-
         </>
     );
 };
