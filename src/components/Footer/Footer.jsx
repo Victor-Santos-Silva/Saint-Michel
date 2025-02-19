@@ -6,10 +6,10 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-logo" style={{ marginLeft: '-30px' }}> 
-          <img src="src/img/FooterLogo.png" alt="Logo do Hospital Saint-Michel" style={{width: '15rem', marginRight: '5rem'}} />
+        <div className="footer-logo" style={{ marginLeft: '-30px' }}>
+          <img src="src/img/FooterLogo.png" alt="Logo do Hospital Saint-Michel" style={{ width: '15rem', marginRight: '5rem' }} />
         </div>
-<br />
+        <br />
         <div style={{ marginRight: '8rem' }}>
           <h3>Links Importantes</h3>
           <ul>
@@ -45,9 +45,10 @@ export default function Footer() {
           <span>Parcerias:</span> <strong>Libbs</strong>
         </div>
         <div className="footer-social">
-          <FaLinkedin />
-          <FaFacebook />
-          <FaInstagram />
+          <a href="https://www.instagram.com/hospital.saintmichel/" target="_blank"><FaLinkedin /></a>
+          <a href="https://www.instagram.com/hospital.saintmichel/" target="_blank"><FaFacebook /></a>
+          <a href="https://www.instagram.com/hospital.saintmichel/" target="_blank"><FaInstagram /></a>
+
         </div>
       </div>
     </footer>
