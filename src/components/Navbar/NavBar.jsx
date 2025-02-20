@@ -1,7 +1,7 @@
 import React from "react";
 import { FaPhone, FaClock, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../AuthContext'; // Importando o hook de autenticação
+import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
 import fotoPerfil from '../../img/foto de perfil.png'
 import "./Navbar.css"; // Importando o CSS
 
