@@ -34,7 +34,7 @@
 
 .logo-img {
   width: 100%;
-  max-width: 150px;
+  max-width: 290px;
 }
 
 .contact-info {
@@ -74,7 +74,7 @@
   color: var(--color-text);
   text-decoration: none;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 15px;
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -112,8 +112,8 @@
   transform: translateY(-3px);
 }
 
-/* Botão de Sair */
-/* .btn-sair-perfil {
+/* Botão de Sair 
+.btn-sair-perfil {
   padding: 10px 24px;
   border-radius: 25px;
   font-size: 14px;
@@ -156,5 +156,5 @@
 
 
 .foto-de-Perfil{
-  width: 40px;
+  width: 20px;
 }
