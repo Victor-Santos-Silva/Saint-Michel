@@ -2,7 +2,7 @@ import React from "react";
 import { FaPhone, FaClock, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../AuthContext'; // Importando o hook de autenticação
-import fotoPerfil from '../../img/foto-de-perfil.jpg'
+import fotoPerfil from '../../img/foto de perfil.png'
 import "./Navbar.css"; // Importando o CSS
 
 
@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className="perfil-usuario">
 
               <p className="nome-usuario">Olá, {username}</p>
-              <img src={fotoPerfil} alt="foto-perfil" className="foto-de-Perfil"/>
+              <img src={fotoPerfil} alt="foto-perfil" className="foto-de-Perfil" />
               <button onClick={logout} className="btn-sair-perfil">Sair</button>
             </div>
           ) : (
