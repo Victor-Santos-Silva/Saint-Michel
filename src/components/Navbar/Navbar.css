@@ -149,6 +149,12 @@
 
 .nome-usuario {
   font-weight: bold;
+  text-transform: uppercase;
   color: var(--color-text);
   margin: 0;
+}
+
+
+.foto-de-Perfil{
+  width: 40px;
 }
