@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CadastroPage.css';
 import imagemFundo from '../../img/planoDeFundo.png'
+import { useNavigate } from 'react-router-dom';
 
 function CadastroPage() {
-
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -51,6 +52,9 @@ function CadastroPage() {
                 cpf: '',
                 endereco: ''
             });
+
+            navigate('/login'); // indo para a pagina login
+
         } catch (error) {
             console.error('Erro ao cadastrar:', error.response ? error.response.data : error.message);
         }

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../AuthContext'; // Importando o hook de autenticação
 import imagemFundo from '../../img/planoDeFundo2.png';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: '',
         senha: ''
@@ -35,13 +38,11 @@ export default function LoginPage() {
         try {
             const response = await axios.post('http://localhost:5000/api/auth/login', formData);
 
-            alert(response.data.message);
-
-            // Após o login bem-sucedido, chamamos o método login do contexto
             login(response.data.username); // Passa o nome do usuário para o contexto
 
             setFormData({ email: '', senha: '' }); // Limpa os campos após login
 
+            navigate('/'); // indo para a pagina home
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
 
