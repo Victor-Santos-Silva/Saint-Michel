@@ -9,6 +9,7 @@ import "./Navbar.css"; // Importando o CSS
 export default function Navbar() {
 
   const { isLoggedIn, username, logout } = useAuth(); // Acessando o estado do usuário
+
   return (
     <header className="header">
       <div className="top-bar">
@@ -56,7 +57,8 @@ export default function Navbar() {
 
               <p className="nome-usuario">Olá, {username}</p>
               <img src={fotoPerfil} alt="foto-perfil" className="foto-de-Perfil" />
-              <button onClick={logout} className="btn-sair-perfil">Sair</button>
+              <Link onClick={logout} className="btn-sair-perfil">Sair</Link>
+
             </div>
           ) : (
             <>
