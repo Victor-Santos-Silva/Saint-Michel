@@ -19,62 +19,62 @@ const  Agendamentos = () => {
         <h2 className="title">Escolha uma data para o agendamento</h2>
         </div>
 
-      <div className="container-form">
+        <div className="container-form">
       <h2 className="title">Agendamento de Consulta</h2>
       <div className="form-grid">
         <div className="form-group">
-          <label>Departamento</label>
+          <label>Nome Completo</label>
           <input type="text" />
         </div>
         <div className="form-group">
-          <label>Profissional</label>
-          <input type="text" />
-        </div>
-        <div className="form-group">
-          <label>Data</label>
+          <label>Data de nascimento</label>
           <input type="date" />
         </div>
         <div className="form-group">
-          <label>Hora</label>
-          <input type="time" />
+          <label>CPF</label>
+          <input type="text" />
         </div>
         <div className="form-group">
-          <label>Tipo de Consulta</label>
+          <label>Endereço<object data="" type=""></object></label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Gênero</label>
           <select>
-            <option>Presencial</option>
-            <option>Online</option>
+            <option>
+                Masculino
+            </option>
+            <option>
+                Feminino
+            </option>
+            <option>
+                Outro
+            </option>
           </select>
         </div>
         <div className="form-group">
-          <label>Convênio</label>
+          <label>Etnia</label>
           <select>
-            <option>
-              Convênio A
-            </option>
-            <option>
-              Convênio B
-            </option>
-            <option>
-              Convênio C
-            </option>
+            <option>Preto</option>
+            <option>Branco</option>
+            <option>Pardo</option>
+            <option>Amarelo</option>
+            <option>Indígena</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label>Algum problema de saúde?</label>
+          <input type="text" />
         </div>
         <div className="form-group full-width">
-          <label>Plano</label>
-          <select>
-            <option>
-              Plano Básico
-            </option>
-            <option>
-              Plano Intermediário
-            </option>
-            <option>
-              Plano Premium
-            </option>
-          </select>
+          <label>Parentesco</label>
+          <input type="text" />
         </div>
-
-        <div className="form-group">
+      </div>
+      <button className="submit-btn">Agendar</button>
+    </div>
+    <br /> 
+    <div className="form-group">
           <label>Tipo de Exame</label>
           <select>
             <optgroup label='Exames de Rotina'>
@@ -115,14 +115,11 @@ const  Agendamentos = () => {
             </optgroup>
           </select>
       </div>
-
-      </div>
-      <button className="submit-btn">Agendar</button>
-    </div>
-    <br /> 
         
       
-    <Footer />
+
+      
+      <Footer />
     </>
   );
 };
