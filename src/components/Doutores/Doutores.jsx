@@ -17,16 +17,16 @@ const DoctorCard = ({ name, specialty, image }) => {
   }, []);
 
   return (
-    <div className="card-info-doutores" data-aos="fade-up">
+    <div className="card-info-doutores" data-aos="fade-down">
       <img src={image} alt={name} className="doctor-image" />
       <div className="texto-doutores">
         <h3 className="card-info-h3">{name}</h3>
         <p className="card-info-p"><b>{specialty}</b></p>
       </div>
       <div className="social-icons">
-        <img src="src/img/icons8-facebook-novo-30.png" alt="Facebook" />
-        <img src="src/img/icons8-instagram-30.png" alt="Instagram" />
-        <img src="src/img/icons8-linkedin-30 (1).png" alt="LinkedIn" />
+        <img src="src/img/icons8-facebook-novo-30.png" alt="Facebook" className="social-icon"/>
+        <img src="src/img/icons8-instagram-30.png" alt="Instagram" className="social-icon"/>
+        <img src="src/img/icons8-linkedin-30 (1).png" alt="LinkedIn" className="social-icon"/>
       </div>
       <button className="profile-button-doutores">Visualizar Perfil</button>
     </div>
@@ -35,7 +35,7 @@ const DoctorCard = ({ name, specialty, image }) => {
 
 const Medico = () => (
   <>
-    <div className="card-doutores">
+    <div className="card-doutores" data-aos="fade-up">
       <div className="container-doutores">
         {doctors.map((doctor, index) => (
           <DoctorCard key={index} {...doctor} />

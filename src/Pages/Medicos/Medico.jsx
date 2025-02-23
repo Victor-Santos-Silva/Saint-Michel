@@ -27,8 +27,6 @@ export default function Medico() {
       </div>
       <Doutores />
       <Doutores />
-
-      {/* <Contato /> */}
       <Footer />
     </>
   );

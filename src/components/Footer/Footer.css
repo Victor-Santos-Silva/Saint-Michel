@@ -1,22 +1,16 @@
-/* Footer.css */
-
 :root {
   --primary-font: "Yeseva One", serif;
   --color-dark-blue: #1F2B6C;
   --color-dark-hover: #1f2b6ca8;
-  --color-blue-card-info: #2c3e50;
-  --color-card-info: #7f8c8d;
-  --color-background-card: #7dbeff25;
   --color-light-blue: #159EEC;
-  --color-azul-calcinha: #BFD2F8;
   --color-dark-gray: #333;
+  --color-white: #fff;
 }
 
 .footer {
-  background-color: var(--color-dark-blue);
-  color: white;
-  padding: 40px 20px;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #1F2B6C, #1e40af);
+  color: var(--color-white);
+  padding: 2rem 0;
 }
 
 .footer-container {
@@ -25,120 +19,80 @@
   align-items: flex-start;
   flex-wrap: wrap;
   max-width: 1200px;
-  margin: auto;
-}
-
-.logo-footer {
-  width: 210px;
-  display: block;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
-
-.footer-links{
-  font-size: 16px;
-  margin-bottom: 10px;
+.footer-logo img {
+  width: 16rem;
 }
 
-.footer-contact{
-    font-size: 16px;
-    margin-bottom: 10px;
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  text-align: left;
+  padding: 1rem;
 }
 
-.footer-newsletter {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.sub-bold{
-  font-size: 18px;
-  margin-bottom: 10px;
+.footer h3 {
+  font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-.footer-links ul {
+.footer ul {
   list-style: none;
   padding: 0;
 }
 
-.footer-links li a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  display: block;
-  margin-bottom: 5px;
+.footer ul li {
+  margin-bottom: 0.5rem;
 }
 
-.footer-links li a:hover {
+.footer a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.footer a:hover {
   text-decoration: underline;
 }
 
-.footer-contact p {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.newsletter-box {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.newsletter-box input {
-  border: none;
-  outline: none;
-  padding: 8px;
-  width: 190px;
-}
-
-.newsletter-box button {
-  background: none;
-  border: none;
-  color: var(--color-dark-blue);
-  cursor: pointer;
-  font-size: 18px;
-}
-
-hr {
-  border: 0.5px solid white;
-  margin: 20px 0;
+.footer p {
+  margin: 0.3rem 0;
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   max-width: 1200px;
-  margin: auto;
-  font-size: 14px;
-}
-
-.footer-partners {
-  font-weight: bold;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .footer-social {
   display: flex;
-  gap: 15px;
-  font-size: 18px;
-  cursor: pointer;
+  gap: 1rem;
+  font-size: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .footer-container {
-      flex-direction: column;
-      align-items: center;
-  }
+.footer-social a {
+  color: var(--color-white);
+  transition: color 0.3s ease;
+}
 
-  .footer-bottom {
-      flex-direction: column;
-      text-align: center;
-  }
+.footer-social a:hover {
+  color: #d1d5db;
+}
 
-  .footer-social {
-      justify-content: center;
-      margin-top: 10px;
-  }
+.libbs-footer{
+  font-size: 16.9px;
+}
+
+.direitos{
+  font-weight: bold;
 }
