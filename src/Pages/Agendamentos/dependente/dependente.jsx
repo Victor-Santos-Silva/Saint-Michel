@@ -35,7 +35,7 @@ const AgendamentosDependentes = () => {
             <input type="text" />
           </div>
           <div className="form-group">
-            <label>Endereço<object data="" type=""></object></label>
+            <label>Endereço</label>
             <input type="text" />
           </div>
           <div className="form-group">
