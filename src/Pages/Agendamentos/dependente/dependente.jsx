@@ -71,10 +71,8 @@ const AgendamentosDependentes = () => {
             <input type="text" />
           </div>
         </div>
-        <button className="submit-btn">Agendar</button>
-      </div>
-      <br />
-      <div className="form-group">
+        <br />
+        <div className="form-group">
         <label>Tipo de Exame</label>
         <select>
           <optgroup label='Exames de Rotina'>
@@ -115,6 +113,11 @@ const AgendamentosDependentes = () => {
           </optgroup>
         </select>
       </div>
+      <br />
+        <button className="submit-btn">Agendar</button>
+      </div>
+      <br />
+      
 
 
 
