@@ -114,7 +114,8 @@ const AgendamentosDependentes = () => {
         </select>
       </div>
       <br />
-        <button className="submit-btn">Agendar</button>
+        <button className="submit-btn">Ir para o próximo formulário</button>
+        <br />
       </div>
       <br />
       

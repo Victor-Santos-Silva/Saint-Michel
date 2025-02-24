@@ -7,7 +7,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-container">
         <div className="footer-logo">
-          <img src="src/img/FooterLogo.png" alt="Logo do Hospital Saint-Michel" style={{marginRight: '12rem'}}/>
+          
+          <img src="src/img/FooterLogo.png" style={{marginRight: '12rem'}}/>
         </div>
 
         <div className="footer-section">
