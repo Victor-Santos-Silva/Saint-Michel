@@ -196,7 +196,7 @@ input, select {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
-  background: blue;
+  background: var(--color-dark-blue);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 4px;
@@ -204,7 +204,7 @@ input, select {
 }
 
 .submit-btn:hover {
-  background: darkblue;
+  background: rgb(0, 0, 115);
 
 }
 

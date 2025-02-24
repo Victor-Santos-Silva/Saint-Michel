@@ -14,7 +14,9 @@ export default function Navbar() {
     <header className="header">
       <div className="top-bar">
         <div className="logo">
+          <Link to="/">
           <img src="../src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
+          </Link>
         </div>
         <div className="contact-info">
           <div className="info-item modern-item">
@@ -27,8 +29,8 @@ export default function Navbar() {
           <div className="info-item modern-item">
             <FaClock className="icon-img" />
             <div>
-              <strong>HORÁRIO DE TRABALHO</strong>
-              <br /> 09:00 - 20:00 Todo dia
+              <strong>HORÁRIO DE FUNCIONAMENTO</strong>
+              <br /> 24 HORAS POR DIA
             </div>
           </div>
           <div className="info-item modern-item">
