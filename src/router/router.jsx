@@ -10,6 +10,8 @@ import Contatos from '../Pages/Contatos/Contato.jsx';
 import Cadastro from '../Pages/Cadastro/Cadastro.jsx';
 import Login from '../Pages/Login/LoginPage.jsx';
 import ErroPage from '../components/PaginaDeErro/ErrorPage.jsx';
+import AgendamentosDependentes from "../Pages/Agendamentos/dependente/dependente.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/doutores", element: <Doutores /> },
       { path: "/contato", element: <Contatos /> },
       { path: "/agendamentos", element: <Agendamentos /> },
+      { path: "/agendamentos/dependente", element: <AgendamentosDependentes /> },
       { path: "/cadastro", element: <Cadastro /> },
       { path: "/login", element: <Login /> }
     ]
