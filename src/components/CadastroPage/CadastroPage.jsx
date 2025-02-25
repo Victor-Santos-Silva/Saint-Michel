@@ -34,7 +34,7 @@ function CadastroPage() {
         const repetir_senha = formData.confirmar_senha.trim();
 
         try {
-            const response = await axios.post('http://localhost:5000/api/cadastro', {
+            const response = await axios.post('http://localhost:5000/paciente/cadastro', {
                 ...formData,
                 senha,
                 repetir_senha,

@@ -36,9 +36,9 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const response = await axios.post('http://localhost:5000/paciente/login', formData);
 
-            login(response.data.username); // Passa o nome do usuário para o contexto
+            login(response.data.usuario); // Passa o nome do usuário para o contexto
 
             setFormData({ email: '', senha: '' }); // Limpa os campos após login
 

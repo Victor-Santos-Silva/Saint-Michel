@@ -27,11 +27,11 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const login = (name) => {
-        setUsername(name);
+    const login = (nome) => {
+        setUsername(nome);
         setIsLoggedIn(true);
 
-        localStorage.setItem('username', name);
+        localStorage.setItem('username', nome);
 
         const expirationTime = new Date().getTime() + EXPIRATION_MINUTES * 60 * 1000; // 30 min
         localStorage.setItem('expirationTime', expirationTime.toString());
