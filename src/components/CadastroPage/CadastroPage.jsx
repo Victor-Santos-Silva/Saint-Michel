@@ -72,42 +72,78 @@ function CadastroPage() {
 
                     <form onSubmit={handleSubmit}>
 
-                        <div className='text-field'>
-                            <label htmlFor="usuario">Nome Completo</label>
-                            <input type="text" name="nome" placeholder="Nome" value={formData.nome} onChange={handleChange} className='input-cadastro' />
+                        <div className='container-1'>
+
+                            <div className='text-field'>
+                                <label htmlFor="usuario">Nome Completo</label>
+                                <input type="text" name="nome" placeholder="Nome" value={formData.nome} onChange={handleChange} className='input-cadastro' />
+                            </div>
+
+                            <div className='text-field'>
+                                <label htmlFor="idade">Data de Nascimento</label>
+                                <input type="number" name="idade" placeholder="Idade" value={formData.idade} onChange={handleChange} className='input-cadastro' />
+                            </div>
+
+                            <div className='text-field'>
+                                <label htmlFor="cpf">CPF</label>
+                                <input type="text" name="cpf" placeholder="Cpf" value={formData.cpf} onChange={handleChange} className='input-cadastro' />
+                            </div>
+
+                            <div className='text-field'>
+                                <label htmlFor="rg">RG</label>
+                                <input type="text" name="rg" placeholder="Rg" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
                         </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="idade">Idade</label>
-                            <input type="number" name="idade" placeholder="Idade" value={formData.idade} onChange={handleChange} className='input-cadastro' />
-                        </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="email">Email</label>
-                            <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className='input-cadastro' />
-                        </div>
+                        <div className="container2">
+                            {/* ---- */}
+                            <div className='text-field'>
+                                <label htmlFor="email">gênero;</label>
+                                <input type="text" name="email" placeholder="Email" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="senha">Senha</label>
-                            <input type="password" name="senha" placeholder="Senha" value={formData.senha} onChange={handleChange} className='input-cadastro' />
-                        </div>
+                            <div className='text-field'>
+                                <label htmlFor="senha">endereço</label>
+                                <input type="password" name="senha" placeholder="Senha" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="confirmar_senha">Confirmar Senha</label>
-                            <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" value={formData.confirmar_senha} onChange={handleChange} className='input-cadastro' />
-                        </div>
+                            <div className='text-field'>
+                                <label htmlFor="confirmar_senha">telefone</label>
+                                <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="cpf">Cpf</label>
-                            <input type="text" name="cpf" placeholder="Cpf" value={formData.cpf} onChange={handleChange} className='input-cadastro' />
-                        </div>
+                            <div className='text-field'>
+                                <label htmlFor="cpf">convenio medico</label>
+                                <input type="text" name="cpf" placeholder="Cpf" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
 
-                        <div className='text-field'>
-                            <label htmlFor="endereco">Endereço</label>
-                            <input type="text" name="endereco" placeholder="Endereco" value={formData.endereco} onChange={handleChange} className='input-cadastro' />
+                            <div className='text-field'>
+                                <label htmlFor="endereco">tipo sanguinho</label>
+                                <input type="text" name="endereco" placeholder="Endereco" value={formData} onChange={handleChange} className='input-cadastro' />
+                            </div>
                         </div>
+                        
+                        <div className="container3">
 
-                        <button className='btn-cadastro'>Cadastrar</button>
+                            {/* ---- */}
+
+                            <div className='text-field'>
+                                <label htmlFor="email">Email</label>
+                                <input type="text" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className='input-cadastro' />
+                            </div>
+
+                            <div className='text-field'>
+                                <label htmlFor="senha">Senha</label>
+                                <input type="password" name="senha" placeholder="Senha" value={formData.senha} onChange={handleChange} className='input-cadastro' />
+                            </div>
+
+                            <div className='text-field'>
+                                <label htmlFor="confirmar_senha">Confirmar Senha</label>
+                                <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" value={formData.confirmar_senha} onChange={handleChange} className='input-cadastro' />
+                            </div>
+                            <button className='btn-cadastro'>Cadastrar</button>
+                        </div>
 
                     </form>
 
