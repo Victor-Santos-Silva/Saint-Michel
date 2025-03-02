@@ -1,8 +1,8 @@
 .imagem-fundo-login {
-    width: 100%;
+    object-fit: cover;
 }
- 
- 
+
+
 .container-login {
     width: 30%;
     position: absolute;
@@ -14,11 +14,11 @@
     text-align: center;
     border-radius: 10px;
 }
- 
+
 .formulario-login {
     margin-top: 10%;
 }
- 
+
 .btn-login {
     width: 100%;
     padding: 16px;
@@ -35,6 +35,5 @@
     cursor: pointer;
     box-shadow: 0px 10px 40px -12px #1f2b6c;
     transition: 0.3s;
- 
+
 }
- 

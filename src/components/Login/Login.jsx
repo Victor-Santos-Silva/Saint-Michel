@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
-import imagemFundo from '../../img/planoDeFundo2.png';
+import imagemFundo from '../../img/planoDeFundo.png';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 

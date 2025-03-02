@@ -9,17 +9,17 @@ const EXPIRATION_MINUTES = 30;
 // Provedor do contexto que vai envolver a árvore de componentes
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
+    const [nomeCompleto, setnomeCompleto] = useState('');
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
+        const storednomeCompleto = localStorage.getItem('nomeCompleto');
         const expirationTime = localStorage.getItem('expirationTime');
 
-        if (storedUsername && expirationTime) {
+        if (storednomeCompleto && expirationTime) {
             const now = new Date().getTime();
 
             if (now < Number(expirationTime)) {
-                setUsername(storedUsername);
+                setnomeCompleto(storednomeCompleto);
                 setIsLoggedIn(true);
             } else {
                 logout(); // Se o tempo expirou, desloga
@@ -28,24 +28,24 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (nome) => {
-        setUsername(nome);
+        setnomeCompleto(nome);
         setIsLoggedIn(true);
 
-        localStorage.setItem('username', nome);
+        localStorage.setItem('nomeCompleto', nome);
 
         const expirationTime = new Date().getTime() + EXPIRATION_MINUTES * 60 * 1000; // 30 min
         localStorage.setItem('expirationTime', expirationTime.toString());
     };
 
     const logout = () => {
-        setUsername('');
+        setnomeCompleto('');
         setIsLoggedIn(false);
-        localStorage.removeItem('username');
+        localStorage.removeItem('nomeCompleto');
         localStorage.removeItem('expirationTime');
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, username, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, nomeCompleto, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
