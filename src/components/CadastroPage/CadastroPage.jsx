@@ -39,8 +39,21 @@ function CadastroPage() {
             return;
         }
 
+        // Adicionando a imagem com base no gênero
+        let generoImagem = '';
+        if (formData.genero === 'Masculino') {
+            generoImagem = '/img/pacienteM.png'; // Caminho relativo a partir da pasta public
+        } else if (formData.genero === 'Feminino') {
+            generoImagem = '/img/pacienteF.png'; // Caminho relativo a partir da pasta public
+        } else if (formData.genero === 'Outro') {
+            generoImagem = '/img/pacienteOutro.png'; // Caminho relativo a partir da pasta public
+        }
+
+        // Atualizando formData com a imagem
+        const dataToSubmit = { ...formData, imagemGenero: generoImagem };
+
         try {
-            const response = await axios.post('http://localhost:5000/paciente/cadastro', formData, {
+            const response = await axios.post('http://localhost:5000/paciente/cadastro', dataToSubmit, {
                 headers: { 'Content-Type': 'application/json' }
             });
 
