@@ -1,48 +1,36 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // Cria o contexto
 const AuthContext = createContext();
-
-// Duração da sessão em minutos
-const EXPIRATION_MINUTES = 30;
 
 // Provedor do contexto que vai envolver a árvore de componentes
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [nomeCompleto, setnomeCompleto] = useState('');
 
+    // Verifica o estado de autenticação ao carregar o componente
     useEffect(() => {
         const storednomeCompleto = localStorage.getItem('nomeCompleto');
-        const expirationTime = localStorage.getItem('expirationTime');
 
-        if (storednomeCompleto && expirationTime) {
-            const now = new Date().getTime();
-
-            if (now < Number(expirationTime)) {
-                setnomeCompleto(storednomeCompleto);
-                setIsLoggedIn(true);
-            } else {
-                logout(); // Se o tempo expirou, desloga
-            }
+        if (storednomeCompleto) {
+            setnomeCompleto(storednomeCompleto);
+            setIsLoggedIn(true);
         }
     }, []);
 
     const login = (nome) => {
         setnomeCompleto(nome);
         setIsLoggedIn(true);
-
         localStorage.setItem('nomeCompleto', nome);
-
-        const expirationTime = new Date().getTime() + EXPIRATION_MINUTES * 60 * 1000; // 30 min
-        localStorage.setItem('expirationTime', expirationTime.toString());
     };
 
     const logout = () => {
         setnomeCompleto('');
         setIsLoggedIn(false);
         localStorage.removeItem('nomeCompleto');
-        localStorage.removeItem('expirationTime');
+        localStorage.removeItem('token');
+        // Redireciona o usuário para a página de login (opcional)
+        window.location.href = '/login';
     };
 
     return (
