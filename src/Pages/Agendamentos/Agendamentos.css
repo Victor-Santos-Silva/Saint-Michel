@@ -7,6 +7,10 @@
   --color-dark-green: #2da37c;
 }
 
+#textoAparece{
+color: #007bff;
+}
+
 /* Centralizar o calendário e manter largura uniforme */
 .calendar-container {
   display: flex;

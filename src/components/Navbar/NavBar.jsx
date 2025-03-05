@@ -9,13 +9,14 @@ import "./Navbar.css"; // Importando o CSS
 export default function Navbar() {
 
   const { isLoggedIn, nomeCompleto, logout } = useAuth(); // Acessando o estado do usuário
+  // Após o login bem-sucedido:
 
   return (
     <header className="header">
       <div className="top-bar">
         <div className="logo">
           <Link to="/">
-          <img src="../src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
+            <img src="../src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
           </Link>
         </div>
         <div className="contact-info">

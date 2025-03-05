@@ -16,6 +16,7 @@ function CadastroPage() {
         endereco: '',
         telefone: '',
         convenioMedico: '',
+        planoConvenio: '',
         tipoSanguineo: '',
         email: '',
         senha: '',
@@ -28,6 +29,7 @@ function CadastroPage() {
         setFormData((prevData) => ({
             ...prevData,
             [name]: name === 'cpf' || name === 'telefone' ? value.replace(/\D/g, '') : value,
+            ...(name === "convenioMedico" && { planoConvenio: "" }) // Reseta o plano ao trocar o convênio
         }));
     };
 
@@ -39,21 +41,12 @@ function CadastroPage() {
             return;
         }
 
-        // Adicionando a imagem com base no gênero
-        let generoImagem = '';
-        if (formData.genero === 'Masculino') {
-            generoImagem = '/img/pacienteM.png'; // Caminho relativo a partir da pasta public
-        } else if (formData.genero === 'Feminino') {
-            generoImagem = '/img/pacienteF.png'; // Caminho relativo a partir da pasta public
-        } else if (formData.genero === 'Outro') {
-            generoImagem = '/img/pacienteOutro.png'; // Caminho relativo a partir da pasta public
-        }
-
-        // Atualizando formData com a imagem
-        const dataToSubmit = { ...formData, imagemGenero: generoImagem };
+        const generoImagem = formData.genero === 'Masculino' ? '/img/pacienteM.png' :
+                             formData.genero === 'Feminino' ? '/img/pacienteF.png' :
+                             '/img/pacienteOutro.png';
 
         try {
-            const response = await axios.post('http://localhost:5000/paciente/cadastro', dataToSubmit, {
+            await axios.post('http://localhost:5000/paciente/cadastro', { ...formData, imagemGenero: generoImagem }, {
                 headers: { 'Content-Type': 'application/json' }
             });
 
@@ -67,6 +60,7 @@ function CadastroPage() {
                 endereco: '',
                 telefone: '',
                 convenioMedico: '',
+                planoConvenio: '',
                 tipoSanguineo: '',
                 email: '',
                 senha: '',
@@ -80,6 +74,17 @@ function CadastroPage() {
         }
     };
 
+    const convenios = {
+        "Amil": ["Amil 400", "Amil 500", "Amil 700", "Amil One", "Amil Fácil"],
+        "Bradesco Saúde": ["Nacional Flex", "Top Nacional", "Efetivo", "Preferencial Plus"],
+        "SulAmérica": ["Clássico", "Especial 100", "Executivo", "Prestige"],
+        "Unimed": ["Unimed Nacional", "Unimed Estadual", "Unimed Local", "Unimed Fácil"],
+        "Hapvida": ["Mix", "Pleno", "Master", "Nacional"],
+        "NotreDame Intermédica": ["Smart", "Advance", "Premium", "Infinity"],
+        "Porto Seguro Saúde": ["Bronze", "Prata", "Ouro", "Diamante"],
+        "Golden Cross": ["Essencial", "Clássico", "Especial"]
+    };
+
     return (
         <div className='container-page-cadastro'>
             <img src={imagemFundo} alt="Plano de Fundo" className="container-imagem-fundo" />
@@ -88,25 +93,22 @@ function CadastroPage() {
                 <h1 className='title-cadastro'>Cadastro</h1>
 
                 <form onSubmit={handleSubmit} className='formulario-cadastro'>
-                    <div className='text-field'>
-                        <label>Nome Completo</label>
-                        <input type="text" name="nomeCompleto" placeholder="Nome Completo" value={formData.nomeCompleto} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Data de Nascimento</label>
-                        <input type="date" name="dataDeNascimento" value={formData.dataDeNascimento} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>CPF</label>
-                        <input type="text" name="cpf" placeholder="CPF" maxLength="11" value={formData.cpf} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>RG</label>
-                        <input type="text" name="rg" placeholder="RG" value={formData.rg} onChange={handleChange} className='input-cadastro' />
-                    </div>
+                    {[
+                        { label: "Nome Completo", name: "nomeCompleto", type: "text", placeholder: "Nome Completo" },
+                        { label: "Data de Nascimento", name: "dataDeNascimento", type: "date" },
+                        { label: "CPF", name: "cpf", type: "text", placeholder: "CPF", maxLength: "11" },
+                        { label: "RG", name: "rg", type: "text", placeholder: "RG" },
+                        { label: "Endereço", name: "endereco", type: "text", placeholder: "Endereço" },
+                        { label: "Telefone", name: "telefone", type: "text", placeholder: "Telefone", maxLength: "11" },
+                        { label: "Email", name: "email", type: "email", placeholder: "Email" },
+                        { label: "Senha", name: "senha", type: "password", placeholder: "Senha" },
+                        { label: "Confirmar Senha", name: "confirmar_senha", type: "password", placeholder: "Confirmar Senha" }
+                    ].map(({ label, name, type, placeholder, maxLength }) => (
+                        <div key={name} className='text-field'>
+                            <label>{label}</label>
+                            <input type={type} name={name} placeholder={placeholder} value={formData[name]} onChange={handleChange} maxLength={maxLength} className='input-cadastro' />
+                        </div>
+                    ))}
 
                     <div className='text-field'>
                         <label>Gênero</label>
@@ -119,48 +121,34 @@ function CadastroPage() {
                     </div>
 
                     <div className='text-field'>
-                        <label>Endereço</label>
-                        <input type="text" name="endereco" placeholder="Endereço" value={formData.endereco} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Telefone</label>
-                        <input type="text" name="telefone" placeholder="Telefone" maxLength="11" value={formData.telefone} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
                         <label>Convênio Médico</label>
-                        <input type="text" name="convenioMedico" placeholder="Convênio Médico" value={formData.convenioMedico} onChange={handleChange} className='input-cadastro' />
+                        <select name="convenioMedico" value={formData.convenioMedico} onChange={handleChange} className='input-cadastro'>
+                            <option value="">Selecione um convênio</option>
+                            {Object.keys(convenios).map((convenio) => (
+                                <option key={convenio} value={convenio}>{convenio}</option>
+                            ))}
+                        </select>
                     </div>
+
+                    {formData.convenioMedico && (
+                        <div className='text-field'>
+                            <label>Plano do Convênio</label>
+                            <select name="planoConvenio" value={formData.planoConvenio} onChange={handleChange} className='input-cadastro'>
+                                <option value="">Selecione um plano</option>
+                                {convenios[formData.convenioMedico].map((plano) => (
+                                    <option key={plano} value={plano}>{plano}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
 
                     <div className='text-field'>
                         <label>Tipo Sanguíneo</label>
                         <select name="tipoSanguineo" value={formData.tipoSanguineo} onChange={handleChange} className='input-cadastro'>
-                            <option value="">Selecione</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
+                            {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
+                                <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
+                            ))}
                         </select>
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Email</label>
-                        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Senha</label>
-                        <input type="password" name="senha" placeholder="Senha" value={formData.senha} onChange={handleChange} className='input-cadastro' />
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Confirmar Senha</label>
-                        <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" value={formData.confirmar_senha} onChange={handleChange} className='input-cadastro' />
                     </div>
 
                     <button type="submit" className='btn-cadastro'>Cadastrar</button>

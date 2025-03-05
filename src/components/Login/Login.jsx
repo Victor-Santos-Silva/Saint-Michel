@@ -41,11 +41,12 @@ export default function LoginPage() {
             login(response.data.usuario); // Passa o nome do usuário para o contexto
 
             setFormData({ email: '', senha: '' }); // Limpa os campos após login
-
-            navigate('/'); // indo para a pagina home
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                navigate('/'); // indo para a pagina home
+            }
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
-
             setError({
                 email: true,
                 senha: true
