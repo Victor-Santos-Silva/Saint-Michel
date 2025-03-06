@@ -190,14 +190,17 @@ const Agendamentos = () => {
                 <label>Data</label>
                 <input type="date" value={data} onChange={e => setData(e.target.value)} />
               </div>
+            </div>
 
-              <div className="form-group">
-                <label>Hora</label>
-                <input type="time" value={hora} onChange={e => setHora(e.target.value)} />
-              </div>
+            <div className="form-group-hora">
+              <label>Hora</label>
+              <input type="time" value={hora} onChange={e => setHora(e.target.value)} />
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
+            <br />
           </div>
+          <br />
+
         </>
       )}
       <Footer />

@@ -31,7 +31,8 @@ const AgendamentosDependentes = () => {
     "Hapvida": ["Mix", "Pleno", "Master", "Nacional"],
     "NotreDame Intermédica": ["Smart", "Advance", "Premium", "Infinity"],
     "Porto Seguro Saúde": ["Bronze", "Prata", "Ouro", "Diamante"],
-    "Golden Cross": ["Essencial", "Clássico", "Especial"]
+    "Golden Cross": ["Essencial", "Clássico", "Especial"],
+    "Particular": ["Consulta Particular"],
   };
 
   // Busca os médicos quando a especialidade é alterada
@@ -138,7 +139,7 @@ const AgendamentosDependentes = () => {
         <h2 className="title">Agendamento de Consulta</h2>
         <div className="form-grid">
           <div className="form-group">
-            <label>Nome Completo</label>
+            <label>Nome Completo *</label>
             <input
               type="text"
               value={nome}
@@ -146,7 +147,7 @@ const AgendamentosDependentes = () => {
             />
           </div>
           <div className="form-group">
-            <label>Data de nascimento</label>
+            <label>Data de nascimento *</label>
             <input
               type="date"
               value={dataNascimento}
@@ -154,7 +155,7 @@ const AgendamentosDependentes = () => {
             />
           </div>
           <div className="form-group">
-            <label>CPF</label>
+            <label>CPF *</label>
             <input
               type="text"
               value={cpf}
@@ -162,7 +163,7 @@ const AgendamentosDependentes = () => {
             />
           </div>
           <div className="form-group">
-            <label>Endereço</label>
+            <label>Endereço *</label>
             <input
               type="text"
               value={endereco}
@@ -170,7 +171,7 @@ const AgendamentosDependentes = () => {
             />
           </div>
           <div className="form-group">
-            <label>Gênero</label>
+            <label>Gênero *</label>
             <select
               value={genero}
               onChange={(e) => setGenero(e.target.value)}
@@ -182,7 +183,7 @@ const AgendamentosDependentes = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Etnia</label>
+            <label>Etnia *</label>
             <select
               value={etnia}
               onChange={(e) => setEtnia(e.target.value)}
@@ -196,7 +197,10 @@ const AgendamentosDependentes = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Algum problema de saúde?</label>
+            <label>Algum problema de saúde? <br />
+              (opcional)
+              
+            </label>
             <input
               type="text"
               value={problemaSaude}
@@ -204,7 +208,7 @@ const AgendamentosDependentes = () => {
             />
           </div>
           <div className="form-group">
-            <label>Parentesco</label>
+            <label>Parentesco *</label>
             <select
               value={parentesco}
               onChange={(e) => setParentesco(e.target.value)}
@@ -218,19 +222,20 @@ const AgendamentosDependentes = () => {
               <option value="Outro">Outro</option>
             </select>
           </div>
-        </div>
-        <br />
+       
+    
+       {/*  parte dois */}
+       
         <div className="form-group">
-          <label>Data e horário</label>
+          <label>Data e horário *</label>
           <input
             type="datetime-local"
             value={dataHora}
             onChange={(e) => setDataHora(e.target.value)}
           />
         </div>
-        <br />
         <div className="form-group">
-          <label>Especialidade</label>
+          <label>Especialidade *</label>
           <select
             value={especialidade}
             onChange={(e) => setEspecialidade(e.target.value)}
@@ -252,7 +257,7 @@ const AgendamentosDependentes = () => {
         </div>
 
         <div className="form-group">
-          <label>Médico</label>
+          <label>Médico * </label>
           <select
             value={medicoSelecionado}
             onChange={(e) => setMedicoSelecionado(parseInt(e.target.value, 10))}
@@ -273,22 +278,22 @@ const AgendamentosDependentes = () => {
             )}
           </select>
         </div>
-        <div className='text-field'>
-          <label>Convênio Médico</label>
+        <div className='form-group'>
+          <label>Convênio Médico | Particular</label>
           <select
             value={convenioMedico}
             onChange={(e) => setConvenioMedico(e.target.value)}
             className='input-cadastro'
           >
-            <option value="">Selecione um convênio</option>
+            <option value="">Selecione uma opção</option>
             {Object.keys(convenios).map((convenio) => (
               <option key={convenio} value={convenio}>{convenio}</option>
             ))}
           </select>
         </div>
         {convenioMedico && (
-          <div className='text-field'>
-            <label>Plano do Convênio</label>
+          <div className='form-group'>
+            <label>Plano</label>
             <select
               value={planoConvenio}
               onChange={(e) => setPlanoConvenio(e.target.value)}
@@ -301,8 +306,8 @@ const AgendamentosDependentes = () => {
             </select>
           </div>
         )}
-        <div className='text-field'>
-          <label>Tipo Sanguíneo</label>
+        <div className='form-group'>
+          <label>Tipo Sanguíneo (opcional)</label>
           <select
             value={tipoSanguineo}
             onChange={(e) => setTipoSanguineo(e.target.value)}
@@ -313,8 +318,9 @@ const AgendamentosDependentes = () => {
             ))}
           </select>
         </div>
-        <button className="submit-btn" onClick={handleAgendar}>Confirmar Agendamento</button>
-        <br />
+        <button className="submit-btn" onClick={handleAgendar}>Confirmar Agendamento</button> <br />
+        
+        </div>
       </div>
       <br />
       <Footer />
