@@ -153,6 +153,7 @@
   /* estilização do formularaio */
   .container-form {
     max-width: 600px;
+    height: 900px;
     margin-bottom: 0 auto;
     padding: 20px;
     background: white;
@@ -183,14 +184,14 @@
     grid-column: span 1;
   }
   
-  input, select {
+  input, select{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 20px;
   
   }
   
-  .submit-btn {
+  .submit-btn-dependente{
     width: 100%;
     margin-top: 10px;
     padding: 10px;
@@ -206,4 +207,56 @@
   
   }
   
-  
+.input-cadastro{
+  padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+} 
+
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-group select:disabled {
+  background-color: #e9ecef;
+}
+
+.form-group input[type="date"],
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+}
+Footer{
+  margin-top: 30px;
+}
+.campo-obrigatorio {
+ 
+  border-radius: 4px;
+  animation: pulse 1.5s ;
+  position: relative;
+}
+
+.campo-obrigatorio label {
+  color: #ff4444 !important;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+.error-message {
+  color: #ff4444;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+  font-weight: bold;
+  background-color: #fff5f5;
+  border: 1px solid #ffd6d6;
+  border-radius: 4px;
+}

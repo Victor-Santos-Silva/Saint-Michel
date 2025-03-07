@@ -12,16 +12,18 @@ const AgendamentosDependentes = () => {
   const [etnia, setEtnia] = useState('');
   const [problemaSaude, setProblemaSaude] = useState('');
   const [parentesco, setParentesco] = useState('');
-  const [dataHora, setDataHora] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [especialidade, setEspecialidade] = useState('');
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
   const [convenioMedico, setConvenioMedico] = useState('');
   const [planoConvenio, setPlanoConvenio] = useState('');
   const [tipoSanguineo, setTipoSanguineo] = useState('');
   const [medicos, setMedicos] = useState([]);
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const [camposFaltantes, setCamposFaltantes] = useState([]);
 
   const convenios = {
     "Amil": ["Amil 400", "Amil 500", "Amil 700", "Amil One", "Amil Fácil"],
@@ -35,24 +37,51 @@ const AgendamentosDependentes = () => {
     "Particular": ["Consulta Particular"],
   };
 
-  // Busca os médicos quando a especialidade é alterada
+  const generateTimeSlots = (date) => {
+    const slots = [];
+    const startHour = 8;
+    const endHour = 18;
+    const interval = 30;
+    const now = new Date();
+
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += interval) {
+        const time = new Date(date);
+        time.setHours(hour, minute);
+        if (time > now) {
+          const timeString = time.toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          slots.push(timeString);
+        }
+      }
+    }
+    return slots;
+  };
+
+  useEffect(() => {
+    if (selectedDate) {
+      const date = new Date(selectedDate);
+      date.setHours(0, 0, 0, 0);
+      const slots = generateTimeSlots(date);
+      setAvailableTimes(slots);
+    }
+  }, [selectedDate]);
+
   useEffect(() => {
     if (especialidade) {
       setLoading(true);
       fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Erro ao buscar médicos');
-          }
+          if (!response.ok) throw new Error('Erro ao buscar médicos');
           return response.json();
         })
         .then(data => {
-          console.log('Médicos encontrados:', data); // Adicionando log para depuração
           setMedicos(data);
           setLoading(false);
         })
         .catch(error => {
-          console.error('Erro ao buscar médicos:', error);
           setError(error.message);
           setLoading(false);
         });
@@ -61,84 +90,104 @@ const AgendamentosDependentes = () => {
     }
   }, [especialidade]);
 
-
   const handleAgendar = async (e) => {
     e.preventDefault();
-
-    if (
-      !nome ||
-      !dataNascimento ||
-      !cpf ||
-      !endereco ||
-      !genero ||
-      !etnia ||
-      !problemaSaude ||
-      !parentesco ||
-      !dataHora ||
-      !especialidade ||
-      !medicoSelecionado ||
-      !convenioMedico ||
-      !planoConvenio ||
-      !tipoSanguineo
-    ) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-      return;
-    }
-    const token = localStorage.getItem('token');
-
-    const agendamentoData = {
-      usuario_id: 1, // Substitua pelo ID do usuário logado
-      medico_id: medicoSelecionado,
-      especialidade,
-      nome,
-      data: dataHora.split('T')[0],
-      hora: dataHora.split('T')[1],
-      cpf,
-      endereco,
-      genero,
-      etnia,
-      problema_saude: problemaSaude,
-      parentesco,
-      convenioMedico,
-      planoConvenio,
-      tipoSanguineo,
-    };
+    setLoading(true);
+    setError('');
+    setCamposFaltantes([]);
 
     try {
-      const response = await fetch('http://localhost:5000/agendamentoDocente/agendarDocente', {
+      const camposObrigatorios = {
+        nome,
+        dataNascimento,
+        cpf,
+        endereco,
+        genero,
+        etnia,
+        parentesco,
+        selectedDate,
+        selectedTime,
+        especialidade,
+        medicoSelecionado,
+        convenioMedico,
+        planoConvenio: convenioMedico !== 'Particular' ? planoConvenio : true
+      };
+
+      const faltantes = Object.keys(camposObrigatorios)
+        .filter(key => !camposObrigatorios[key]);
+
+      if (faltantes.length > 0) {
+        setCamposFaltantes(faltantes);
+        throw new Error('Campos obrigatórios não preenchidos!');
+      }
+
+      const [hours, minutes] = selectedTime.split(':');
+      const selectedDateTime = new Date(selectedDate);
+      selectedDateTime.setHours(hours, minutes);
+
+      if (selectedDateTime < new Date()) {
+        throw new Error('Não é possível agendar para datas/horários passados!');
+      }
+
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/agendamentoDependente/agendar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(agendamentoData),
+        body: JSON.stringify({
+          usuario_id: localStorage.getItem('userId'),
+          medico_id: medicoSelecionado,
+          especialidade,
+          nome,
+          data: selectedDateTime.toISOString().split('T')[0],
+          hora: selectedDateTime.toISOString().split('T')[1].slice(0, 5),
+          cpf,
+          endereco,
+          genero,
+          etnia,
+          problema_saude: problemaSaude,
+          parentesco,
+          convenioMedico,
+          planoConvenio,
+          tipoSanguineo,
+        })
       });
 
-      if (!response.ok) {
-        throw new Error('Erro ao agendar consulta.');
-      }
-
       const data = await response.json();
+      
+      if (!response.ok) throw new Error(data.message || 'Erro no agendamento');
+
       alert('Agendamento realizado com sucesso!');
-      console.log(data);
+      window.location.reload();
+
     } catch (error) {
-      console.error('Erro ao agendar consulta:', error);
-      alert('Erro ao agendar consulta. Por favor, tente novamente.');
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const isCampoFaltante = (campo) => camposFaltantes.includes(campo);
 
   return (
     <>
       <Navbar />
-      <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" data-aos="fade-down" />
-      <div className="calendar-container" data-aos="fade-up">
-        <h1 className="tittle-contato" data-aos="fade-right">Faça já seu agendamento</h1>
-        <h1 className="team-title" data-aos="fade-left">Agende agora</h1>
+      <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
+      <div className="calendar-container">
+        <h1 className="tittle-contato">Faça já seu agendamento</h1>
+        <h1 className="team-title">Agende agora</h1>
       </div>
+      
       <div className="container-form">
-        <h2 className="title">Agendamento de Consulta</h2>
+        <h2 className="title">Agendamento para Dependentes</h2>
+
+        {error && <div className="error-message">{error}</div>}
+
         <div className="form-grid">
-          <div className="form-group">
+          {/* Campos do formulário com validação */}
+          <div className={`form-group ${isCampoFaltante('nome') ? 'campo-obrigatorio' : ''}`}>
             <label>Nome Completo *</label>
             <input
               type="text"
@@ -146,15 +195,17 @@ const AgendamentosDependentes = () => {
               onChange={(e) => setNome(e.target.value)}
             />
           </div>
-          <div className="form-group">
-            <label>Data de nascimento *</label>
+
+          <div className={`form-group ${isCampoFaltante('dataNascimento') ? 'campo-obrigatorio' : ''}`}>
+            <label>Data de Nascimento *</label>
             <input
               type="date"
               value={dataNascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
             />
           </div>
-          <div className="form-group">
+
+          <div className={`form-group ${isCampoFaltante('cpf') ? 'campo-obrigatorio' : ''}`}>
             <label>CPF *</label>
             <input
               type="text"
@@ -162,7 +213,8 @@ const AgendamentosDependentes = () => {
               onChange={(e) => setCpf(e.target.value)}
             />
           </div>
-          <div className="form-group">
+
+          <div className={`form-group ${isCampoFaltante('endereco') ? 'campo-obrigatorio' : ''}`}>
             <label>Endereço *</label>
             <input
               type="text"
@@ -170,24 +222,20 @@ const AgendamentosDependentes = () => {
               onChange={(e) => setEndereco(e.target.value)}
             />
           </div>
-          <div className="form-group">
+
+          <div className={`form-group ${isCampoFaltante('genero') ? 'campo-obrigatorio' : ''}`}>
             <label>Gênero *</label>
-            <select
-              value={genero}
-              onChange={(e) => setGenero(e.target.value)}
-            >
+            <select value={genero} onChange={(e) => setGenero(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Masculino">Masculino</option>
               <option value="Feminino">Feminino</option>
               <option value="Outro">Outro</option>
             </select>
           </div>
-          <div className="form-group">
+
+          <div className={`form-group ${isCampoFaltante('etnia') ? 'campo-obrigatorio' : ''}`}>
             <label>Etnia *</label>
-            <select
-              value={etnia}
-              onChange={(e) => setEtnia(e.target.value)}
-            >
+            <select value={etnia} onChange={(e) => setEtnia(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Preto">Preto</option>
               <option value="Branco">Branco</option>
@@ -196,133 +244,131 @@ const AgendamentosDependentes = () => {
               <option value="Indígena">Indígena</option>
             </select>
           </div>
+
           <div className="form-group">
-            <label>Algum problema de saúde? <br />
-              (opcional)
-              
-            </label>
+            <label>Problema de Saúde</label>
             <input
               type="text"
               value={problemaSaude}
               onChange={(e) => setProblemaSaude(e.target.value)}
+              placeholder="Opcional..."
             />
           </div>
-          <div className="form-group">
+
+          <div className={`form-group ${isCampoFaltante('parentesco') ? 'campo-obrigatorio' : ''}`}>
             <label>Parentesco *</label>
-            <select
-              value={parentesco}
-              onChange={(e) => setParentesco(e.target.value)}
-            >
+            <select value={parentesco} onChange={(e) => setParentesco(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Pai/Mãe">Pai/Mãe</option>
-              <option value="Filho/Filha">Filho/Filha</option>
+              <option value="Filho(a)">Filho(a)</option>
               <option value="Cônjuge">Cônjuge</option>
-              <option value="Irmão/Irmã">Irmão/Irmã</option>
-              <option value="Avô/Avó">Avô/Avó</option>
+              <option value="Irmão(ã)">Irmão(ã)</option>
+              <option value="Avô(ó)">Avô(ó)</option>
               <option value="Outro">Outro</option>
             </select>
           </div>
-       
-    
-       {/*  parte dois */}
-       
-        <div className="form-group">
-          <label>Data e horário *</label>
-          <input
-            type="datetime-local"
-            value={dataHora}
-            onChange={(e) => setDataHora(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Especialidade *</label>
-          <select
-            value={especialidade}
-            onChange={(e) => setEspecialidade(e.target.value)}
-          >
-            <option value="">Selecione</option>
-            <option value="Ortopedista">Ortopedista</option>
-            <option value="Proctologista">Proctologista</option>
-            <option value="Oncologista">Oncologista</option>
-            <option value="Otorrinolaringologista">Otorrinolaringologista</option>
-            <option value="Oftalmologista">Oftalmologista</option>
-            <option value="Cardiologista">Cardiologista</option>
-            <option value="Pneumologista">Pneumologista</option>
-            <option value="Nefrologista">Nefrologista</option>
-            <option value="Gastroenterologista">Gastroenterologista</option>
-            <option value="Urologista">Urologista</option>
-            <option value="Dermatologista">Dermatologista</option>
-            <option value="Ginecologista">Ginecologista</option>
-          </select>
-        </div>
 
-        <div className="form-group">
-          <label>Médico * </label>
-          <select
-            value={medicoSelecionado}
-            onChange={(e) => setMedicoSelecionado(parseInt(e.target.value, 10))}
-          >
-            {loading ? (
-              <option>Carregando...</option>
-            ) : error ? (
-              <option style={{ color: 'red' }}>{error}</option>
-            ) : (
-              <>
-                <option value="">Selecione um médico</option>
-                {medicos.map((medico) => (
-                  <option key={medico.id} value={medico.id}>
-                    {medico.nome_completo}
-                  </option>
-                ))}
-              </>
-            )}
-          </select>
-        </div>
-        <div className='form-group'>
-          <label>Convênio Médico | Particular</label>
-          <select
-            value={convenioMedico}
-            onChange={(e) => setConvenioMedico(e.target.value)}
-            className='input-cadastro'
-          >
-            <option value="">Selecione uma opção</option>
-            {Object.keys(convenios).map((convenio) => (
-              <option key={convenio} value={convenio}>{convenio}</option>
-            ))}
-          </select>
-        </div>
-        {convenioMedico && (
-          <div className='form-group'>
-            <label>Plano</label>
+          <div className={`form-group ${isCampoFaltante('selectedDate') ? 'campo-obrigatorio' : ''}`}>
+            <label>Data *</label>
+            <input
+              type="date"
+              value={selectedDate}
+              min={new Date().toISOString().split('T')[0]}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
+          </div>
+
+          <div className={`form-group ${isCampoFaltante('selectedTime') ? 'campo-obrigatorio' : ''}`}>
+            <label>Horário *</label>
             <select
-              value={planoConvenio}
-              onChange={(e) => setPlanoConvenio(e.target.value)}
-              className='input-cadastro'
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+              disabled={!selectedDate}
             >
-              <option value="">Selecione um plano</option>
-              {convenios[convenioMedico].map((plano) => (
-                <option key={plano} value={plano}>{plano}</option>
+              <option value="">Selecione um horário</option>
+              {availableTimes.map((time, index) => (
+                <option key={index} value={time}>{time}</option>
               ))}
             </select>
           </div>
-        )}
-        <div className='form-group'>
-          <label>Tipo Sanguíneo (opcional)</label>
-          <select
-            value={tipoSanguineo}
-            onChange={(e) => setTipoSanguineo(e.target.value)}
-            className='input-cadastro'
+
+          <div className={`form-group ${isCampoFaltante('especialidade') ? 'campo-obrigatorio' : ''}`}>
+            <label>Especialidade *</label>
+            <select value={especialidade} onChange={(e) => setEspecialidade(e.target.value)}>
+              <option value="">Selecione</option>
+              <option value="Ortopedista">Ortopedista</option>
+              <option value="Cardiologista">Cardiologista</option>
+              <option value="Dermatologista">Dermatologista</option>
+              <option value="Ginecologista">Ginecologista</option>
+              <option value="Pediatra">Pediatra</option>
+            </select>
+          </div>
+
+          <div className={`form-group ${isCampoFaltante('medicoSelecionado') ? 'campo-obrigatorio' : ''}`}>
+            <label>Médico *</label>
+            <select
+              value={medicoSelecionado}
+              onChange={(e) => setMedicoSelecionado(e.target.value)}
+              disabled={loading || !especialidade}
+            >
+              <option value="">Selecione um médico</option>
+              {medicos.map((medico) => (
+                <option key={medico.id} value={medico.id}>
+                  {medico.nome_completo}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={`form-group ${isCampoFaltante('convenioMedico') ? 'campo-obrigatorio' : ''}`}>
+            <label>Convênio Médico *</label>
+            <select
+              value={convenioMedico}
+              onChange={(e) => setConvenioMedico(e.target.value)}
+            >
+              <option value="">Selecione</option>
+              {Object.keys(convenios).map((convenio) => (
+                <option key={convenio} value={convenio}>{convenio}</option>
+              ))}
+            </select>
+          </div>
+
+          {convenioMedico && convenioMedico !== 'Particular' && (
+            <div className={`form-group ${isCampoFaltante('planoConvenio') ? 'campo-obrigatorio' : ''}`}>
+              <label>Plano *</label>
+              <select
+                value={planoConvenio}
+                onChange={(e) => setPlanoConvenio(e.target.value)}
+              >
+                <option value="">Selecione um plano</option>
+                {convenios[convenioMedico].map((plano) => (
+                  <option key={plano} value={plano}>{plano}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <div className="form-group">
+            <label>Tipo Sanguíneo</label>
+            <select
+              value={tipoSanguineo}
+              onChange={(e) => setTipoSanguineo(e.target.value)}
+            >
+              {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
+                <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
+              ))}
+            </select>
+          </div>
+
+          <button 
+            className="submit-bt-dependente" 
+            onClick={handleAgendar}
+            disabled={loading}
           >
-            {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
-              <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
-            ))}
-          </select>
-        </div>
-        <button className="submit-btn" onClick={handleAgendar}>Confirmar Agendamento</button> <br />
-        
+            {loading ? 'Agendando...' : 'Confirmar Agendamento'}
+          </button>
         </div>
       </div>
-      <br />
       <Footer />
     </>
   );

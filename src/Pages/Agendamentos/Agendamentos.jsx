@@ -137,7 +137,7 @@ const Agendamentos = () => {
             <h1 className="team-title" data-aos="fade-left">Agende agora</h1>
           </div>
 
-          <div className="container-form" data-aos="fade-left">
+          <div className="container-form-cliente" data-aos="fade-left">
             <h2 className="title">Agendamento de Consulta</h2>
             <p><strong>Agendamento para:</strong> {agendamentoPara}</p>
 

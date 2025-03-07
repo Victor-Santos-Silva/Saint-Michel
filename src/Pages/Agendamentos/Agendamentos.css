@@ -155,8 +155,9 @@ color: #007bff;
 }
 
 /* estilização do formularaio */
-.container-form {
+.container-form-cliente {
   margin: auto; /* Centraliza horizontalmente */
+  width: 30%;
   padding: 20px;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
