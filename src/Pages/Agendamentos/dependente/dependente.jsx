@@ -156,7 +156,7 @@ const AgendamentosDependentes = () => {
       });
 
       const data = await response.json();
-      
+
       if (!response.ok) throw new Error(data.message || 'Erro no agendamento');
 
       alert('Agendamento realizado com sucesso!');
@@ -179,16 +179,16 @@ const AgendamentosDependentes = () => {
         <h1 className="tittle-contato">Faça já seu agendamento</h1>
         <h1 className="team-title">Agende agora</h1>
       </div>
-      
-      <div className="container-form">
+
+      <div className="container-form-dependente">
         <h2 className="title">Agendamento para Dependentes</h2>
 
         {error && <div className="error-message">{error}</div>}
 
-        <div className="form-grid">
+        <div className="form-grid-dependente">
           {/* Campos do formulário com validação */}
           <div className={`form-group ${isCampoFaltante('nome') ? 'campo-obrigatorio' : ''}`}>
-            <label>Nome Completo *</label>
+            <label>Nome Completo</label>
             <input
               type="text"
               value={nome}
@@ -197,7 +197,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('dataNascimento') ? 'campo-obrigatorio' : ''}`}>
-            <label>Data de Nascimento *</label>
+            <label>Data de Nascimento</label>
             <input
               type="date"
               value={dataNascimento}
@@ -206,7 +206,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('cpf') ? 'campo-obrigatorio' : ''}`}>
-            <label>CPF *</label>
+            <label>CPF</label>
             <input
               type="text"
               value={cpf}
@@ -215,7 +215,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('endereco') ? 'campo-obrigatorio' : ''}`}>
-            <label>Endereço *</label>
+            <label>Endereço</label>
             <input
               type="text"
               value={endereco}
@@ -224,7 +224,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('genero') ? 'campo-obrigatorio' : ''}`}>
-            <label>Gênero *</label>
+            <label>Gênero</label>
             <select value={genero} onChange={(e) => setGenero(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Masculino">Masculino</option>
@@ -234,7 +234,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('etnia') ? 'campo-obrigatorio' : ''}`}>
-            <label>Etnia *</label>
+            <label>Etnia</label>
             <select value={etnia} onChange={(e) => setEtnia(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Preto">Preto</option>
@@ -246,17 +246,17 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className="form-group">
-            <label>Problema de Saúde</label>
+            <label className='opcional'>Problema de Saúde</label>
             <input
               type="text"
               value={problemaSaude}
               onChange={(e) => setProblemaSaude(e.target.value)}
-              placeholder="Opcional..."
+
             />
           </div>
 
           <div className={`form-group ${isCampoFaltante('parentesco') ? 'campo-obrigatorio' : ''}`}>
-            <label>Parentesco *</label>
+            <label>Parentesco</label>
             <select value={parentesco} onChange={(e) => setParentesco(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Pai/Mãe">Pai/Mãe</option>
@@ -269,7 +269,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('selectedDate') ? 'campo-obrigatorio' : ''}`}>
-            <label>Data *</label>
+            <label>Data</label>
             <input
               type="date"
               value={selectedDate}
@@ -279,7 +279,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('selectedTime') ? 'campo-obrigatorio' : ''}`}>
-            <label>Horário *</label>
+            <label>Horário</label>
             <select
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
@@ -293,7 +293,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('especialidade') ? 'campo-obrigatorio' : ''}`}>
-            <label>Especialidade *</label>
+            <label>Especialidade</label>
             <select value={especialidade} onChange={(e) => setEspecialidade(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Ortopedista">Ortopedista</option>
@@ -305,7 +305,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('medicoSelecionado') ? 'campo-obrigatorio' : ''}`}>
-            <label>Médico *</label>
+            <label>Médico</label>
             <select
               value={medicoSelecionado}
               onChange={(e) => setMedicoSelecionado(e.target.value)}
@@ -321,7 +321,7 @@ const AgendamentosDependentes = () => {
           </div>
 
           <div className={`form-group ${isCampoFaltante('convenioMedico') ? 'campo-obrigatorio' : ''}`}>
-            <label>Convênio Médico *</label>
+            <label>Convênio Médico</label>
             <select
               value={convenioMedico}
               onChange={(e) => setConvenioMedico(e.target.value)}
@@ -335,7 +335,7 @@ const AgendamentosDependentes = () => {
 
           {convenioMedico && convenioMedico !== 'Particular' && (
             <div className={`form-group ${isCampoFaltante('planoConvenio') ? 'campo-obrigatorio' : ''}`}>
-              <label>Plano *</label>
+              <label>Plano</label>
               <select
                 value={planoConvenio}
                 onChange={(e) => setPlanoConvenio(e.target.value)}
@@ -349,10 +349,11 @@ const AgendamentosDependentes = () => {
           )}
 
           <div className="form-group">
-            <label>Tipo Sanguíneo</label>
+            <label className='opcional'>Tipo Sanguíneo</label>
             <select
               value={tipoSanguineo}
               onChange={(e) => setTipoSanguineo(e.target.value)}
+
             >
               {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
                 <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
@@ -360,8 +361,8 @@ const AgendamentosDependentes = () => {
             </select>
           </div>
 
-          <button 
-            className="submit-bt-dependente" 
+          <button
+            className="submit-btn-dependente"
             onClick={handleAgendar}
             disabled={loading}
           >

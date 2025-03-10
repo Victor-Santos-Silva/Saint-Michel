@@ -12,15 +12,13 @@ const Agendamentos = () => {
   const [especialidade, setEspecialidade] = useState('');
   const [medicos, setMedicos] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
-
-
   const [error, setError] = useState('');
+  const [missingFields, setMissingFields] = useState([]);
 
-  const navigate = useNavigate(); // Hook para navegar entre páginas
+  const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({ duration: 1000, once: true });
@@ -31,18 +29,14 @@ const Agendamentos = () => {
       setLoading(true);
       fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Erro ao buscar médicos');
-          }
+          if (!response.ok) throw new Error('Erro ao buscar médicos');
           return response.json();
         })
         .then(data => {
-          console.log('Médicos encontrados:', data); // Adicionando log para depuração
           setMedicos(data);
           setLoading(false);
         })
         .catch(error => {
-          console.error('Erro ao buscar médicos:', error);
           setError(error.message);
           setLoading(false);
         });
@@ -53,26 +47,32 @@ const Agendamentos = () => {
 
   const handleSelecionar = (opcao) => {
     if (opcao === 'Outra pessoa') {
-      navigate('/agendamentos/dependente'); // Redireciona para a outra página
+      navigate('/agendamentos/dependente');
     } else {
       setAgendamentoPara(opcao);
       setShowModal(false);
     }
   };
 
-  const handleAgendar = () => {
+  const validateFields = () => {
+    const requiredFields = [];
+    if (!especialidade) requiredFields.push('especialidade');
+    if (!medicoSelecionado) requiredFields.push('medico');
+    if (!data) requiredFields.push('data');
+    if (!hora) requiredFields.push('hora');
 
-    if (!medicoSelecionado || !data || !hora) {
-      alert('Por favor, preencha todos os campos!');
+    setMissingFields(requiredFields);
+    return requiredFields.length === 0;
+  };
+
+  const handleAgendar = () => {
+    setError('');
+    if (!validateFields()) {
+      setError('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
 
-    console.log("Médico selecionado:", medicoSelecionado);
-
-    const token = localStorage.getItem('token'); // Obtemos o token do localStorage
-    console.log('Token enviado: ', token);
-
-
+    const token = localStorage.getItem('token');
     const agendamentoData = {
       especialidade,
       medico_id: medicoSelecionado,
@@ -80,42 +80,37 @@ const Agendamentos = () => {
       hora
     };
 
-    try {
-      // Envia os dados para o backend
-      fetch('http://localhost:5000/agendamento/agendar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(agendamentoData),
-      })
-        .then(response => response.json())
-        .then(data => {
-          alert('Agendamento realizado com sucesso!');
-          console.log(data);
-          // Se quiser resetar o formulário após o agendamento
-          setEspecialidade('');
-          setMedicoSelecionado('');
-          setData('');
-          setHora('');
-        })
-        .catch(error => {
-          alert('Erro ao agendar a consulta');
-          console.error('Erro:', error);
-        });
-    } catch (error) {
-      alert('Erro ao agendar a consulta por algum santo motivo', error);
-    }
-
-
+    fetch('http://localhost:5000/agendamento/agendar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(agendamentoData),
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Erro ao agendar consulta');
+      return response.json();
+    })
+    .then(data => {
+      alert('Agendamento realizado com sucesso!');
+      // Resetar formulário
+      setEspecialidade('');
+      setMedicoSelecionado('');
+      setData('');
+      setHora('');
+    })
+    .catch(error => {
+      setError(error.message || 'Erro ao processar agendamento');
+    });
   };
+
+  const isFieldMissing = (fieldName) => missingFields.includes(fieldName);
 
   return (
     <>
       <Navbar />
 
-      {/* Modal de seleção */}
       {showModal && (
         <div className="container-modal">
           <div className="modal">
@@ -141,10 +136,19 @@ const Agendamentos = () => {
             <h2 className="title">Agendamento de Consulta</h2>
             <p><strong>Agendamento para:</strong> {agendamentoPara}</p>
 
+            {error && <div className="error-message">{error}</div>}
+
             <div className="form-grid">
               <div className="form-group">
                 <label>Especialidade</label>
-                <select value={especialidade} onChange={e => setEspecialidade(e.target.value)}>
+                <select 
+                  value={especialidade} 
+                  onChange={e => {
+                    setEspecialidade(e.target.value);
+                    setMissingFields(prev => prev.filter(f => f !== 'especialidade'));
+                  }}
+                  className={isFieldMissing('especialidade') ? 'campo-obrigatorio' : ''}
+                >
                   <option value="">Selecione</option>
                   <option value="Ortopedista">Ortopedista</option>
                   <option value="Proctologista">Proctologista</option>
@@ -166,8 +170,9 @@ const Agendamentos = () => {
                   onChange={e => {
                     const selectedMedicoId = parseInt(e.target.value, 10);
                     setMedicoSelecionado(selectedMedicoId);
-                    console.log("Médico selecionado:", selectedMedicoId); // Verifique o valor selecionado
+                    setMissingFields(prev => prev.filter(f => f !== 'medico'));
                   }}
+                  className={isFieldMissing('medico') ? 'campo-obrigatorio' : ''}
                 >
                   {loading ? (
                     <option>Carregando...</option>
@@ -175,7 +180,7 @@ const Agendamentos = () => {
                     <option style={{ color: 'red' }}>{error}</option>
                   ) : (
                     <>
-                      <option value="">Selecione um médico</option> {/* Valor inicial vazio */}
+                      <option value="">Selecione um médico</option>
                       {medicos.map(medico => (
                         <option key={medico.id} value={medico.id}>
                           {medico.nome_completo}
@@ -188,19 +193,34 @@ const Agendamentos = () => {
 
               <div className="form-group">
                 <label>Data</label>
-                <input type="date" value={data} onChange={e => setData(e.target.value)} />
+                <input 
+                  type="date" 
+                  value={data} 
+                  onChange={e => {
+                    setData(e.target.value);
+                    setMissingFields(prev => prev.filter(f => f !== 'data'));
+                  }}
+                  className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
+                />
               </div>
             </div>
 
             <div className="form-group-hora">
               <label>Hora</label>
-              <input type="time" value={hora} onChange={e => setHora(e.target.value)} />
+              <input 
+                type="time" 
+                value={hora} 
+                onChange={e => {
+                  setHora(e.target.value);
+                  setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                }}
+                className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+              />
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />
           </div>
           <br />
-
         </>
       )}
       <Footer />

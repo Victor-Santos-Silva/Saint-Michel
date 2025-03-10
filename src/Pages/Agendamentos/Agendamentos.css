@@ -286,7 +286,13 @@ footer {
   flex-direction: column;
   justify-content: end;
   margin-top: -60px;
-  margin-left: 215px;
-  width: 200px;
+  margin-left: 275px;
+  width: 260px;
 
+}
+
+.campo-obrigatorio {
+  border: 2px solid #ff4444 !important;
+ 
+  border-radius: 4px;
 }
