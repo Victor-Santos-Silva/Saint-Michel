@@ -104,7 +104,8 @@
 }
 
 .profile-button-doutores:hover {
-  background-color: #0026ff8c;
+  background: linear-gradient(to right, #4d89ff, #008cff);
+
 }
 
 .card-info-doutores:hover {
