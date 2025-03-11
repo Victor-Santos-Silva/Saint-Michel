@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
 import fotoPerfil from '../../img/foto de perfil.png'
 import "./Navbar.css"; // Importando o CSS
+import Perfil from "../../Pages/Perfil/Perfil";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function Navbar() {
 
   const { isLoggedIn, nomeCompleto, logout } = useAuth(); // Acessando o estado do usuário
+  const navigate = useNavigate();
   // Após o login bem-sucedido:
 
   return (
@@ -56,10 +60,16 @@ export default function Navbar() {
 
         <div className="container-login-cadastro">
           {isLoggedIn ? (
-            <div className="perfil-usuario">
-
-              <p className="nome-usuario">Olá, {nomeCompleto}</p>
-              <img src={fotoPerfil} alt="foto-perfil" className="foto-de-Perfil" />
+           <div className="perfil-usuario">
+           <p className="nome-usuario">Olá, {nomeCompleto}</p>
+           
+           <img
+             src={fotoPerfil}
+             alt="foto-perfil"
+             className="foto-de-Perfil"
+             style={{ cursor: "pointer" }}
+             onClick={() => navigate("/perfil")} 
+           />
               <Link onClick={logout} className="btn-sair-perfil">Sair</Link>
 
             </div>
