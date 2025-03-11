@@ -17,12 +17,47 @@ const Agendamentos = () => {
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
   const [error, setError] = useState('');
   const [missingFields, setMissingFields] = useState([]);
+  const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({ duration: 1000, once: true });
   }, []);
+
+  const getDataAtual = () => {
+    const agora = new Date();
+    return `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
+  };
+
+  const getHoraAtual = () => {
+    const agora = new Date();
+    return `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
+  };
+
+  const gerarHorarios = () => {
+    const horarios = [];
+    const dataAtual = getDataAtual();
+    const horaAtual = getHoraAtual();
+
+    for (let h = 8; h <= 18; h++) {
+      for (let m = 0; m < 60; m += 30) {
+        const horaStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        const isPassado = data === dataAtual && horaStr < horaAtual;
+
+        horarios.push({
+          value: horaStr,
+          label: horaStr,
+          disabled: isPassado
+        });
+      }
+    }
+    return horarios;
+  };
+
+  useEffect(() => {
+    setHorariosDisponiveis(gerarHorarios());
+  }, [data]);
 
   useEffect(() => {
     if (especialidade) {
@@ -72,6 +107,28 @@ const Agendamentos = () => {
       return;
     }
 
+    const dataAtual = getDataAtual();
+    const horaAtual = getHoraAtual();
+
+    // Validação de data passada
+    if (data < dataAtual) {
+      setError('Não é possível agendar para datas passadas.');
+      return;
+    }
+
+    // Validação de hora passada na data atual
+    if (data === dataAtual && hora < horaAtual) {
+      setError('Não é possível agendar para horários passados.');
+      return;
+    }
+
+    // Validação do intervalo de horário
+    const [horaSelecionada] = hora.split(':').map(Number);
+    if (horaSelecionada < 8 || horaSelecionada > 18) {
+      setError('O horário deve estar entre 08:00 e 18:00.');
+      return;
+    }
+
     const token = localStorage.getItem('token');
     const agendamentoData = {
       especialidade,
@@ -88,21 +145,20 @@ const Agendamentos = () => {
       },
       body: JSON.stringify(agendamentoData),
     })
-    .then(response => {
-      if (!response.ok) throw new Error('Erro ao agendar consulta');
-      return response.json();
-    })
-    .then(data => {
-      alert('Agendamento realizado com sucesso!');
-      // Resetar formulário
-      setEspecialidade('');
-      setMedicoSelecionado('');
-      setData('');
-      setHora('');
-    })
-    .catch(error => {
-      setError(error.message || 'Erro ao processar agendamento');
-    });
+      .then(response => {
+        if (!response.ok) throw new Error('Erro ao agendar consulta');
+        return response.json();
+      })
+      .then(data => {
+        alert('Agendamento realizado com sucesso!');
+        setEspecialidade('');
+        setMedicoSelecionado('');
+        setData('');
+        setHora('');
+      })
+      .catch(error => {
+        setError(error.message || 'Erro ao processar agendamento');
+      });
   };
 
   const isFieldMissing = (fieldName) => missingFields.includes(fieldName);
@@ -141,8 +197,8 @@ const Agendamentos = () => {
             <div className="form-grid">
               <div className="form-group">
                 <label>Especialidade</label>
-                <select 
-                  value={especialidade} 
+                <select
+                  value={especialidade}
                   onChange={e => {
                     setEspecialidade(e.target.value);
                     setMissingFields(prev => prev.filter(f => f !== 'especialidade'));
@@ -193,9 +249,10 @@ const Agendamentos = () => {
 
               <div className="form-group">
                 <label>Data</label>
-                <input 
-                  type="date" 
-                  value={data} 
+                <input
+                  type="date"
+                  min={getDataAtual()}
+                  value={data}
                   onChange={e => {
                     setData(e.target.value);
                     setMissingFields(prev => prev.filter(f => f !== 'data'));
@@ -207,15 +264,25 @@ const Agendamentos = () => {
 
             <div className="form-group-hora">
               <label>Hora</label>
-              <input 
-                type="time" 
-                value={hora} 
+              <select
+                value={hora}
                 onChange={e => {
                   setHora(e.target.value);
                   setMissingFields(prev => prev.filter(f => f !== 'hora'));
                 }}
                 className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
-              />
+              >
+                <option value="">Selecione um horário</option>
+                {horariosDisponiveis.map((horario) => (
+                  <option 
+                    key={horario.value} 
+                    value={horario.value}
+                    disabled={horario.disabled}
+                  >
+                    {horario.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />
