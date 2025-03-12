@@ -20,18 +20,16 @@
   flex-wrap: wrap;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
 .footer-logo img {
-  width: 16rem;
+  width: 30%;
 }
 
 .footer-section {
   flex: 1;
   min-width: 200px;
   text-align: left;
-  padding: 1rem;
 }
 
 .footer h3 {
@@ -69,7 +67,6 @@
   flex-wrap: wrap;
   max-width: 1200px;
   margin: 1rem auto 0;
-  padding: 1rem;
   font-size: 0.9rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
