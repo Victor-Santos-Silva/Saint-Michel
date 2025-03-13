@@ -23,6 +23,8 @@ function CadastroPage() {
         confirmar_senha: ''
     });
 
+    const [showPopup, setShowPopup] = useState(false); // Estado para controlar o pop-up
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -35,6 +37,14 @@ function CadastroPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Verifica se todos os campos estão preenchidos
+        const isFormValid = Object.values(formData).every(value => value !== '');
+
+        if (!isFormValid) {
+            setShowPopup(true); // Exibe o pop-up de erro
+            return;
+        }
 
         if (formData.senha !== formData.confirmar_senha) {
             alert("As senhas não coincidem!");
@@ -97,7 +107,7 @@ function CadastroPage() {
                         { label: "Nome Completo", name: "nomeCompleto", type: "text", placeholder: "Nome Completo" },
                         { label: "Data de Nascimento", name: "dataDeNascimento", type: "date" },
                         { label: "CPF", name: "cpf", type: "text", placeholder: "CPF", maxLength: "11" },
-                        { label: "RG", name: "rg", type: "text", placeholder: "RG" },
+                        { label: "RG", name: "rg", type: "text", placeholder: "RG" ,maxLength : "10" },
                         { label: "Endereço", name: "endereco", type: "text", placeholder: "Endereço" },
                         { label: "Telefone", name: "telefone", type: "text", placeholder: "Telefone", maxLength: "11" },
                         { label: "Email", name: "email", type: "email", placeholder: "Email" },
@@ -154,6 +164,16 @@ function CadastroPage() {
                     <button type="submit" className='btn-cadastro'>Cadastrar</button>
                 </form>
             </div>
+
+            {/* Pop-up de erro */}
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <span>Todos os campos são obrigatórios!</span>
+                        <button onClick={() => setShowPopup(false)}>Fechar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
