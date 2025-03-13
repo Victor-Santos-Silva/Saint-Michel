@@ -52,8 +52,8 @@ function CadastroPage() {
         }
 
         const generoImagem = formData.genero === 'Masculino' ? '/img/pacienteM.png' :
-                             formData.genero === 'Feminino' ? '/img/pacienteF.png' :
-                             '/img/pacienteOutro.png';
+            formData.genero === 'Feminino' ? '/img/pacienteF.png' :
+                '/img/pacienteOutro.png';
 
         try {
             await axios.post('http://localhost:5000/paciente/cadastro', { ...formData, imagemGenero: generoImagem }, {
@@ -107,7 +107,7 @@ function CadastroPage() {
                         { label: "Nome Completo", name: "nomeCompleto", type: "text", placeholder: "Nome Completo" },
                         { label: "Data de Nascimento", name: "dataDeNascimento", type: "date" },
                         { label: "CPF", name: "cpf", type: "text", placeholder: "CPF", maxLength: "11" },
-                        { label: "RG", name: "rg", type: "text", placeholder: "RG" ,maxLength : "10" },
+                        { label: "RG", name: "rg", type: "text", placeholder: "RG", maxLength: "10" },
                         { label: "Endereço", name: "endereco", type: "text", placeholder: "Endereço" },
                         { label: "Telefone", name: "telefone", type: "text", placeholder: "Telefone", maxLength: "11" },
                         { label: "Email", name: "email", type: "email", placeholder: "Email" },
@@ -169,7 +169,9 @@ function CadastroPage() {
             {showPopup && (
                 <div className="popup-overlay">
                     <div className="popup-content">
-                        <span>Todos os campos são obrigatórios!</span>
+                        <div className="error-icon">⚠️</div>
+                        <h1 className="error-code">ERROR</h1>
+                        <span className="error-message">Todos os campos são obrigatórios!</span>
                         <button onClick={() => setShowPopup(false)}>Fechar</button>
                     </div>
                 </div>
