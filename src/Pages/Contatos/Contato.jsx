@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Contato.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
-import Contato from '../../components/Contato/Contato';
 
 const ContactInfo = [
   { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "../src/img/icons8-siren-96.png" },
@@ -12,6 +11,83 @@ const ContactInfo = [
 ];
 
 const Contatos = () => {
+  // Estados para os campos do formulário
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [assunto, setAssunto] = useState('');
+  const [mensagem, setMensagem] = useState('');
+
+  // Estados para erros de validação
+  const [errors, setErrors] = useState({
+    nome: '',
+    email: '',
+    assunto: '',
+    mensagem: ''
+  });
+
+  // Função para validar o email
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  // Função para validar o formulário
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { nome: '', email: '', assunto: '', mensagem: '' };
+
+    // Validação do Nome
+    if (!nome.trim()) {
+      newErrors.nome = 'O nome é obrigatório.';
+      valid = false;
+    }
+
+    // Validação do Email
+    if (!email.trim()) {
+      newErrors.email = 'O email é obrigatório.';
+      valid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = 'Por favor, insira um email válido.';
+      valid = false;
+    }
+
+    // Validação do Assunto
+    if (!assunto.trim()) {
+      newErrors.assunto = 'O assunto é obrigatório.';
+      valid = false;
+    }
+
+    // Validação da Mensagem
+    if (!mensagem.trim()) {
+      newErrors.mensagem = 'A mensagem é obrigatória.';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  // Função para lidar com o envio do formulário
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      // Se o formulário for válido, pode enviar os dados
+      alert('Formulário enviado com sucesso!');
+      // Aqui você pode adicionar a lógica para enviar os dados para o backend
+      console.log({ nome, email, assunto, mensagem });
+
+      // Limpar os campos após o envio
+      setNome('');
+      setEmail('');
+      setAssunto('');
+      setMensagem('');
+      setErrors({ nome: '', email: '', assunto: '', mensagem: '' });
+    } else {
+      alert('Por favor, corrija os erros antes de enviar.');
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -33,13 +109,56 @@ const Contatos = () => {
       <div className="contato-container">
         <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
         <h3 className="subtitulo-contato">Contato</h3>
-        <form className="contato-form">
+        <form className="contato-form" onSubmit={handleSubmit}>
           <div className="form-row">
-            <input type="text" name="nome" placeholder="Nome" required className="placeholder-branco" />
-            <input type="email" name="email" placeholder="Email" required className="placeholder-branco" />
+            <div className="input-group">
+              <input
+                type="text"
+                name="nome"
+                placeholder="Nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                required
+                className={errors.nome ? 'input-error' : ''}
+              />
+              {errors.nome && <span className="error-message">{errors.nome}</span>}
+            </div>
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className={errors.email ? 'input-error' : ''}
+              />
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
           </div>
-          <input type="text" name="assunto" placeholder="  Assunto" required className="placeholder-branco" />
-          <textarea name="mensagem" placeholder="  Mensagem" required className="placeholder-branco"></textarea>
+          <div className="input-group">
+            <input
+              type="text"
+              name="assunto"
+              placeholder="Assunto"
+              value={assunto}
+              onChange={(e) => setAssunto(e.target.value)}
+              required
+              className={errors.assunto ? 'input-error' : ''}
+            />
+            {errors.assunto && <span className="error-message">{errors.assunto}</span>}
+          </div>
+          <div className="input-group">
+            <textarea
+              name="mensagem"
+              placeholder="Mensagem"
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+              required
+              className={errors.mensagem ? 'input-error' : ''}
+            />
+            {errors.mensagem && <span className="error-message">{errors.mensagem}</span>}
+          </div>
           <button type="submit">ENVIAR</button>
         </form>
       </div>
