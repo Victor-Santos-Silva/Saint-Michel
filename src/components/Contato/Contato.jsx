@@ -13,6 +13,7 @@ const ContactInfo = [
 export default function Contato() {
   return (
     <>
+    
 
       <div className="contact-section">
         <h2>ENTRE EM CONTATO</h2>

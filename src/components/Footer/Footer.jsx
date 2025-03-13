@@ -7,8 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-container">
         <div className="footer-logo">
-          
-          <img src="src/img/FooterLogo.png" style={{marginRight: '12rem'}}/>
+          <img src="src/img/FooterLogo.png" />
         </div>
 
         <div className="footer-section">
@@ -32,7 +31,7 @@ export default function Footer() {
 
       <hr />
 
-      <div className="footer-bottom"  style={{marginLeft: '18rem'}}>
+      <div className="footer-bottom">
         <p className="direitos">© 2025 Direitos reservados Hospital Saint-Michel by PNTEC-LTD</p>
         <div>
           <span>Parcerias:</span> <strong className="libbs-footer">Libbs</strong>
