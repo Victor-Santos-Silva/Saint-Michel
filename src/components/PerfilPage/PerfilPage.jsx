@@ -3,18 +3,16 @@ import axios from 'axios';
 import './PerfilPage.css';
 
 function PerfilPage() {
-    const [dadosUsuario, setDadosUsuario] = useState();
-    const [error, setError] = useState(null);
+    const [dadosUsuario, setDadosUsuario] = useState([]);
 
     useEffect(() => {
-
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/paciente/1`);
-                setDadosUsuario(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar dados do usuário:', error);
-                setError('Falha ao carregar os dados. Tente novamente.');
+                const response = await axios.get(`http://localhost:5000/paciente/`);
+                console.log("✅ Dados do usuário recebidos:", response.data.usuario);
+                setDadosUsuario(response.data.usuario);
+            } catch (err) {
+                console.error("Erro na requisição:", err);
             }
         };
 
@@ -22,20 +20,30 @@ function PerfilPage() {
     }, []);
 
     return (
-        
-        <div className="perfil-container">
-            <h1>Perfil do Usuário</h1>
-            <img src={dadosUsuario.imagemGenero} alt="Foto de perfil" className="perfil-foto" />
-            <p><strong>Nome: {dadosUsuario.nomeCompleto}</strong></p>
-            <p><strong>Email:</strong> {dadosUsuario.email}</p>
-            <p><strong>Data de Nascimento:</strong> {dadosUsuario.dataDeNascimento}</p>
-            <p><strong>CPF:</strong> {dadosUsuario.cpf}</p>
-            <p><strong>RG:</strong> {dadosUsuario.rg}</p>
-            <p><strong>Telefone:</strong> {dadosUsuario.telefone}</p>
-            <p><strong>Endereço:</strong> {dadosUsuario.endereco}</p>
-            <p><strong>Convênio Médico:</strong> {dadosUsuario.convenioMedico}</p>
-            <p><strong>Plano:</strong> {dadosUsuario.planoConvenio}</p>
-            <p><strong>Tipo Sanguíneo:</strong> {dadosUsuario.tipoSanguineo}</p>
+        <div className='perfil-container'>
+            <div>
+                {dadosUsuario.length > 0 ? (
+                    dadosUsuario.map((item, index) => (
+                        <div key={index}>
+                            <p>Nome completo:  {item.nomeCompleto}</p>
+                            <p>Data de nascimento: {item.dataDeNascimento}</p>
+                            <p>CPF: {item.cpf}</p>
+                            <p>RG: {item.rg}</p>
+                            <p>Gênero: {item.genero}</p>
+                            <p>Endereço: {item.endereco}</p>
+                            <p>Telefone: {item.telefone}</p>
+                            <p>Convênio Médico:{item.convenioMedico}</p>
+                            <p>Plano do Convênio:{item.planoConvenio}</p>
+                            <p>Tipo sanguíneo:{item.tipoSanguineo}</p>
+                            <p>Email:{item.email}</p>
+                            
+                            
+                        </div>
+                    ))
+                ) : (
+                    <p>Nenhum paciente encontrado.</p>
+                )}
+            </div>
         </div>
     );
 }

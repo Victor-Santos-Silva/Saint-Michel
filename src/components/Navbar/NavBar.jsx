@@ -68,7 +68,7 @@ export default function Navbar() {
              alt="foto-perfil"
              className="foto-de-Perfil"
              style={{ cursor: "pointer" }}
-             onClick={() => navigate("/perfil")} 
+             onClick={() => navigate('/perfil')} 
            />
               <Link onClick={logout} className="btn-sair-perfil">Sair</Link>
 

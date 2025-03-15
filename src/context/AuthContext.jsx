@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
     const login = (nome) => {
         setnomeCompleto(nome);
         setIsLoggedIn(true);
-        localStorage.setItem('nomeCompleto', nome);
     };
 
     const logout = () => {
