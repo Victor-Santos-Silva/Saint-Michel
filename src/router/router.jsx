@@ -11,9 +11,7 @@ import Cadastro from '../Pages/Cadastro/Cadastro.jsx';
 import Login from '../Pages/Login/LoginPage.jsx';
 import ErroPage from '../components/PaginaDeErro/ErrorPage.jsx';
 import AgendamentosDependentes from "../Pages/Agendamentos/dependente/dependente.jsx";
-import Perfil from "../Pages/Perfil/Perfil.jsx"
-import PerfilPage from '../components/PerfilPage/PerfilPage.jsx';
-
+import Perfil from '../Pages/Perfil/Perfil.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +27,7 @@ const router = createBrowserRouter([
       { path: "/agendamentos/dependente", element: <AgendamentosDependentes /> },
       { path: "/cadastro", element: <Cadastro /> },
       { path: "/login", element: <Login /> },
-      { path: "/perfil", element: <Perfil />},
-
+      {path: "/Perfil", element: <Perfil />}
     ]
   }
 ]);

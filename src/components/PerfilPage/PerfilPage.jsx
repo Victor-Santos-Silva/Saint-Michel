@@ -8,7 +8,7 @@ function PerfilPage() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/paciente/`);
+                const response = await axios.get(`http://localhost:5000/paciente`);
                 console.log("✅ Dados do usuário recebidos:", response.data.usuario);
                 setDadosUsuario(response.data.usuario);
             } catch (err) {
