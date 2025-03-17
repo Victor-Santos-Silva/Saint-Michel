@@ -1,43 +1,52 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Cria o contexto
 const AuthContext = createContext();
 
-// Provedor do contexto que vai envolver a árvore de componentes
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [nomeCompleto, setnomeCompleto] = useState('');
+    const [nomeCompleto, setNomeCompleto] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('token') || '');
+    const [id, setId] = useState(localStorage.getItem('id') || ''); // Adiciona o estado do id
 
-    // Verifica o estado de autenticação ao carregar o componente
     useEffect(() => {
-        const storednomeCompleto = localStorage.getItem('nomeCompleto');
+        const storedNomeCompleto = localStorage.getItem('nomeCompleto');
+        const storedToken = localStorage.getItem('token');
+        const storedId = localStorage.getItem('id'); // Recupera o id do localStorage
 
-        if (storednomeCompleto) {
-            setnomeCompleto(storednomeCompleto);
+        if (storedNomeCompleto && storedToken && storedId) {
+            setNomeCompleto(storedNomeCompleto);
+            setToken(storedToken);
+            setId(storedId); // Define o id
             setIsLoggedIn(true);
         }
     }, []);
 
-    const login = (nome) => {
-        setnomeCompleto(nome);
+    const login = (nome, token, id) => {
+        setNomeCompleto(nome);
+        setToken(token);
+        setId(id); // Define o id
         setIsLoggedIn(true);
+        localStorage.setItem('nomeCompleto', nome);
+        localStorage.setItem('token', token);
+        localStorage.setItem('id', id); // Armazena o id no localStorage
     };
 
     const logout = () => {
-        setnomeCompleto('');
+        setNomeCompleto('');
+        setToken('');
+        setId('');
         setIsLoggedIn(false);
         localStorage.removeItem('nomeCompleto');
         localStorage.removeItem('token');
-        // Redireciona o usuário para a página de login (opcional)
+        localStorage.removeItem('id'); // Remove o id do localStorage
         window.location.href = '/login';
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, nomeCompleto, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, nomeCompleto, token, id, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-// Hook para consumir o contexto
 export const useAuth = () => useContext(AuthContext);

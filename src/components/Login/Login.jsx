@@ -28,29 +28,25 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!formData.email || !formData.senha) {
             alert("Preencha todos os campos!");
             setError({ email: !formData.email, senha: !formData.senha });
             return;
         }
-
+    
         try {
             const response = await axios.post('http://localhost:5000/paciente/login', formData);
-
-            login(response.data.usuario); // Passa o nome do usuário para o contexto
-
-            setFormData({ email: '', senha: '' }); // Limpa os campos após login
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                navigate('/'); // indo para a pagina home
-            }
+    
+            // Passa o nome, token e id para o contexto
+            login(response.data.usuario, response.data.token, response.data.id);
+    
+            setFormData({ email: '', senha: '' });
+            navigate('/');
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
-            setError({
-                email: true,
-                senha: true
-            });
+            setError({ email: true, senha: true });
+            setServerError(error.response?.data?.error || 'Erro no login. Tente novamente.');
         }
     };
 

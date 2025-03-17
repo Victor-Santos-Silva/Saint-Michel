@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext'; // Importa o useAuth
 import './PerfilPage.css';
 
 function PerfilPage() {
     const [dadosUsuario, setDadosUsuario] = useState([]);
+    const { token, id } = useAuth(); // Acessa o token e o id do AuthContext
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/paciente`);
-                console.log("✅ Dados do usuário recebidos:", response.data.usuario);
+                console.log("ID do usuário:", id); // Verifique o id no console
+                const response = await axios.get(`http://localhost:5000/paciente/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                console.log("Dados do usuário recebidos:", response.data.usuario);
                 setDadosUsuario(response.data.usuario);
             } catch (err) {
                 console.error("Erro na requisição:", err);
             }
         };
 
-        fetchUserData();
-    }, []);
+        if (token && id) { // Só faz a requisição se o token e o id existirem
+            fetchUserData();
+        }
+    }, [token, id]); // Dependência do useEffect: token e id
 
     return (
         <div className='perfil-container'>
@@ -36,8 +45,6 @@ function PerfilPage() {
                             <p>Plano do Convênio:{item.planoConvenio}</p>
                             <p>Tipo sanguíneo:{item.tipoSanguineo}</p>
                             <p>Email:{item.email}</p>
-                            
-                            
                         </div>
                     ))
                 ) : (
