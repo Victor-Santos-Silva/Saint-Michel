@@ -18,6 +18,9 @@ export default function LoginPage() {
         senha: false
     });
 
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+
     const { login } = useAuth(); // Acesso à função login do contexto
 
     const handleChange = (e) => {
@@ -51,6 +54,25 @@ export default function LoginPage() {
                 email: true,
                 senha: true
             });
+        }
+    };
+
+    const handleForgotPassword = async () => {
+        if (!forgotPasswordEmail) {
+            alert("Por favor, insira seu email.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:5000/paciente/forgot-password', {
+                email: forgotPasswordEmail
+            });
+
+            alert(response.data.message);
+            setShowForgotPassword(false);
+        } catch (error) {
+            console.error('Erro ao enviar email:', error.response?.data?.error || error.message);
+            alert("Erro ao enviar email. Tente novamente.");
         }
     };
 
@@ -89,6 +111,29 @@ export default function LoginPage() {
 
                     <button className='btn-cadastro'>Logar</button>
                 </form>
+
+                <button
+                    className='btn-forgot-password'
+                    onClick={() => setShowForgotPassword(true)}
+                >
+                    Esqueci a senha
+                </button>
+
+                {showForgotPassword && (
+                    <div className='forgot-password-popup'>
+                        <div className='forgot-password-content'>
+                            <h2 className=''>Insira o seu E-mail</h2>
+                            <input
+                                type="email"
+                                placeholder="exemplo@gmail.com"
+                                value={forgotPasswordEmail}
+                                onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                            />
+                            <button onClick={handleForgotPassword}>Enviar</button>
+                            <button onClick={() => setShowForgotPassword(false)}>Fechar</button>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

@@ -1,7 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+:root {
+    --primary-font: "Yeseva One", serif;
+    --second-font: "Ysabeau Infant", serif;
+    --color-dark-blue: #1F2B6C;
+    --color-dark-hover: #1f2b6ca8;
+    --color-blue-contact: #0056b3;
+    --color-hover: #4b5dff9d;
+    --color-cadastro-hover: #4687ff;
+    --color-text: #fff;
+    --color-top-gray: #4a4a4a;
+  }
+  
+
 .imagem-fundo-login {
     object-fit: cover;
 }
-
 
 .container-login {
     width: 30%;
@@ -15,11 +30,11 @@
     border-radius: 10px;
 }
 
-.formulario-login {
+.form-login {
     margin-top: 10%;
 }
 
-.btn-login {
+.btn-cadastro {
     width: 100%;
     padding: 16px;
     margin-top: 25px;
@@ -35,5 +50,64 @@
     cursor: pointer;
     box-shadow: 0px 10px 40px -12px #1f2b6c;
     transition: 0.3s;
+}
 
+.btn-forgot-password {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: #bfd2f8;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.forgot-password-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.forgot-password-content {
+    background-color: white;
+    padding: 20px;
+    opacity: 92%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.forgot-password-content h2 {
+    margin-bottom: 20px;
+    color: #1f2b6c;
+}
+
+.forgot-password-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.forgot-password-content button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #1f2b6c;
+    color: white;
+}
+
+.forgot-password-content button:hover {
+    background-color: #159EEC;
+}
+
+.title-email{
+    font-family: var(--second-font);
 }
