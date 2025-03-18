@@ -1,38 +1,30 @@
-.imagem-profile{
-    margin: auto;
-    display: flex;
-}
+/* PerfilPage.css */
 
-/* Estilo do contêiner principal */
 .perfil-container {
     max-width: 800px;
-    margin: auto;
-    margin-top: 20px;
+    margin: 0 auto;
     padding: 20px;
     font-family: 'Arial', sans-serif;
-    background-color: #1e40af;
+    background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo do título da página */
 .perfil-container h1 {
     text-align: center;
     font-size: 2rem;
-    color: #eee;
+    color: #333;
     margin-bottom: 20px;
 }
 
-/* Estilo do contêiner dos dados do usuário */
-.perfil-container .dados-usuario {
+.dados-usuario {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo dos parágrafos com as informações */
-.perfil-container .dados-usuario p {
+.dados-usuario p {
     font-size: 1.1rem;
     color: #555;
     margin: 10px 0;
@@ -40,37 +32,76 @@
     border-bottom: 1px solid #eee;
 }
 
-/* Estilo do último parágrafo para remover a borda inferior */
-.perfil-container .dados-usuario p:last-child {
+.dados-usuario p:last-child {
     border-bottom: none;
 }
 
-/* Estilo para a mensagem de carregamento */
-.perfil-container p.carregando {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #777;
-    margin-top: 20px;
+.dados-usuario button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-/* Estilo para destacar os rótulos das informações */
-.perfil-container .dados-usuario p strong {
-    color: #333;
+.dados-usuario button:hover {
+    opacity: 0.9;
+}
+
+/* Estilo do formulário de edição */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
     font-weight: 600;
-    margin-right: 10px;
+    color: #333;
 }
 
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
-    .perfil-container {
-        padding: 15px;
-    }
+.form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
 
-    .perfil-container h1 {
-        font-size: 1.8rem;
-    }
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
 
-    .perfil-container .dados-usuario p {
-        font-size: 1rem;
-    }
+.form-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-buttons button[type='button'] {
+    background-color: #6c757d;
+}
+
+.form-buttons button:hover {
+    opacity: 0.9;
+}
+
+.imagem-profile{
+    display: flex;
+    margin: auto;
+    width: 40%;
 }
