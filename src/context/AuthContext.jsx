@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('nomeCompleto');
         localStorage.removeItem('token');
         localStorage.removeItem('id'); // Remove o id do localStorage
+        window.location.href = '/';
     };
 
     return (
