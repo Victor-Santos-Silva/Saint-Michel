@@ -32,6 +32,7 @@ function PerfilPage() {
             <div className='dados-usuario'>
                 {dadosUsuario ? ( // Verifica se dadosUsuario não é null
                     <>
+                        <img src={dadosUsuario.imagemGenero} alt="" />
                         <p><strong>Nome completo:</strong> {dadosUsuario.nomeCompleto}</p>
                         <p><strong>Data de nascimento:</strong> {dadosUsuario.dataDeNascimento}</p>
                         <p><strong>CPF:</strong> {dadosUsuario.cpf}</p>
