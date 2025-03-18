@@ -1,12 +1,16 @@
-/* PerfilPage.css */
+.imagem-profile{
+    margin: auto;
+    display: flex;
+}
 
 /* Estilo do contêiner principal */
 .perfil-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
+    margin-top: 20px;
     padding: 20px;
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #1e40af;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -15,7 +19,7 @@
 .perfil-container h1 {
     text-align: center;
     font-size: 2rem;
-    color: #333;
+    color: #eee;
     margin-bottom: 20px;
 }
 
