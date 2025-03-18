@@ -31,19 +31,22 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!formData.email || !formData.senha) {
             alert("Preencha todos os campos!");
             setError({ email: !formData.email, senha: !formData.senha });
             return;
         }
-    
+
         try {
             const response = await axios.post('http://localhost:5000/paciente/login', formData);
-    
+
+            // Verifique a resposta do backend no console
+            console.log("Resposta do backend:", response.data);
+
             // Passa o nome, token e id para o contexto
             login(response.data.usuario, response.data.token, response.data.id);
-    
+
             setFormData({ email: '', senha: '' });
             navigate('/');
         } catch (error) {

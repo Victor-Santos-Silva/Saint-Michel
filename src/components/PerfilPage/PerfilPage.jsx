@@ -4,20 +4,18 @@ import { useAuth } from '../../context/AuthContext'; // Importa o useAuth
 import './PerfilPage.css';
 
 function PerfilPage() {
-    const [dadosUsuario, setDadosUsuario] = useState([]);
+    const [dadosUsuario, setDadosUsuario] = useState(null); // Inicializa como null
     const { token, id } = useAuth(); // Acessa o token e o id do AuthContext
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                console.log("ID do usuário:", id); // Verifique o id no console
                 const response = await axios.get(`http://localhost:5000/paciente/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                console.log("Dados do usuário recebidos:", response.data.usuario);
-                setDadosUsuario(response.data.usuario);
+                setDadosUsuario(response.data.usuario); // Atualiza o estado com os dados do usuário
             } catch (err) {
                 console.error("Erro na requisição:", err);
             }
@@ -30,25 +28,24 @@ function PerfilPage() {
 
     return (
         <div className='perfil-container'>
-            <div>
-                {dadosUsuario.length > 0 ? (
-                    dadosUsuario.map((item, index) => (
-                        <div key={index}>
-                            <p>Nome completo:  {item.nomeCompleto}</p>
-                            <p>Data de nascimento: {item.dataDeNascimento}</p>
-                            <p>CPF: {item.cpf}</p>
-                            <p>RG: {item.rg}</p>
-                            <p>Gênero: {item.genero}</p>
-                            <p>Endereço: {item.endereco}</p>
-                            <p>Telefone: {item.telefone}</p>
-                            <p>Convênio Médico:{item.convenioMedico}</p>
-                            <p>Plano do Convênio:{item.planoConvenio}</p>
-                            <p>Tipo sanguíneo:{item.tipoSanguineo}</p>
-                            <p>Email:{item.email}</p>
-                        </div>
-                    ))
+            <h1>Perfil do Usuário</h1>
+            <div className='dados-usuario'>
+                {dadosUsuario ? ( // Verifica se dadosUsuario não é null
+                    <>
+                        <p><strong>Nome completo:</strong> {dadosUsuario.nomeCompleto}</p>
+                        <p><strong>Data de nascimento:</strong> {dadosUsuario.dataDeNascimento}</p>
+                        <p><strong>CPF:</strong> {dadosUsuario.cpf}</p>
+                        <p><strong>RG:</strong> {dadosUsuario.rg}</p>
+                        <p><strong>Gênero:</strong> {dadosUsuario.genero}</p>
+                        <p><strong>Endereço:</strong> {dadosUsuario.endereco}</p>
+                        <p><strong>Telefone:</strong> {dadosUsuario.telefone}</p>
+                        <p><strong>Convênio Médico:</strong> {dadosUsuario.convenioMedico}</p>
+                        <p><strong>Plano do Convênio:</strong> {dadosUsuario.planoConvenio}</p>
+                        <p><strong>Tipo sanguíneo:</strong> {dadosUsuario.tipoSanguineo}</p>
+                        <p><strong>Email:</strong> {dadosUsuario.email}</p>
+                    </>
                 ) : (
-                    <p>Nenhum paciente encontrado.</p>
+                    <p className='carregando'>Carregando...</p> // Exibe uma mensagem de carregamento enquanto os dados são buscados
                 )}
             </div>
         </div>

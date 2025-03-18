@@ -1,3 +1,72 @@
-.nomeperfil {
-    color: aqua;
+/* PerfilPage.css */
+
+/* Estilo do contêiner principal */
+.perfil-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo do título da página */
+.perfil-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo do contêiner dos dados do usuário */
+.perfil-container .dados-usuario {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo dos parágrafos com as informações */
+.perfil-container .dados-usuario p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Estilo do último parágrafo para remover a borda inferior */
+.perfil-container .dados-usuario p:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para a mensagem de carregamento */
+.perfil-container p.carregando {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* Estilo para destacar os rótulos das informações */
+.perfil-container .dados-usuario p strong {
+    color: #333;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .perfil-container {
+        padding: 15px;
+    }
+
+    .perfil-container h1 {
+        font-size: 1.8rem;
+    }
+
+    .perfil-container .dados-usuario p {
+        font-size: 1rem;
+    }
 }
