@@ -24,6 +24,7 @@ function CadastroPage() {
     });
 
     const [showPopup, setShowPopup] = useState(false); // Estado para controlar o pop-up
+    const [errorMessage, setErrorMessage] = useState(''); // Mensagem de erro específica
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,19 +36,107 @@ function CadastroPage() {
         }));
     };
 
+    // Função para validar todos os campos
+    const validateFields = () => {
+        const {
+            nomeCompleto,
+            dataDeNascimento,
+            cpf,
+            rg,
+            genero,
+            endereco,
+            telefone,
+            convenioMedico,
+            planoConvenio,
+            tipoSanguineo,
+            email,
+            senha,
+            confirmar_senha
+        } = formData;
+
+        // Validação do Nome Completo
+        if (!nomeCompleto.trim()) {
+            return "O campo Nome Completo é obrigatório.";
+        }
+
+        // Validação da Data de Nascimento
+        if (!dataDeNascimento) {
+            return "O campo Data de Nascimento é obrigatório.";
+        }
+        const birthDate = new Date(dataDeNascimento);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        if (age < 18 || isNaN(birthDate.getTime())) {
+            return "Você deve ter pelo menos 18 anos para se cadastrar.";
+        }
+
+        // Validação do CPF
+        if (cpf.length !== 11) {
+            return "CPF deve ter 11 dígitos.";
+        }
+
+        // Validação do RG
+        if (rg.length < 7 || rg.length > 10) {
+            return "RG deve ter entre 7 e 10 dígitos.";
+        }
+
+        // Validação do Gênero
+        if (!genero) {
+            return "O campo Gênero é obrigatório.";
+        }
+
+        // Validação do Endereço
+        if (!endereco.trim()) {
+            return "O campo Endereço é obrigatório.";
+        }
+
+        // Validação do Telefone
+        if (telefone.length !== 11) {
+            return "Telefone deve ter 11 dígitos.";
+        }
+
+        // Validação do Convênio Médico
+        if (!convenioMedico) {
+            return "O campo Convênio Médico é obrigatório.";
+        }
+
+        // Validação do Plano do Convênio
+        if (convenioMedico && !planoConvenio) {
+            return "O campo Plano do Convênio é obrigatório.";
+        }
+
+        // Validação do Tipo Sanguíneo
+        if (!tipoSanguineo) {
+            return "O campo Tipo Sanguíneo é obrigatório.";
+        }
+
+        // Validação do Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return "Email inválido.";
+        }
+
+        // Validação da Senha
+        if (senha.length < 6) {
+            return "A senha deve ter pelo menos 6 caracteres.";
+        }
+
+        // Validação da Confirmação de Senha
+        if (senha !== confirmar_senha) {
+            return "As senhas não coincidem.";
+        }
+
+        return null; // Retorna null se todos os campos forem válidos
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Verifica se todos os campos estão preenchidos
-        const isFormValid = Object.values(formData).every(value => value !== '');
-
-        if (!isFormValid) {
+        // Valida todos os campos
+        const validationError = validateFields();
+        if (validationError) {
+            setErrorMessage(validationError);
             setShowPopup(true); // Exibe o pop-up de erro
-            return;
-        }
-
-        if (formData.senha !== formData.confirmar_senha) {
-            alert("As senhas não coincidem!");
             return;
         }
 
@@ -171,7 +260,7 @@ function CadastroPage() {
                     <div className="popup-content">
                         <div className="error-icon">⚠️</div>
                         <h1 className="error-code">ERROR</h1>
-                        <span className="error-message">Todos os campos são obrigatórios!</span>
+                        <span className="error-message">{errorMessage}</span>
                         <button onClick={() => setShowPopup(false)}>Fechar</button>
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 
-
 :root {
     --primary-font: "Yeseva One", serif;
     --color-dark-blue: #1F2B6C;
@@ -101,7 +100,6 @@ a {
     margin: auto;
 }
 
-
 .ver-tudo {
     background-color: var(--color-dark-blue);
     color: white;
@@ -148,7 +146,6 @@ a {
     color: white;
 }
 
-
 .lista-homepage ul li {
     font-size: 20px;
     color: #2c3e50;
@@ -166,15 +163,12 @@ a {
     top: 2px;
 }
 
-
 .imgLateral {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 20px;
     margin-left: 1%;
-
-
 }
 
 .segundoParagrafoHome {
@@ -182,25 +176,110 @@ a {
     font-size: 18px;
     width: 600px;
     margin: auto;
-
 }
-
-
 
 .medicoBranco {
     margin-top: 50px;
     margin-bottom: 50px;
     width: 100%;
-
 }
 
 .conjunto-nossos-servicos {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin-bottom: 50px ;
+    margin-bottom: 50px;
 }
 
-.img-menu-servicos{
+.img-menu-servicos {
     width: 90px;
+}
+
+/* Media Queries para Responsividade */
+
+@media (max-width: 1200px) {
+    .conjunto-nossos-servicos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-servicos-homepage {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .frase-homepage {
+        width: 80%;
+    }
+
+    .segundoParagrafoHome {
+        width: 80%;
+    }
+
+    .imgLateral {
+        align-items: center;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo {
+        font-size: 24px;
+    }
+
+    .segundoTitulo {
+        font-size: 28px;
+    }
+
+    .frase-homepage {
+        font-size: 24px;
+        width: 90%;
+    }
+
+    .lista-homepage {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .especialidades-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .medico {
+        width: 80%;
+    }
+
+    .img-menu-servicos {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo {
+        font-size: 20px;
+    }
+
+    .segundoTitulo {
+        font-size: 24px;
+    }
+
+    .frase-homepage {
+        font-size: 20px;
+    }
+
+    .lista-homepage ul li {
+        font-size: 16px;
+    }
+
+    .especialidades-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .img-menu-servicos {
+        width: 50px;
+    }
+
+    .segundoParagrafoHome {
+        font-size: 16px;
+    }
 }
