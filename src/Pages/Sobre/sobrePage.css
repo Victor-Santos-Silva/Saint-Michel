@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap');
 
-:root{
+:root {
     --primary-font: "Yeseva One", serif;
     --color-dark-blue: #1F2B6C; 
     --color-light-blue: #159EEC;
 }
-
 
 .container-sobre-master {
     display: flex;
     justify-content: center;
     margin-top: 5%;
     margin-bottom: 5%;
+    flex-wrap: wrap;
 }
 
 .img-doutores-sobre {
@@ -29,7 +29,7 @@
 .titulo-sobre {
     font-size: 20px;
     font-weight: bold;
-    color: var(--color-light-blue)
+    color: var(--color-light-blue);
 }
 
 .subTitulo-sobre {
@@ -44,6 +44,7 @@
     font-family: "Yeseva One", serif;
     font-weight: 400;
     font-style: normal;
+    flex-wrap: wrap;
 }
 
 .ul-container-listas {
@@ -83,4 +84,87 @@
     font-family: "Yeseva One", serif;
     font-size: 40px;
     font-weight: 400;
+}
+
+/* Media Queries para Responsividade */
+
+@media (max-width: 1200px) {
+    .container-sobre-master {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .img-medicas-sobre {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .container-texto-sobre {
+        width: 80%;
+    }
+
+    .container-listas {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo-sobre {
+        font-size: 18px;
+    }
+
+    .subTitulo-sobre {
+        font-size: 32px;
+    }
+
+    .li-container-listas {
+        font-size: 20px;
+    }
+
+    .texto-sobre {
+        font-size: 16px;
+    }
+
+    .container-texto-sobre {
+        width: 90%;
+    }
+
+    .img-medicas-sobre {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo-sobre {
+        font-size: 16px;
+    }
+
+    .subTitulo-sobre {
+        font-size: 24px;
+    }
+
+    .li-container-listas {
+        font-size: 18px;
+    }
+
+    .texto-sobre {
+        font-size: 14px;
+    }
+
+    .container-texto-sobre {
+        width: 100%;
+    }
+
+    .img-medicas-sobre {
+        width: 100%;
+    }
+
+    .container-listas {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ul-container-listas {
+        margin-left: 0;
+    }
 }
