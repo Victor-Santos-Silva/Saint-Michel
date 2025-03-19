@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
 import fotoPerfil from '../../img/foto de perfil.png'
 import "./Navbar.css"; // Importando o CSS
-import Perfil from "../../Pages/Perfil/Perfil";
 import { useNavigate } from "react-router-dom";
 
 
