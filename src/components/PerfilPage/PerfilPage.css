@@ -35,14 +35,8 @@
     align-items: start;
 }
 
-.left-section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
 .right-section {
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 .user-header {
@@ -104,7 +98,6 @@
     gap: 1rem;
     margin-bottom: 2rem;
     text-align: center;
-    margin-right: 20%;
 }
 
 .user-info {

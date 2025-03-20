@@ -50,9 +50,7 @@ function PerfilPage() {
 
     return (
         <div className='perfil-container'>
-            <div className='perfil-header'>
-                <h1>DADOS DO PACIENTE</h1>
-            </div>
+           
             {dadosUsuario ? (
                 editando ? (
                     <form className='edit-form' onSubmit={(e) => {
@@ -163,7 +161,8 @@ function PerfilPage() {
 
                         <div className='right-section'>
                             <div className='dados-section'>
-                                <h3 className='dados-title'>Detalhes Adicionais</h3>
+                                <h3 className='dados-title'>Dados do Perfil</h3>
+                                <br />  
                                 <div className='dados-grid'>
                                     <div className='dados-item'>
                                         <strong>Gênero</strong>
