@@ -9,7 +9,7 @@ function Perfil() {
     <>
       <NavBar />
       <PerfilPage />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
