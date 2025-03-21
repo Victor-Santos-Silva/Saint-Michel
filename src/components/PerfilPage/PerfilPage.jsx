@@ -139,24 +139,6 @@ function PerfilPage() {
                                 </div>
                             </div>
                             
-                            <div className='dados-grid personal-info'>
-                                <div className='dados-item'>
-                                    <strong>Idade</strong>
-                                    <span>{calcularIdade(dadosUsuario.dataDeNascimento)} anos</span>
-                                </div>
-                                <div className='dados-item'>
-                                    <strong>CPF</strong>
-                                    <span>{dadosUsuario.cpf}</span>
-                                </div>
-                                <div className='dados-item'>
-                                    <strong>RG</strong>
-                                    <span>{dadosUsuario.rg}</span>
-                                </div>
-                                <div className='dados-item'>
-                                    <strong>Data de Nascimento</strong>
-                                    <span>{dadosUsuario.dataDeNascimento}</span>
-                                </div>
-                            </div>
                         </div>
 
                         <div className='right-section'>
@@ -164,6 +146,22 @@ function PerfilPage() {
                                 <h3 className='dados-title'>Dados do Perfil</h3>
                                 <br />  
                                 <div className='dados-grid'>
+                                <div className='dados-item'>
+                                        <strong>Idade</strong>
+                                        <span>{calcularIdade(dadosUsuario.dataDeNascimento)} anos</span>
+                                    </div>
+                                    <div className='dados-item'>
+                                    <strong>Data de Nascimento</strong>
+                                    <span>{dadosUsuario.dataDeNascimento}</span>
+                                </div>
+                                    <div className='dados-item'>
+                                        <strong>CPF</strong>
+                                        <span>{dadosUsuario.cpf}</span>
+                                    </div>
+                                    <div className='dados-item'>
+                                    <strong>RG</strong>
+                                    <span>{dadosUsuario.rg}</span>
+                                </div>
                                     <div className='dados-item'>
                                         <strong>Gênero</strong>
                                         <span>{dadosUsuario.genero}</span>
