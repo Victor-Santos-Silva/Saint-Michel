@@ -162,7 +162,7 @@
 /* estilização do formularaio */
 .container-form-dependente {
   max-width: 600px;
-  height: 800px;
+  height: 900px;
   margin-bottom: 0 auto;
   padding: 20px;
   background: white;
@@ -204,7 +204,6 @@ select {
 
 .submit-btn-dependente {
   width: 100%;
-  margin-top: 10px;
   padding: 10px;
   background: var(--color-dark-blue);
   color: rgb(255, 255, 255);

@@ -295,7 +295,6 @@ footer {
   position: relative;
   bottom: 0;
   background: #f8f9fa;
-  /* Cor de fundo do footer */
   padding: 20px;
   text-align: center;
 }
@@ -346,4 +345,5 @@ select {
 
 .form-group-hora {
   margin-bottom: 25px;
+  margin-top: -110px;
 }

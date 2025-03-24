@@ -370,6 +370,7 @@ const AgendamentosDependentes = () => {
           </button>
         </div>
       </div>
+    <br />
       <Footer />
     </>
   );
