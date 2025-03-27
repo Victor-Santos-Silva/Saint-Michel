@@ -6,9 +6,17 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
 
+const examesPorTipo = {
+  'Imagem': ['Raio-X', 'Ultrassom', 'Ressonância Magnética', 'Tomografia Computadorizada'],
+  'Laboratorial': ['Exames de Sangue', 'Teste de Urina', 'Perfil Lipídico', 'Glicemia'],
+  'Cardíaco': ['Eletrocardiograma', 'Teste de Esforço', 'Ecocardiograma']
+};
+
 const Agendamentos = () => {
   const [showModal, setShowModal] = useState(true);
+  const [showServiceTypeModal, setShowServiceTypeModal] = useState(false);
   const [agendamentoPara, setAgendamentoPara] = useState('');
+  const [serviceType, setServiceType] = useState('');
   const [especialidade, setEspecialidade] = useState('');
   const [medicos, setMedicos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,12 +26,45 @@ const Agendamentos = () => {
   const [error, setError] = useState('');
   const [missingFields, setMissingFields] = useState([]);
   const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
+  const [tipoExame, setTipoExame] = useState('');
+  const [exameSelecionado, setExameSelecionado] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({ duration: 1000, once: true });
   }, []);
+
+  useEffect(() => {
+    setHorariosDisponiveis(gerarHorarios());
+  }, [data]);
+
+  useEffect(() => {
+    if (especialidade && serviceType === 'consulta') {
+      setLoading(true);
+      fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
+        .then(response => {
+          if (!response.ok) throw new Error('Erro ao buscar médicos');
+          return response.json();
+        })
+        .then(data => {
+          setMedicos(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError(error.message);
+          setLoading(false);
+        });
+    } else {
+      setMedicos([]);
+    }
+  }, [especialidade, serviceType]);
+
+  useEffect(() => {
+    if (serviceType === 'exame') {
+      setExameSelecionado('');
+    }
+  }, [tipoExame]);
 
   const getDataAtual = () => {
     const agora = new Date();
@@ -55,44 +96,33 @@ const Agendamentos = () => {
     return horarios;
   };
 
-  useEffect(() => {
-    setHorariosDisponiveis(gerarHorarios());
-  }, [data]);
-
-  useEffect(() => {
-    if (especialidade) {
-      setLoading(true);
-      fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
-        .then(response => {
-          if (!response.ok) throw new Error('Erro ao buscar médicos');
-          return response.json();
-        })
-        .then(data => {
-          setMedicos(data);
-          setLoading(false);
-        })
-        .catch(error => {
-          setError(error.message);
-          setLoading(false);
-        });
-    } else {
-      setMedicos([]);
-    }
-  }, [especialidade]);
-
   const handleSelecionar = (opcao) => {
     if (opcao === 'Outra pessoa') {
       navigate('/agendamentos/dependente');
     } else {
       setAgendamentoPara(opcao);
       setShowModal(false);
+      setShowServiceTypeModal(true);
     }
+  };
+
+  const handleServiceTypeSelect = (tipo) => {
+    setServiceType(tipo);
+    setShowServiceTypeModal(false);
   };
 
   const validateFields = () => {
     const requiredFields = [];
-    if (!especialidade) requiredFields.push('especialidade');
-    if (!medicoSelecionado) requiredFields.push('medico');
+    
+    if (serviceType === 'consulta') {
+      if (!especialidade) requiredFields.push('especialidade');
+      if (!medicoSelecionado) requiredFields.push('medico');
+    } 
+    else if (serviceType === 'exame') {
+      if (!tipoExame) requiredFields.push('tipoExame');
+      if (!exameSelecionado) requiredFields.push('exame');
+    }
+    
     if (!data) requiredFields.push('data');
     if (!hora) requiredFields.push('hora');
 
@@ -110,19 +140,16 @@ const Agendamentos = () => {
     const dataAtual = getDataAtual();
     const horaAtual = getHoraAtual();
 
-    // Validação de data passada
     if (data < dataAtual) {
       setError('Não é possível agendar para datas passadas.');
       return;
     }
 
-    // Validação de hora passada na data atual
     if (data === dataAtual && hora < horaAtual) {
       setError('Não é possível agendar para horários passados.');
       return;
     }
 
-    // Validação do intervalo de horário
     const [horaSelecionada] = hora.split(':').map(Number);
     if (horaSelecionada < 8 || horaSelecionada > 18) {
       setError('O horário deve estar entre 08:00 e 18:00.');
@@ -131,8 +158,15 @@ const Agendamentos = () => {
 
     const token = localStorage.getItem('token');
     const agendamentoData = {
-      especialidade,
-      medico_id: medicoSelecionado,
+      tipo: serviceType,
+      ...(serviceType === 'consulta' && { 
+        especialidade,
+        medico_id: medicoSelecionado 
+      }),
+      ...(serviceType === 'exame' && {
+        tipoExame,
+        exame: exameSelecionado
+      }),
       data,
       hora
     };
@@ -146,15 +180,21 @@ const Agendamentos = () => {
       body: JSON.stringify(agendamentoData),
     })
       .then(response => {
-        if (!response.ok) throw new Error('Erro ao agendar consulta');
+        if (!response.ok) throw new Error('Erro ao agendar');
         return response.json();
       })
       .then(data => {
         alert('Agendamento realizado com sucesso!');
+        // Resetar todos os estados
         setEspecialidade('');
         setMedicoSelecionado('');
         setData('');
         setHora('');
+        setServiceType('');
+        setAgendamentoPara('');
+        setTipoExame('');
+        setExameSelecionado('');
+        setShowModal(true);
       })
       .catch(error => {
         setError(error.message || 'Erro ao processar agendamento');
@@ -171,7 +211,7 @@ const Agendamentos = () => {
         <div className="container-modal">
           <div className="modal">
             <div className="modal-content">
-              <h2 className="tittle-contato">O exame é para você ou para outra pessoa?</h2>
+              <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
               <button onClick={() => handleSelecionar('Para mim')}>Para mim</button>
               <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
             </div>
@@ -179,7 +219,19 @@ const Agendamentos = () => {
         </div>
       )}
 
-      {!showModal && (
+      {showServiceTypeModal && (
+        <div className="container-modal">
+          <div className="modal">
+            <div className="modal-content">
+              <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
+              <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
+              <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!showModal && !showServiceTypeModal && (
         <>
           <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
 
@@ -189,64 +241,108 @@ const Agendamentos = () => {
           </div>
 
           <div className="container-form-cliente" data-aos="fade-left">
-            <h2 className="title">Agendamento de Consulta</h2>
+            <h2 className="title">
+              Agendamento de {serviceType === 'exame' ? 'Exame' : 'Consulta'}
+            </h2>
             <p><strong>Agendamento para:</strong> {agendamentoPara}</p>
 
             {error && <div className="error-message">{error}</div>}
 
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Especialidade</label>
-                <select
-                  value={especialidade}
-                  onChange={e => {
-                    setEspecialidade(e.target.value);
-                    setMissingFields(prev => prev.filter(f => f !== 'especialidade'));
-                  }}
-                  className={isFieldMissing('especialidade') ? 'campo-obrigatorio' : ''}
-                >
-                  <option value="">Selecione</option>
-                  <option value="Ortopedista">Ortopedista</option>
-                  <option value="Proctologista">Proctologista</option>
-                  <option value="Oncologista">Oncologista</option>
-                  <option value="Otorrinolaringologista">Otorrinolaringologista</option>
-                  <option value="Oftalmologista">Oftalmologista</option>
-                  <option value="Cardiologista">Cardiologista</option>
-                  <option value="Pneumologista">Pneumologista</option>
-                  <option value="Nefrologista">Nefrologista</option>
-                  <option value="Gastroenterologista">Gastroenterologista</option>
-                  <option value="Urologista">Urologista</option>
-                  <option value="Dermatologista">Dermatologista</option>
-                  <option value="Ginecologista">Ginecologista</option>
-                </select>
+            {serviceType === 'exame' ? (
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Tipo de Exame</label>
+                  <select
+                    value={tipoExame}
+                    onChange={(e) => {
+                      setTipoExame(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'tipoExame'));
+                    }}
+                    className={isFieldMissing('tipoExame') ? 'campo-obrigatorio' : ''}
+                  >
+                    <option value="">Selecione o tipo</option>
+                    {Object.keys(examesPorTipo).map(tipo => (
+                      <option key={tipo} value={tipo}>{tipo}</option>
+                    ))}
+                  </select>
 
-                <label>Médico</label>
-                <select
-                  value={medicoSelecionado}
-                  onChange={e => {
-                    const selectedMedicoId = parseInt(e.target.value, 10);
-                    setMedicoSelecionado(selectedMedicoId);
-                    setMissingFields(prev => prev.filter(f => f !== 'medico'));
-                  }}
-                  className={isFieldMissing('medico') ? 'campo-obrigatorio' : ''}
-                >
-                  {loading ? (
-                    <option>Carregando...</option>
-                  ) : error ? (
-                    <option style={{ color: 'red' }}>{error}</option>
-                  ) : (
+                  {tipoExame && (
                     <>
-                      <option value="">Selecione um médico</option>
-                      {medicos.map(medico => (
-                        <option key={medico.id} value={medico.id}>
-                          {medico.nome_completo}
-                        </option>
-                      ))}
+                      <label>Exame Específico</label>
+                      <select
+                        value={exameSelecionado}
+                        onChange={(e) => {
+                          setExameSelecionado(e.target.value);
+                          setMissingFields(prev => prev.filter(f => f !== 'exame'));
+                        }}
+                        className={isFieldMissing('exame') ? 'campo-obrigatorio' : ''}
+                      >
+                        <option value="">Selecione o exame</option>
+                        {examesPorTipo[tipoExame].map(exame => (
+                          <option key={exame} value={exame}>{exame}</option>
+                        ))}
+                      </select>
                     </>
                   )}
-                </select>
+                </div>
               </div>
+            ) : (
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Especialidade</label>
+                  <select
+                    value={especialidade}
+                    onChange={e => {
+                      setEspecialidade(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'especialidade'));
+                    }}
+                    className={isFieldMissing('especialidade') ? 'campo-obrigatorio' : ''}
+                  >
+                    <option value="">Selecione</option>
+                    <option value="Ortopedista">Ortopedista</option>
+                    <option value="Proctologista">Proctologista</option>
+                    <option value="Oncologista">Oncologista</option>
+                    <option value="Otorrinolaringologista">Otorrinolaringologista</option>
+                    <option value="Oftalmologista">Oftalmologista</option>
+                    <option value="Cardiologista">Cardiologista</option>
+                    <option value="Pneumologista">Pneumologista</option>
+                    <option value="Nefrologista">Nefrologista</option>
+                    <option value="Gastroenterologista">Gastroenterologista</option>
+                    <option value="Urologista">Urologista</option>
+                    <option value="Dermatologista">Dermatologista</option>
+                    <option value="Ginecologista">Ginecologista</option>
+                  </select>
 
+                  <label>Médico</label>
+                  <select
+                    value={medicoSelecionado}
+                    onChange={e => {
+                      const selectedMedicoId = parseInt(e.target.value, 10);
+                      setMedicoSelecionado(selectedMedicoId);
+                      setMissingFields(prev => prev.filter(f => f !== 'medico'));
+                    }}
+                    className={isFieldMissing('medico') ? 'campo-obrigatorio' : ''}
+                  >
+                    {loading ? (
+                      <option>Carregando...</option>
+                    ) : error ? (
+                      <option style={{ color: 'red' }}>{error}</option>
+                    ) : (
+                      <>
+                        <option value="">Selecione um médico</option>
+                        {medicos.map(medico => (
+                          <option key={medico.id} value={medico.id}>
+                            {medico.nome_completo}
+                          </option>
+                        ))}
+                      </>
+                    )}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            <div className="form-grid">
               <div className="form-group">
                 <label>Data</label>
                 <input
@@ -260,9 +356,8 @@ const Agendamentos = () => {
                   className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
                 />
               </div>
-            </div>
 
-            <div className="form-group-hora">
+              <div className="form-group">
               <label>Hora</label>
               <select
                 value={hora}
@@ -281,8 +376,11 @@ const Agendamentos = () => {
                   >
                     {horario.label}
                   </option>
+                   
                 ))}
-              </select>
+                 </select>
+            </div>
+            
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />

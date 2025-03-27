@@ -3,240 +3,10 @@
   --color-dark-blue: #1F2B6C;
   --color-light-blue: #3eacec;
   --color-azul-calcinha: #BFD2F8;
-  --color-dark-gray: #333;
-  --color-dark-green: #2da37c;
+  --color-error: #ff4444;
 }
 
-#textoAparece {
-  color: #007bff;
-}
-
-/* Centralizar o calendário e manter largura uniforme */
-.calendar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  max-width: 420px;
-  margin: 20px auto;
-}
-
-/* Ajustar tamanho e estilo do calendário */
-.react-calendar {
-  width: 100% !important;
-  max-width: 420px;
-  background: white;
-  border: 1px solid #d3d3d3;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilizar o título "Escolha uma data para o agendamento" */
-.calendar-container h2 {
-  font-size: 1.2rem;
-  /* Reduzir o tamanho da fonte */
-  font-weight: 100;
-  text-align: center;
-  width: 100%;
-  max-width: 350px;
-  /* Mesma largura do calendário */
-  white-space: nowrap;
-  /* Impede a quebra de linha */
-  overflow: hidden;
-  /* Esconde qualquer conteúdo extra */
-  margin-bottom: 10px;
-}
-
-
-/* Centralizar mês e ano */
-.react-calendar__navigation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Estilizar mês e ano */
-.react-calendar__navigation button {
-  color: black;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-/* Estilizar setas de navegação */
-.react-calendar__navigation button:enabled {
-  color: black;
-}
-
-/* Estilizar os dias com fonte cinza e borda minimalista */
-.react-calendar__tile {
-  color: #808080;
-  border: 1px solid #d3d3d3;
-  padding: 10px;
-  text-align: center;
-}
-
-/* Destacar dias com lembretes */
-.react-calendar__tile.highlight {
-  background-color: var(--color-dark-green);
-  color: black;
-  border-radius: none;
-}
-
-/* Destacar o dia atual */
-.react-calendar__tile--now {
-  background-color: var(--color-light-blue) !important;
-  color: white !important;
-  border-radius: none;
-  font-weight: bold;
-}
-
-/* Estilizar a seção de lembretes */
-.reminder-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-  margin: 20px auto;
-}
-
-/* Estilizar os inputs */
-.reminder-container input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-/* Ajustar largura dos campos */
-.reminder-container input[type="text"] {
-  flex: 2;
-}
-
-.reminder-container input[type="time"] {
-  flex: 1;
-}
-
-/* Estilizar o botão */
-.reminder-container button {
-  padding: 8px 12px;
-  border: none;
-  background-color: var(--color-light-blue);
-  color: white;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.reminder-container button:hover {
-  background-color: #1178b5;
-}
-
-/* Adicionar uma linha separadora entre os dias da semana e os dias do mês */
-.react-calendar__month-view__weekdays {
-  border-bottom: 1px solid #d3d3d3;
-  border-top: 1px solid #d3d3d3;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-}
-
-/* Estilizar o título "Lembretes para" */
-.reminder-display h3 {
-  font-size: 1rem;
-  /* Reduzir o tamanho da fonte */
-  font-weight: bold;
-  white-space: nowrap;
-  /* Impede que o texto quebre em várias linhas */
-  overflow: hidden;
-  /* Esconde qualquer conteúdo extra */
-  text-overflow: ellipsis;
-  /* Adiciona "..." caso o texto seja muito longo */
-  margin-bottom: 5px;
-}
-
-/* estilização do formularaio */
-.container-form-cliente {
-  margin: auto;
-  /* Centraliza horizontalmente */
-  width: 30%;
-  padding: 20px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.title {
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-.principal {
-  font-weight: bolder;
-  color: var(--color-dark-blue);
-  font-family: var(--primary-font);
-}
-
-.sub-tittle {
-  color: var(--color-light-blue);
-  font-weight: 300px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.full-width {
-  grid-column: span 2;
-}
-
-input,
-select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-
-}
-
-.submit-btn {
-  width: 100%;
-  margin-top: 40px;
-  padding: 15px;
-  background: var(--color-dark-blue);
-  color: rgb(255, 255, 255);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-}
-
-.submit-btn:hover {
-  background: rgb(0, 0, 115);
-
-}
-
-/* Estilização do modal */
-
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -244,28 +14,20 @@ select {
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.226);
-  /* Branco semitransparente */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(10px);
-  /* Aplica o efeito de desfoque */
 }
 
-/* Estilização do conteúdo do modal */
 .modal-content {
   background: white;
   padding: 30px;
   width: 40%;
-  height: 30%;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
 }
 
 .modal-content button {
@@ -284,66 +46,77 @@ select {
   background: #007bff;
 }
 
-/* Quando o modal está visível, desfoca o fundo */
-body.modal-open {
-  overflow: hidden;
-  /* Evita rolagem da página */
-}
-
-footer {
-  width: 100%;
-  position: relative;
-  bottom: 0;
-  background: #f8f9fa;
+/* Formulário Principal */
+.container-form-cliente {
+  margin: auto;
+  width: 30%;
   padding: 20px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.title {
   text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.form-group-hora {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  margin-top: -90px;
-  margin-left: 230px;
-  width: 200px;
+.principal {
+  font-weight: bolder;
+  color: var(--color-dark-blue);
+  font-family: var(--primary-font);
 }
 
-.campo-obrigatorio {
-  border: 2px solid #ff4444 !important;
-  border-radius: 4px;
+.sub-tittle {
+  color: var(--color-light-blue);
+  font-weight: 300;
 }
 
-/* Estilo para opções desabilitadas no select */
-select option:disabled {
-  color: #cccccc;
-  background-color: #f8f8f8;
-  cursor: not-allowed;
-}
-
-/* Estilo geral para os selects */
-select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  margin-top: 8px;
-}
-
-/* Estilo para campos obrigatórios não preenchidos */
-.campo-obrigatorio {
-  border: 2px solid #ff4444 !important;
-}
-
-/* Ajuste no grid do formulário */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
-.form-group-hora {
-  margin-bottom: 25px;
-  margin-top: -110px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  width: 100%;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--color-dark-blue);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #000073;
+}
+
+/* Validação */
+.campo-obrigatorio {
+  border: 2px solid var(--color-error) !important;
+}
+
+.error-message {
+  color: var(--color-error);
+  padding: 1rem;
+  text-align: center;
+  margin: 1rem 0;
 }
