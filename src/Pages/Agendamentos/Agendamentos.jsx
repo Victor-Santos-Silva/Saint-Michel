@@ -244,7 +244,7 @@ const Agendamentos = () => {
             <h2 className="title">
               Agendamento de {serviceType === 'exame' ? 'Exame' : 'Consulta'}
             </h2>
-            <p><strong>Agendamento para:</strong> {agendamentoPara}</p>
+            <p><strong>Agendamento:</strong> {agendamentoPara}</p>
 
             {error && <div className="error-message">{error}</div>}
 
