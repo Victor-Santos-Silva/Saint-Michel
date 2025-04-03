@@ -350,10 +350,17 @@ const AgendamentosDependentes = () => {
             <select value={especialidade} onChange={(e) => setEspecialidade(e.target.value)}>
               <option value="">Selecione</option>
               <option value="Ortopedista">Ortopedista</option>
+              <option value="Proctologista">Proctologista</option>
+              <option value="Oncologista">Oncologista</option>
+              <option value="Otorrinolaringologista">Otorrinolaringologista</option>
+              <option value="Oftalmologista">Oftalmologista</option>
               <option value="Cardiologista">Cardiologista</option>
+              <option value="Pneumologista">Pneumologista</option>
+              <option value="Nefrologista">Nefrologista</option>
+              <option value="Gastroenterologista">Gastroenterologista</option>
+              <option value="Urologista">Urologista</option>
               <option value="Dermatologista">Dermatologista</option>
               <option value="Ginecologista">Ginecologista</option>
-              <option value="Pediatra">Pediatra</option>
             </select>
           </div>
 
