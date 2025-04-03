@@ -4,22 +4,29 @@ import Footer from '../../../components/Footer/Footer';
 import Navbar from '../../../components/Navbar/NavBar';
 
 const AgendamentosDependentes = () => {
-  const [nome, setNome] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
+  const [nomeCompleto, setNomeCompleto] = useState('');
+  const [dataDeNascimento, setDataDeNascimento] = useState('');
   const [cpf, setCpf] = useState('');
-  const [endereco, setEndereco] = useState('');
+  const [rg, setRg] = useState('');
   const [genero, setGenero] = useState('');
+  const [imagemPaciente, setImagemPaciente] = useState('/img/pacienteOutro.png');
+  const [imagemGenero, setImagemGenero] = useState('/img/pacienteOutro.png');
+
+  const [endereco, setEndereco] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [convenioMedico, setConvenioMedico] = useState('');
+  const [planoConvenio, setPlanoConvenio] = useState('');
   const [etnia, setEtnia] = useState('');
   const [problemaSaude, setProblemaSaude] = useState('');
   const [parentesco, setParentesco] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
+  const [tipoSanguineo, setTipoSanguineo] = useState('');
+
+  const [medicos, setMedicos] = useState([]);
   const [especialidade, setEspecialidade] = useState('');
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
-  const [convenioMedico, setConvenioMedico] = useState('');
-  const [planoConvenio, setPlanoConvenio] = useState('');
-  const [tipoSanguineo, setTipoSanguineo] = useState('');
-  const [medicos, setMedicos] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+
   const [availableTimes, setAvailableTimes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -36,6 +43,19 @@ const AgendamentosDependentes = () => {
     "Golden Cross": ["Essencial", "Clássico", "Especial"],
     "Particular": ["Consulta Particular"],
   };
+
+  useEffect(() => {
+    let imgSrc = '/img/pacienteOutro.png';
+
+    if (genero === 'Masculino') {
+      imgSrc = '/img/pacienteM.png';
+    } else if (genero === 'Feminino') {
+      imgSrc = '/img/pacienteF.png';
+    }
+
+    setImagemPaciente(imgSrc);
+    setImagemGenero(imgSrc);
+  }, [genero]);
 
   const generateTimeSlots = (date) => {
     const slots = [];
@@ -78,10 +98,12 @@ const AgendamentosDependentes = () => {
           return response.json();
         })
         .then(data => {
+          console.log("Dados recebidos:", data);
           setMedicos(data);
           setLoading(false);
         })
         .catch(error => {
+          console.error("Erro na requisição:", error);
           setError(error.message);
           setLoading(false);
         });
@@ -98,11 +120,14 @@ const AgendamentosDependentes = () => {
 
     try {
       const camposObrigatorios = {
-        nome,
-        dataNascimento,
+        nomeCompleto,
+        dataDeNascimento,
         cpf,
+        rg,
         endereco,
+        telefone,
         genero,
+        imagemGenero,
         etnia,
         parentesco,
         selectedDate,
@@ -110,11 +135,13 @@ const AgendamentosDependentes = () => {
         especialidade,
         medicoSelecionado,
         convenioMedico,
-        planoConvenio: convenioMedico !== 'Particular' ? planoConvenio : true
+        planoConvenio: convenioMedico !== 'Particular' ? planoConvenio || 'Não informado' : true
+
       };
 
       const faltantes = Object.keys(camposObrigatorios)
-        .filter(key => !camposObrigatorios[key]);
+        .filter(key => camposObrigatorios[key] === undefined || camposObrigatorios[key] === null || camposObrigatorios[key] === '');
+
 
       if (faltantes.length > 0) {
         setCamposFaltantes(faltantes);
@@ -123,14 +150,17 @@ const AgendamentosDependentes = () => {
 
       const [hours, minutes] = selectedTime.split(':');
       const selectedDateTime = new Date(selectedDate);
-      selectedDateTime.setHours(hours, minutes);
+      selectedDateTime.setHours(parseInt(hours, 10), parseInt(minutes, 10));
 
-      if (selectedDateTime < new Date()) {
+      const now = new Date();
+      now.setSeconds(0, 0);
+      selectedDateTime.setSeconds(0, 0);
+      if (selectedDateTime < now) {
         throw new Error('Não é possível agendar para datas/horários passados!');
       }
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/agendamentoDependente/agendar', {
+      const response = await fetch('http://localhost:5000/agendamentoDocente/agendarDocente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,12 +170,16 @@ const AgendamentosDependentes = () => {
           usuario_id: localStorage.getItem('userId'),
           medico_id: medicoSelecionado,
           especialidade,
-          nome,
+          nomeCompleto,
           data: selectedDateTime.toISOString().split('T')[0],
           hora: selectedDateTime.toISOString().split('T')[1].slice(0, 5),
           cpf,
+          rg,
+          dataDeNascimento,
+          telefone,
           endereco,
           genero,
+          imagemGenero: imagemPaciente,
           etnia,
           problema_saude: problemaSaude,
           parentesco,
@@ -155,9 +189,10 @@ const AgendamentosDependentes = () => {
         })
       });
 
-      const data = await response.json();
+      const dataDados = await response.json();
+      console.log(dataDados);
 
-      if (!response.ok) throw new Error(data.message || 'Erro no agendamento');
+      if (!response.ok) throw new Error(dataDados.message || 'Erro no agendamento');
 
       alert('Agendamento realizado com sucesso!');
       window.location.reload();
@@ -191,8 +226,8 @@ const AgendamentosDependentes = () => {
             <label>Nome Completo</label>
             <input
               type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
+              value={nomeCompleto}
+              onChange={(e) => setNomeCompleto(e.target.value)}
             />
           </div>
 
@@ -200,8 +235,8 @@ const AgendamentosDependentes = () => {
             <label>Data de Nascimento</label>
             <input
               type="date"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
+              value={dataDeNascimento}
+              onChange={(e) => setDataDeNascimento(e.target.value)}
             />
           </div>
 
@@ -214,6 +249,15 @@ const AgendamentosDependentes = () => {
             />
           </div>
 
+          <div className={`form-group ${isCampoFaltante('rg') ? 'campo-obrigatorio' : ''}`}>
+            <label>RG</label>
+            <input
+              type="text"
+              value={rg}
+              onChange={(e) => setRg(e.target.value)}
+            />
+          </div>
+
           <div className={`form-group ${isCampoFaltante('endereco') ? 'campo-obrigatorio' : ''}`}>
             <label>Endereço</label>
             <input
@@ -223,7 +267,16 @@ const AgendamentosDependentes = () => {
             />
           </div>
 
-          <div className={`form-group ${isCampoFaltante('genero') ? 'campo-obrigatorio' : ''}`}>
+          <div className={`form-group ${isCampoFaltante('telefone') ? 'campo-obrigatorio' : ''}`}>
+            <label>Telefone</label>
+            <input
+              type="text"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
             <label>Gênero</label>
             <select value={genero} onChange={(e) => setGenero(e.target.value)}>
               <option value="">Selecione</option>
@@ -370,7 +423,7 @@ const AgendamentosDependentes = () => {
           </button>
         </div>
       </div>
-    <br />
+      <br />
       <Footer />
     </>
   );
