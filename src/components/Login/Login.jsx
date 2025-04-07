@@ -56,7 +56,7 @@ export default function LoginPage() {
             // Notificação de sucesso com redirecionamento
             toast.success('Login realizado com sucesso!', {
                 position: "top-right",
-                autoClose: 500, // Corrigido o tempo para 3 segundos
+                autoClose: 900, // Corrigido o tempo para 3 segundos
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
