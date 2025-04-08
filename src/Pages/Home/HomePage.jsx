@@ -41,7 +41,7 @@ const especialidades = [
     { nome: "Renal", img: coracaoEscuro },
     { nome: "Gastro", img: coracaoEscuro },
     { nome: "Urologia", img: coracaoEscuro },
-    { nome: "dermatologia", img: coracaoEscuro },
+    { nome: "Dermatologia", img: coracaoEscuro },
     { nome: "Ginecologia", img: coracaoEscuro }
 ];
 

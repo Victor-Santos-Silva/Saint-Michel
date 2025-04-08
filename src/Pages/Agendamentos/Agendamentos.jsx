@@ -31,6 +31,23 @@ const Agendamentos = () => {
 
   const navigate = useNavigate();
 
+  // Função para resetar todos os estados
+  const resetAllStates = () => {
+    setShowModal(true);
+    setShowServiceTypeModal(false);
+    setAgendamentoPara('');
+    setServiceType('');
+    setEspecialidade('');
+    setMedicos([]);
+    setData('');
+    setHora('');
+    setMedicoSelecionado('');
+    setError('');
+    setMissingFields([]);
+    setTipoExame('');
+    setExameSelecionado('');
+  };
+
   useEffect(() => {
     Aos.init({ duration: 1000, once: true });
   }, []);
@@ -185,16 +202,7 @@ const Agendamentos = () => {
       })
       .then(data => {
         alert('Agendamento realizado com sucesso!');
-        // Resetar todos os estados
-        setEspecialidade('');
-        setMedicoSelecionado('');
-        setData('');
-        setHora('');
-        setServiceType('');
-        setAgendamentoPara('');
-        setTipoExame('');
-        setExameSelecionado('');
-        setShowModal(true);
+        resetAllStates();
       })
       .catch(error => {
         setError(error.message || 'Erro ao processar agendamento');
@@ -211,6 +219,12 @@ const Agendamentos = () => {
         <div className="container-modal">
           <div className="modal">
             <div className="modal-content">
+              <button 
+                className="close-modal-button" 
+                onClick={resetAllStates}
+              >
+                X
+              </button>
               <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
               <button onClick={() => handleSelecionar('Para mim')}>Para mim</button>
               <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
@@ -223,6 +237,12 @@ const Agendamentos = () => {
         <div className="container-modal">
           <div className="modal">
             <div className="modal-content">
+              <button 
+                className="close-modal-button" 
+                onClick={resetAllStates}
+              >
+                X
+              </button>
               <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
               <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
               <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
@@ -358,29 +378,27 @@ const Agendamentos = () => {
               </div>
 
               <div className="form-group">
-              <label>Hora</label>
-              <select
-                value={hora}
-                onChange={e => {
-                  setHora(e.target.value);
-                  setMissingFields(prev => prev.filter(f => f !== 'hora'));
-                }}
-                className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
-              >
-                <option value="">Selecione um horário</option>
-                {horariosDisponiveis.map((horario) => (
-                  <option 
-                    key={horario.value} 
-                    value={horario.value}
-                    disabled={horario.disabled}
-                  >
-                    {horario.label}
-                  </option>
-                   
-                ))}
-                 </select>
-            </div>
-            
+                <label>Hora</label>
+                <select
+                  value={hora}
+                  onChange={e => {
+                    setHora(e.target.value);
+                    setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                  }}
+                  className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+                >
+                  <option value="">Selecione um horário</option>
+                  {horariosDisponiveis.map((horario) => (
+                    <option 
+                      key={horario.value} 
+                      value={horario.value}
+                      disabled={horario.disabled}
+                    >
+                      {horario.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />
