@@ -130,16 +130,16 @@ const Agendamentos = () => {
 
   const validateFields = () => {
     const requiredFields = [];
-    
+
     if (serviceType === 'consulta') {
       if (!especialidade) requiredFields.push('especialidade');
       if (!medicoSelecionado) requiredFields.push('medico');
-    } 
+    }
     else if (serviceType === 'exame') {
       if (!tipoExame) requiredFields.push('tipoExame');
       if (!exameSelecionado) requiredFields.push('exame');
     }
-    
+
     if (!data) requiredFields.push('data');
     if (!hora) requiredFields.push('hora');
 
@@ -176,9 +176,9 @@ const Agendamentos = () => {
     const token = localStorage.getItem('token');
     const agendamentoData = {
       tipo: serviceType,
-      ...(serviceType === 'consulta' && { 
+      ...(serviceType === 'consulta' && {
         especialidade,
-        medico_id: medicoSelecionado 
+        medico_id: medicoSelecionado
       }),
       ...(serviceType === 'exame' && {
         tipoExame,
@@ -226,7 +226,7 @@ const Agendamentos = () => {
                 X
               </button>
               <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
-              <button onClick={() => handleSelecionar('Para mim')}>Para mim</button>
+              <button onClick={() => handleSelecionar('consulta')}>Para mim</button>
               <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
             </div>
           </div>
@@ -264,7 +264,7 @@ const Agendamentos = () => {
             <h2 className="title">
               Agendamento de {serviceType === 'exame' ? 'Exame' : 'Consulta'}
             </h2>
-            <p><strong>Agendamento para:</strong> {agendamentoPara}</p>
+            <p><strong>Agendamento:</strong> {agendamentoPara}</p>
 
             {error && <div className="error-message">{error}</div>}
 
@@ -308,7 +308,9 @@ const Agendamentos = () => {
               </div>
             ) : (
               <div className="form-grid">
-                <div className="form-group">
+
+                {/* Selecionar Especialidade */}
+                <div>
                   <label>Especialidade</label>
                   <select
                     value={especialidade}
@@ -332,7 +334,10 @@ const Agendamentos = () => {
                     <option value="Dermatologista">Dermatologista</option>
                     <option value="Ginecologista">Ginecologista</option>
                   </select>
+                </div>
 
+                {/* Selecionar medicos */}
+                <div>
                   <label>Médico</label>
                   <select
                     value={medicoSelecionado}
@@ -359,46 +364,47 @@ const Agendamentos = () => {
                     )}
                   </select>
                 </div>
-              </div>
-            )}
 
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Data</label>
-                <input
-                  type="date"
-                  min={getDataAtual()}
-                  value={data}
-                  onChange={e => {
-                    setData(e.target.value);
-                    setMissingFields(prev => prev.filter(f => f !== 'data'));
-                  }}
-                  className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
-                />
-              </div>
+
+                {/* Data  */}
+                <div>
+                  <label>Data</label>
+                  <input
+                    type="date"
+                    min={getDataAtual()}
+                    value={data}
+                    onChange={e => {
+                      setData(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'data'));
+                    }}
+                    className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
+                  />
+                </div>
 
               <div className="form-group">
-                <label>Hora</label>
-                <select
-                  value={hora}
-                  onChange={e => {
-                    setHora(e.target.value);
-                    setMissingFields(prev => prev.filter(f => f !== 'hora'));
-                  }}
-                  className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
-                >
-                  <option value="">Selecione um horário</option>
-                  {horariosDisponiveis.map((horario) => (
-                    <option 
-                      key={horario.value} 
-                      value={horario.value}
-                      disabled={horario.disabled}
-                    >
-                      {horario.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <label>Hora</label>
+              <select
+                value={hora}
+                onChange={e => {
+                  setHora(e.target.value);
+                  setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                }}
+                className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+              >
+                <option value="">Selecione um horário</option>
+                {horariosDisponiveis.map((horario) => (
+                  <option 
+                    key={horario.value} 
+                    value={horario.value}
+                    disabled={horario.disabled}
+                  >
+                    {horario.label}
+                  </option>
+                   
+                ))}
+                 </select>
+            </div>
+            
             </div>
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />

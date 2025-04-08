@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-container">
         <div className="footer-logo">
-          <img src="src/img/FooterLogo.png" />
+          <img src="../src/img/FooterLogo.png" />
         </div>
 
         <div className="footer-section">
@@ -37,8 +37,7 @@ export default function Footer() {
           <span>Parcerias:</span> <strong className="libbs-footer">Libbs</strong>
         </div>
         <div className="footer-social">
-          <a href="https://www.linkedin.com/hospital.saintmichel/" target="_blank"><FaLinkedin /></a>
-          <a href="https://www.facebook.com/hospital.saintmichel/" target="_blank"><FaFacebook /></a>
+          <a href="https://www.linkedin.com/in/saint-michael-hospital-47ab05359/" target="_blank"><FaLinkedin /></a>
           <a href="https://www.instagram.com/hospital.saintmichel/" target="_blank"><FaInstagram /></a>
         </div>
       </div>

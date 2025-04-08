@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
+import { useAuth } from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import imagemFundo from '../../img/planoDeFundo.png';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
@@ -21,44 +23,71 @@ export default function LoginPage() {
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
-    const { login } = useAuth(); // Acesso à função login do contexto
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        setError({ ...error, [name]: false }); // Remove erro ao digitar
+        setError({ ...error, [name]: false });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!formData.email || !formData.senha) {
-            alert("Preencha todos os campos!");
+            toast.error('Preencha todos os campos!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
             setError({ email: !formData.email, senha: !formData.senha });
             return;
         }
 
         try {
             const response = await axios.post('http://localhost:5000/paciente/login', formData);
-
-            // Verifique a resposta do backend no console
-            console.log("Resposta do backend:", response.data);
-
-            // Passa o nome, token e id para o contexto
             login(response.data.usuario, response.data.token, response.data.id);
-
             setFormData({ email: '', senha: '' });
-            navigate('/');
+
+            // Notificação de sucesso com redirecionamento
+            toast.success('Login realizado com sucesso!', {
+                position: "top-right",
+                autoClose: 900, // Corrigido o tempo para 3 segundos
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+                onClose: () => navigate('/') // Redireciona após fechar a notificação
+            });
+
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
             setError({ email: true, senha: true });
-            setServerError(error.response?.data?.error || 'Erro no login. Tente novamente.');
+            
+            toast.error(error.response?.data?.error || 'Erro no login. Tente novamente.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
         }
     };
 
     const handleForgotPassword = async () => {
         if (!forgotPasswordEmail) {
-            alert("Por favor, insira seu email.");
+            toast.warn('Por favor, insira seu email.', {
+                position: "top-right",
+                autoClose: 3000,
+                theme: "colored",
+            });
             return;
         }
 
@@ -67,11 +96,20 @@ export default function LoginPage() {
                 email: forgotPasswordEmail
             });
 
-            alert(response.data.message);
+            toast.success(response.data.message, {
+                position: "top-right",
+                autoClose: 4000,
+                theme: "colored",
+            });
+            
             setShowForgotPassword(false);
         } catch (error) {
             console.error('Erro ao enviar email:', error.response?.data?.error || error.message);
-            alert("Erro ao enviar email. Tente novamente.");
+            toast.error(error.response?.data?.error || 'Erro ao enviar email. Tente novamente.', {
+                position: "top-right",
+                autoClose: 5000,
+                theme: "colored",
+            });
         }
     };
 
@@ -79,6 +117,19 @@ export default function LoginPage() {
         <>
             <img src={imagemFundo} alt="imagem de fundo" className='imagem-fundo-login' />
             <div className='container-login'>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
+                
                 <h1 className='title-cadastro'>Login</h1>
 
                 <form onSubmit={handleSubmit} className='form-login'>
