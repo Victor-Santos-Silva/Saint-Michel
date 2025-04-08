@@ -219,8 +219,8 @@ const Agendamentos = () => {
         <div className="container-modal">
           <div className="modal">
             <div className="modal-content">
-              <button 
-                className="close-modal-button" 
+              <button
+                className="close-modal-button"
                 onClick={resetAllStates}
               >
                 X
@@ -237,8 +237,8 @@ const Agendamentos = () => {
         <div className="container-modal">
           <div className="modal">
             <div className="modal-content">
-              <button 
-                className="close-modal-button" 
+              <button
+                className="close-modal-button"
                 onClick={resetAllStates}
               >
                 X
@@ -264,7 +264,7 @@ const Agendamentos = () => {
             <h2 className="title">
               Agendamento de {serviceType === 'exame' ? 'Exame' : 'Consulta'}
             </h2>
-            <p><strong>Agendamento:</strong> {agendamentoPara}</p>
+    
 
             {error && <div className="error-message">{error}</div>}
 
@@ -304,8 +304,49 @@ const Agendamentos = () => {
                       </select>
                     </>
                   )}
-                </div>
+              
               </div>
+                  {/* Data  */}
+                  <div>
+                    <label>Data</label>
+                    <input
+                      type="date"
+                      min={getDataAtual()}
+                      value={data}
+                      onChange={e => {
+                        setData(e.target.value);
+                        setMissingFields(prev => prev.filter(f => f !== 'data'));
+                      }}
+                      className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
+                    />
+                  </div>
+
+                  {/* Hora  */}
+                  <div>
+                    <label>Hora</label>
+                    <select
+                      value={hora}
+                      onChange={e => {
+                        setHora(e.target.value);
+                        setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                      }}
+                      className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+                    >
+                      <option value="">Selecione um horário</option>
+                      {horariosDisponiveis.map((horario) => (
+                        <option
+                          key={horario.value}
+                          value={horario.value}
+                          disabled={horario.disabled}
+                        >
+                          {horario.label}
+                        </option>
+
+                      ))}
+                    </select>
+                  </div>
+
+                </div>
             ) : (
               <div className="form-grid">
 
@@ -381,37 +422,40 @@ const Agendamentos = () => {
                   />
                 </div>
 
-              <div className="form-group">
-              <label>Hora</label>
-              <select
-                value={hora}
-                onChange={e => {
-                  setHora(e.target.value);
-                  setMissingFields(prev => prev.filter(f => f !== 'hora'));
-                }}
-                className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
-              >
-                <option value="">Selecione um horário</option>
-                {horariosDisponiveis.map((horario) => (
-                  <option 
-                    key={horario.value} 
-                    value={horario.value}
-                    disabled={horario.disabled}
+                {/* Hora  */}
+                <div>
+                  <label>Hora</label>
+                  <select
+                    value={hora}
+                    onChange={e => {
+                      setHora(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                    }}
+                    className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
                   >
-                    {horario.label}
-                  </option>
-                   
-                ))}
-                 </select>
-            </div>
-            
-            </div>
+                    <option value="">Selecione um horário</option>
+                    {horariosDisponiveis.map((horario) => (
+                      <option
+                        key={horario.value}
+                        value={horario.value}
+                        disabled={horario.disabled}
+                      >
+                        {horario.label}
+                      </option>
+
+                    ))}
+                  </select>
+                </div>
+
+              </div>
+            )}
             <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />
           </div>
           <br />
         </>
-      )}
+      )
+      }
       <Footer />
     </>
   );
