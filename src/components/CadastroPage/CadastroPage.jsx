@@ -81,7 +81,15 @@ function CadastroPage() {
 
         const validationError = validateFields();
         if (validationError) {
-            toast.error(validationError);
+            toast.error(validationError, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
             return;
         }
 
@@ -95,7 +103,17 @@ function CadastroPage() {
                 { headers: { 'Content-Type': 'application/json' } }
             );
 
-            toast.success('Cadastro realizado com sucesso!');
+            toast.success('Cadastro realizado com sucesso!', {
+                position: "top-right",
+                autoClose: 900,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+                onClose: () => navigate('/login')
+            });
+
             setFormData({
                 nomeCompleto: '',
                 dataDeNascimento: '',
@@ -112,11 +130,17 @@ function CadastroPage() {
                 confirmar_senha: ''
             });
 
-            navigate('/login');
-
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Erro ao realizar cadastro';
-            toast.error(errorMessage);
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
         }
     };
 
@@ -143,6 +167,7 @@ function CadastroPage() {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
+                theme="colored"
             />
             
             <img src={imagemFundo} alt="Plano de Fundo" className="container-imagem-fundo" />
