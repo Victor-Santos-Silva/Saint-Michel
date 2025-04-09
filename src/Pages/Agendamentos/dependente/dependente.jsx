@@ -267,20 +267,7 @@ const AgendamentosDependentes = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-
-<Navbar />
+      <Navbar />
       {showModal && (
         <div className="container-modal">
           <div className="modal">
@@ -298,24 +285,18 @@ const AgendamentosDependentes = () => {
           </div>
         </div>
       )}
-
-{showServiceTypeModal && (
-        <div className="container-modal">
-          <div className="modal">
-            <div className="modal-content">
-              <button
-                className="close-modal-button"
-                onClick={resetAllStates}
-              >
-                X
-              </button>
-              <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
-              <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
-              <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       
       <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
       <div className="calendar-container">
