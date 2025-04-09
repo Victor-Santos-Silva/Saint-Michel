@@ -135,7 +135,7 @@ select:focus {
   padding: 1rem;
   text-align: center;
   margin: 1rem 0;
-<<<<<<< HEAD
+
 }
 .close-modal-button {
   position: absolute;
@@ -153,11 +153,6 @@ select:focus {
   color: #333;
 }
 
-=======
-  font-size: 14px;
-  font-weight: bold;
-}
-
 /* Animações */
 @keyframes fadeIn {
   from {
@@ -169,4 +164,4 @@ select:focus {
     transform: translateY(0);
   }
 }
->>>>>>> 5894c01fa716fa31a7c498c92726a8e114012237
+

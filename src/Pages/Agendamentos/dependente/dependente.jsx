@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify'; // Correto
 import './dependente.css';
+// Adicionar no topo com as outras importações
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 import Footer from '../../../components/Footer/Footer';
 import Navbar from '../../../components/Navbar/NavBar';
 
 const AgendamentosDependentes = () => {
+  const [showModal, setShowModal] = useState(true);
   const [nomeCompleto, setNomeCompleto] = useState('');
   const [dataDeNascimento, setDataDeNascimento] = useState('');
   const [cpf, setCpf] = useState('');
@@ -31,6 +36,31 @@ const AgendamentosDependentes = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [camposFaltantes, setCamposFaltantes] = useState([]);
+
+  const resetAllStates = () => {
+    setShowModal(true);
+    setShowServiceTypeModal(false);
+    setAgendamentoPara('');
+    setServiceType('');
+    setEspecialidade('');
+    setMedicos([]);
+    setData('');
+    setHora('');
+    setMedicoSelecionado('');
+    setError('');
+    setMissingFields([]);
+    setTipoExame('');
+    setExameSelecionado('');
+  };
+
+  const handleSelecionar = (tipo) => {
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    Aos.init({ duration: 1000, once: true });
+  }, []);
+
 
   const convenios = {
     "Amil": ["Amil 400", "Amil 500", "Amil 700", "Amil One", "Amil Fácil"],
@@ -98,7 +128,6 @@ const AgendamentosDependentes = () => {
           return response.json();
         })
         .then(data => {
-          console.log("Dados recebidos:", data);
           setMedicos(data);
           setLoading(false);
         })
@@ -117,6 +146,7 @@ const AgendamentosDependentes = () => {
     setLoading(true);
     setError('');
     setCamposFaltantes([]);
+
 
     try {
       const camposObrigatorios = {
@@ -140,12 +170,11 @@ const AgendamentosDependentes = () => {
       };
 
       const faltantes = Object.keys(camposObrigatorios)
-        .filter(key => camposObrigatorios[key] === undefined || camposObrigatorios[key] === null || camposObrigatorios[key] === '');
-
+      .filter(key => camposObrigatorios[key] === undefined || camposObrigatorios[key] === null || camposObrigatorios[key] === '');
 
       if (faltantes.length > 0) {
         setCamposFaltantes(faltantes);
-        throw new Error('Campos obrigatórios não preenchidos!');
+        throw new Error('Preencha todos os campos obrigatórios!');
       }
 
       const [hours, minutes] = selectedTime.split(':');
@@ -156,9 +185,15 @@ const AgendamentosDependentes = () => {
       now.setSeconds(0, 0);
       selectedDateTime.setSeconds(0, 0);
       if (selectedDateTime < now) {
+        toast.error('Não é possível agendar para datas/horários passados!', {
+          position: "top-right",
+          autoClose: 5000,
+          theme: "colored"
+        });
         throw new Error('Não é possível agendar para datas/horários passados!');
       }
 
+      // Codigo da requisição da api 
       const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:5000/agendamentoDocente/agendarDocente', {
         method: 'POST',
@@ -192,13 +227,30 @@ const AgendamentosDependentes = () => {
       const dataDados = await response.json();
       console.log(dataDados);
 
-      if (!response.ok) throw new Error(dataDados.message || 'Erro no agendamento');
+      if (!response.ok) {
+        const errorMsg = dataDados.message || 'Erro no agendamento';
+        toast.error(errorMsg, {
+          position: "top-right",
+          autoClose: 5000,
+          theme: "colored"
+        });
+        throw new Error(errorMsg);
+      }
 
-      alert('Agendamento realizado com sucesso!');
-      window.location.reload();
+      toast.success('Agendamento realizado com sucesso!', {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        onClose: () => window.location.reload()
+      });
 
     } catch (error) {
       setError(error.message);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "colored"
+      });
     } finally {
       setLoading(false);
     }
@@ -209,6 +261,36 @@ const AgendamentosDependentes = () => {
   return (
     <>
       <Navbar />
+      {showModal && (
+        <div className="container-modal">
+          <div className="modal">
+            <div className="modal-content">
+              <button
+                className="close-modal-button"
+                onClick={resetAllStates}
+              >
+                X
+              </button>
+              <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
+              <button onClick={() => handleSelecionar('consulta')}>Para mim</button>
+              <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
+            </div>
+          </div>
+        </div>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      
       <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
       <div className="calendar-container">
         <h1 className="tittle-contato">Faça já seu agendamento</h1>
