@@ -264,7 +264,7 @@ const Agendamentos = () => {
             <h2 className="title">
               Agendamento de {serviceType === 'exame' ? 'Exame' : 'Consulta'}
             </h2>
-    
+
 
             {error && <div className="error-message">{error}</div>}
 
@@ -304,49 +304,49 @@ const Agendamentos = () => {
                       </select>
                     </>
                   )}
-              
-              </div>
-                  {/* Data  */}
-                  <div>
-                    <label>Data</label>
-                    <input
-                      type="date"
-                      min={getDataAtual()}
-                      value={data}
-                      onChange={e => {
-                        setData(e.target.value);
-                        setMissingFields(prev => prev.filter(f => f !== 'data'));
-                      }}
-                      className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
-                    />
-                  </div>
-
-                  {/* Hora  */}
-                  <div>
-                    <label>Hora</label>
-                    <select
-                      value={hora}
-                      onChange={e => {
-                        setHora(e.target.value);
-                        setMissingFields(prev => prev.filter(f => f !== 'hora'));
-                      }}
-                      className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
-                    >
-                      <option value="">Selecione um horário</option>
-                      {horariosDisponiveis.map((horario) => (
-                        <option
-                          key={horario.value}
-                          value={horario.value}
-                          disabled={horario.disabled}
-                        >
-                          {horario.label}
-                        </option>
-
-                      ))}
-                    </select>
-                  </div>
 
                 </div>
+                {/* Data  */}
+                <div>
+                  <label>Data</label>
+                  <input
+                    type="date"
+                    min={getDataAtual()}
+                    value={data}
+                    onChange={e => {
+                      setData(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'data'));
+                    }}
+                    className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
+                  />
+                </div>
+
+                {/* Hora  */}
+                <div>
+                  <label>Hora</label>
+                  <select
+                    value={hora}
+                    onChange={e => {
+                      setHora(e.target.value);
+                      setMissingFields(prev => prev.filter(f => f !== 'hora'));
+                    }}
+                    className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+                  >
+                    <option value="">Selecione um horário</option>
+                    {horariosDisponiveis.map((horario) => (
+                      <option
+                        key={horario.value}
+                        value={horario.value}
+                        disabled={horario.disabled}
+                      >
+                        {horario.label}
+                      </option>
+
+                    ))}
+                  </select>
+                </div>
+
+              </div>
             ) : (
               <div className="form-grid">
 
