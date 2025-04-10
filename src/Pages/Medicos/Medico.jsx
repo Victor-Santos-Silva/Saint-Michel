@@ -49,8 +49,8 @@ export default function Medico() {
           data-aos="fade-down"
         />
         <div className='titulo-subtitulo-sobre' data-aos="fade-up">
-          <h1 className='titulo-sobre'>OS MELHORES</h1>
-          <h2 className='subTitulo-sobre-2'>Nossos Médicos</h2>
+        <h2 className="titulo-contato">OS MELHORES</h2>
+        <h3 className="subtitulo-contato">Medicos</h3>
         </div>
       </div>
 

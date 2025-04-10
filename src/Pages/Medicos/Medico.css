@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+
+:root {
+    --primary-font: "Yeseva One", serif;
+    --color-dark-blue: #1F2B6C;
+    --color-dark-hover: #1f2b6ca8;
+    --color-light-blue: #159EEC;
+    --color-dark-gray: #333;
+}
+
 /* Medico.css */
 .medico-header {
   text-align: center;
@@ -17,7 +27,7 @@
 
 .titulo-sobre {
   font-size: 2.5rem;
-  color: #2c3e50;
+  color: var(--color-light-blue);
   margin-bottom: 0.5rem;
 }
 
