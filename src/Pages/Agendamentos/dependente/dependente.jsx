@@ -9,6 +9,7 @@ import Navbar from '../../../components/Navbar/NavBar';
 
 const AgendamentosDependentes = () => {
   const [showModal, setShowModal] = useState(true);
+  const [showServiceTypeModal, setShowServiceTypeModal] = useState(false);
   const [nomeCompleto, setNomeCompleto] = useState('');
   const [dataDeNascimento, setDataDeNascimento] = useState('');
   const [cpf, setCpf] = useState('');
@@ -37,22 +38,22 @@ const AgendamentosDependentes = () => {
   const [error, setError] = useState('');
   const [camposFaltantes, setCamposFaltantes] = useState([]);
 
- // Função para resetar todos os estados
- const resetAllStates = () => {
-  setShowModal(true);
-  setShowServiceTypeModal(false);
-  setAgendamentoPara('');
-  setServiceType('');
-  setEspecialidade('');
-  setMedicos([]);
-  setData('');
-  setHora('');
-  setMedicoSelecionado('');
-  setError('');
-  setMissingFields([]);
-  setTipoExame('');
-  setExameSelecionado('');
-};
+  // Função para resetar todos os estados
+  const resetAllStates = () => {
+    setShowModal(true);
+    setShowServiceTypeModal(false);
+    setAgendamentoPara('');
+    setServiceType('');
+    setEspecialidade('');
+    setMedicos([]);
+    setData('');
+    setHora('');
+    setMedicoSelecionado('');
+    setError('');
+    setMissingFields([]);
+    setTipoExame('');
+    setExameSelecionado('');
+  };
 
 
   const handleSelecionar = (tipo) => {
@@ -63,7 +64,7 @@ const AgendamentosDependentes = () => {
     Aos.init({ duration: 1000, once: true });
   }, []);
 
-  
+
 
 
   const convenios = {
@@ -78,7 +79,7 @@ const AgendamentosDependentes = () => {
     "Particular": ["Consulta Particular"],
   };
 
-  
+
 
   useEffect(() => {
     let imgSrc = '/img/pacienteOutro.png';
@@ -88,7 +89,7 @@ const AgendamentosDependentes = () => {
     } else if (genero === 'Feminino') {
       imgSrc = '/img/pacienteF.png';
     }
-    
+
 
     setImagemPaciente(imgSrc);
     setImagemGenero(imgSrc);
@@ -177,7 +178,7 @@ const AgendamentosDependentes = () => {
       };
 
       const faltantes = Object.keys(camposObrigatorios)
-      .filter(key => camposObrigatorios[key] === undefined || camposObrigatorios[key] === null || camposObrigatorios[key] === '');
+        .filter(key => camposObrigatorios[key] === undefined || camposObrigatorios[key] === null || camposObrigatorios[key] === '');
 
       if (faltantes.length > 0) {
         setCamposFaltantes(faltantes);
@@ -268,6 +269,19 @@ const AgendamentosDependentes = () => {
   return (
     <>
       <Navbar />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
       {showModal && (
         <div className="container-modal">
           <div className="modal">
@@ -285,19 +299,26 @@ const AgendamentosDependentes = () => {
           </div>
         </div>
       )}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      
+
+      {showServiceTypeModal && (
+        <div className="container-modal">
+          <div className="modal">
+            <div className="modal-content">
+              <button
+                className="close-modal-button"
+                onClick={resetAllStates}
+              >
+                X
+              </button>
+              <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
+              <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
+              <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
       <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
       <div className="calendar-container">
         <h1 className="tittle-contato">Faça já seu agendamento</h1>
@@ -509,12 +530,13 @@ const AgendamentosDependentes = () => {
               ))}
             </select>
           </div>
-
+    
           <button
             className="submit-btn-dependente"
             onClick={handleAgendar}
             disabled={loading}
           >
+      
             {loading ? 'Agendando...' : 'Confirmar Agendamento'}
           </button>
         </div>

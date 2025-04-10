@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Agendamentos.css';
 import Navbar from '../../components/Navbar/NavBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../../components/Footer/Footer';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
@@ -150,7 +152,7 @@ const Agendamentos = () => {
   const handleAgendar = () => {
     setError('');
     if (!validateFields()) {
-      setError('Por favor, preencha todos os campos obrigatórios!');
+      toast.error('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
 
@@ -158,36 +160,34 @@ const Agendamentos = () => {
     const horaAtual = getHoraAtual();
 
     if (data < dataAtual) {
-      setError('Não é possível agendar para datas passadas.');
+      toast.error('Não é possível agendar para datas passadas.');
       return;
     }
-
+  
     if (data === dataAtual && hora < horaAtual) {
-      setError('Não é possível agendar para horários passados.');
+      toast.error('Não é possível agendar para horários passados.');
       return;
     }
-
     const [horaSelecionada] = hora.split(':').map(Number);
     if (horaSelecionada < 8 || horaSelecionada > 18) {
-      setError('O horário deve estar entre 08:00 e 18:00.');
+      toast.error('O horário deve estar entre 08:00 e 18:00.');
       return;
     }
 
     const token = localStorage.getItem('token');
-    const agendamentoData = {
-      tipo: serviceType,
-      ...(serviceType === 'consulta' && {
-        especialidade,
-        medico_id: medicoSelecionado
-      }),
-      ...(serviceType === 'exame' && {
-        tipoExame,
-        exame: exameSelecionado
-      }),
-      data,
-      hora
-    };
-
+  const agendamentoData = {
+    tipo: serviceType,
+    ...(serviceType === 'consulta' && {
+      especialidade,
+      medico_id: medicoSelecionado
+    }),
+    ...(serviceType === 'exame' && {
+      tipoExame,
+      exame: exameSelecionado
+    }),
+    data,
+    hora
+  };
     fetch('http://localhost:5000/agendamento/agendar', {
       method: 'POST',
       headers: {
@@ -201,10 +201,11 @@ const Agendamentos = () => {
         return response.json();
       })
       .then(data => {
-        alert('Agendamento realizado com sucesso!');
+        toast.success('Agendamento realizado com sucesso!');
         resetAllStates();
       })
       .catch(error => {
+        toast.error(error.message || 'Erro ao processar agendamento');
         setError(error.message || 'Erro ao processar agendamento');
       });
   };
@@ -214,6 +215,18 @@ const Agendamentos = () => {
   return (
     <>
       <Navbar />
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+    />
 
       {showModal && (
         <div className="container-modal">
