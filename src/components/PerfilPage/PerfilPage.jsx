@@ -50,7 +50,7 @@ function PerfilPage() {
 
     return (
         <div className='perfil-container'>
-           
+
             {dadosUsuario ? (
                 editando ? (
                     <form className='edit-form' onSubmit={(e) => {
@@ -138,30 +138,30 @@ function PerfilPage() {
                                     <p>{dadosUsuario.email}</p>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div className='right-section'>
                             <div className='dados-section'>
                                 <h3 className='dados-title'>Dados do Perfil</h3>
-                                <br />  
+                                <br />
                                 <div className='dados-grid'>
-                                <div className='dados-item'>
+                                    <div className='dados-item'>
                                         <strong>Idade</strong>
                                         <span>{calcularIdade(dadosUsuario.dataDeNascimento)} anos</span>
                                     </div>
                                     <div className='dados-item'>
-                                    <strong>Data de Nascimento</strong>
-                                    <span>{dadosUsuario.dataDeNascimento}</span>
-                                </div>
+                                        <strong>Data de Nascimento</strong>
+                                        <span>{dadosUsuario.dataDeNascimento}</span>
+                                    </div>
                                     <div className='dados-item'>
                                         <strong>CPF</strong>
                                         <span>{dadosUsuario.cpf}</span>
                                     </div>
                                     <div className='dados-item'>
-                                    <strong>RG</strong>
-                                    <span>{dadosUsuario.rg}</span>
-                                </div>
+                                        <strong>RG</strong>
+                                        <span>{dadosUsuario.rg}</span>
+                                    </div>
                                     <div className='dados-item'>
                                         <strong>Gênero</strong>
                                         <span>{dadosUsuario.genero}</span>

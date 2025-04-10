@@ -1,32 +1,128 @@
-.divPrincipal{
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+.divPrincipal {
+  padding: 1.5rem 0;
+  background-color: #f8f9fa;
 }
 
-.inner{
-    display: flex;
+.titulo-carrossel {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1F2B6C;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
-.item{
-    min-height:200px ;
-    min-width: 400px;
-    padding: 14px;
+.carrosselMedicos {
+  cursor: grab;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.item img {
-    width: 100%;
-    height: 90%;
-    border-radius: 12px;
-    pointer-events: none;
+.inner {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
-.carrosselMedicos{
-    cursor: grab;
-    overflow: hidden;
 
+.item {
+  width: 340px;
+  height: 340px;
+  padding: 0.5rem;
+}
+
+.card-medico {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.card-medico:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.foto-medico {
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 3px solid #BFD2F8;
+}
+
+.info-medico {
+  padding: 1rem;
+  text-align: center;
+  background: #BFD2F8;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-medico h3 {
+  color: #1F2B6C;
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.info-medico p {
+  color: #2c3e50;
+  margin: 0.2rem 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 1rem;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* Efeito sutil quando o carrossel está sendo arrastado */
+.carrosselMedicos:active {
+  cursor: grabbing;
+}
+
+.img-carrosel {
+  width: 200px;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .item {
+    min-width: 200px;
+    min-height: 280px;
+  }
+
+  .info-medico {
+    padding: 0.8rem;
+  }
+
+  .info-medico h3 {
+    font-size: 1rem;
+  }
+
+  .info-medico p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    min-width: 180px;
+  }
+
+  .inner {
+    gap: 0.8rem;
+  }
 }
