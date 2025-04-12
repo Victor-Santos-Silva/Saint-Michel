@@ -7,6 +7,9 @@ import Footer from '../../components/Footer/Footer';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const examesPorTipo = {
   'Imagem': ['Raio-X', 'Ultrassom', 'Ressonância Magnética', 'Tomografia Computadorizada'],
@@ -163,7 +166,7 @@ const Agendamentos = () => {
       toast.error('Não é possível agendar para datas passadas.');
       return;
     }
-  
+
     if (data === dataAtual && hora < horaAtual) {
       toast.error('Não é possível agendar para horários passados.');
       return;
@@ -175,19 +178,19 @@ const Agendamentos = () => {
     }
 
     const token = localStorage.getItem('token');
-  const agendamentoData = {
-    tipo: serviceType,
-    ...(serviceType === 'consulta' && {
-      especialidade,
-      medico_id: medicoSelecionado
-    }),
-    ...(serviceType === 'exame' && {
-      tipoExame,
-      exame: exameSelecionado
-    }),
-    data,
-    hora
-  };
+    const agendamentoData = {
+      tipo: serviceType,
+      ...(serviceType === 'consulta' && {
+        especialidade,
+        medico_id: medicoSelecionado
+      }),
+      ...(serviceType === 'exame' && {
+        tipoExame,
+        exame: exameSelecionado
+      }),
+      data,
+      hora
+    };
     fetch('http://localhost:5000/agendamento/agendar', {
       method: 'POST',
       headers: {
@@ -210,23 +213,111 @@ const Agendamentos = () => {
       });
   };
 
+
+
+  /* Logica de agendamento de Exame */
+
+  const [formDataExame, setFormDataExame] = useState({
+    tipoDeExame: '',
+    exameEspecifico: '',
+    data: '',
+    hora: '',
+    pedidoMedico: ''
+  });
+
+  const handleAgendarExame = (e) => {
+    e.preventDefault();
+
+
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setFormDataExame({
+        tipoDeExame: '',
+        exameEspecifico: '',
+        data: '',
+        hora: '',
+        pedidoMedico: null, // Resetando o arquivo também
+      });
+      document.querySelector('input[type="file"]').value = ''; // Resetando o input de arquivo
+
+      toast.error("Você precisa estar logado para agendar o exame!", {
+        position: "top-right", // Posição do toast
+        autoClose: 3000, // Duração do toast
+        hideProgressBar: false, // Mostrar barra de progresso
+        closeOnClick: true, // Fechar ao clicar
+        pauseOnHover: true, // Pausar ao passar o mouse
+        draggable: true, // Permitir arrastar
+        progress: undefined,
+        onClose: () => {
+          navigate('/login'); // Redireciona para a página de login
+        }
+      });
+
+      return;
+    }
+
+    if (!formDataExame.pedidoMedico) {
+      toast.error("O pedido médico é obrigatório.", {
+        position: "top-right", // Posição do toast
+        autoClose: 5000, // Duração do toast
+        hideProgressBar: false, // Mostrar barra de progresso
+        closeOnClick: true, // Fechar ao clicar
+        pauseOnHover: true, // Pausar ao passar o mouse
+        draggable: true, // Permitir arrastar
+        progress: undefined,
+      });
+      return;
+    }
+
+    axios.post('http://localhost:5000/exame/criarexame', formDataExame, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Importante para envio de arquivos
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then(() => {
+
+        toast.success("Exame agendado com sucesso!", {
+          position: "top-right", // Posição do toast
+          autoClose: 3000, // Duração do toast
+          hideProgressBar: false, // Mostrar barra de progresso
+        })
+
+
+        // Resetando o estado após o sucesso
+        setFormDataExame({
+          tipoDeExame: '',
+          exameEspecifico: '',
+          data: '',
+          hora: '',
+          pedidoMedico: null, // Resetando o arquivo também
+        });
+        document.querySelector('input[type="file"]').value = ''; // Resetando o input de arquivo
+        setMissingFields([]);
+      })
+      .catch(error => {
+        console.log("Erro ao fazer POST:", error);
+      })
+  }
+
   const isFieldMissing = (fieldName) => missingFields.includes(fieldName);
 
   return (
     <>
       <Navbar />
       <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-    />
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
 
       {showModal && (
         <div className="container-modal">
@@ -281,72 +372,86 @@ const Agendamentos = () => {
 
             {error && <div className="error-message">{error}</div>}
 
+            {/* agendar exame */}
             {serviceType === 'exame' ? (
               <div className="form-grid">
-                <div className="form-group">
-                  <label>Tipo de Exame</label>
-                  <select
-                    value={tipoExame}
-                    onChange={(e) => {
-                      setTipoExame(e.target.value);
-                      setMissingFields(prev => prev.filter(f => f !== 'tipoExame'));
-                    }}
-                    className={isFieldMissing('tipoExame') ? 'campo-obrigatorio' : ''}
-                  >
-                    <option value="">Selecione o tipo</option>
-                    {Object.keys(examesPorTipo).map(tipo => (
-                      <option key={tipo} value={tipo}>{tipo}</option>
-                    ))}
-                  </select>
+                <select
+                  value={formDataExame.tipoDeExame}
+                  name="tipoDeExame"
+                  onChange={(e) => {
+                    setFormDataExame(prev => ({
+                      ...prev,
+                      tipoDeExame: e.target.value
+                    }));
+                    setMissingFields(prev => prev.filter(f => f !== 'tipoExame'));
+                  }}
+                  className={isFieldMissing('tipoExame') ? 'campo-obrigatorio' : ''}
+                >
+                  <option value="">Selecione o tipo</option>
+                  {Object.keys(examesPorTipo).map(tipo => (
+                    <option key={tipo} value={tipo}>{tipo}</option>
+                  ))}
+                </select>
 
-                  {tipoExame && (
-                    <>
-                      <label>Exame Específico</label>
-                      <select
-                        value={exameSelecionado}
-                        onChange={(e) => {
-                          setExameSelecionado(e.target.value);
-                          setMissingFields(prev => prev.filter(f => f !== 'exame'));
-                        }}
-                        className={isFieldMissing('exame') ? 'campo-obrigatorio' : ''}
-                      >
-                        <option value="">Selecione o exame</option>
-                        {examesPorTipo[tipoExame].map(exame => (
-                          <option key={exame} value={exame}>{exame}</option>
-                        ))}
-                      </select>
-                    </>
-                  )}
+                {formDataExame.tipoDeExame && (
+                  <>
+                    <label>Exame Específico</label>
+                    <select
+                      value={formDataExame.exameEspecifico}
+                      name="exameEspecifico"
+                      onChange={(e) => {
+                        setFormDataExame(prev => ({
+                          ...prev,
+                          exameEspecifico: e.target.value
+                        }));
+                        setMissingFields(prev => prev.filter(f => f !== 'exame'));
+                      }}
+                      className={isFieldMissing('exame') ? 'campo-obrigatorio' : ''}
+                    >
+                      <option value="">Selecione o exame</option>
+                      {examesPorTipo[formDataExame.tipoDeExame].map(exame => (
+                        <option key={exame} value={exame}>{exame}</option>
+                      ))}
+                    </select>
+                  </>
+                )}
 
-                </div>
-                {/* Data  */}
+                {/* Data */}
                 <div>
                   <label>Data</label>
                   <input
                     type="date"
+                    name="data"
+                    value={formDataExame.data}
                     min={getDataAtual()}
-                    value={data}
-                    onChange={e => {
-                      setData(e.target.value);
+                    onChange={(e) => {
+                      setFormDataExame(prev => ({
+                        ...prev,
+                        data: e.target.value
+                      }));
                       setMissingFields(prev => prev.filter(f => f !== 'data'));
                     }}
                     className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
                   />
                 </div>
 
-                {/* Hora  */}
+                {/* Hora */}
                 <div>
                   <label>Hora</label>
                   <select
-                    value={hora}
-                    onChange={e => {
-                      setHora(e.target.value);
+                    value={formDataExame.hora}
+                    name="hora"
+                    onChange={(e) => {
+                      setFormDataExame(prev => ({
+                        ...prev,
+                        hora: e.target.value
+                      }));
                       setMissingFields(prev => prev.filter(f => f !== 'hora'));
                     }}
                     className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
                   >
                     <option value="">Selecione um horário</option>
-                    {horariosDisponiveis.map((horario) => (
+                    {horariosDisponiveis.map(horario => (
                       <option
                         key={horario.value}
                         value={horario.value}
@@ -354,11 +459,31 @@ const Agendamentos = () => {
                       >
                         {horario.label}
                       </option>
-
                     ))}
                   </select>
                 </div>
 
+                <div>
+                  <label>Pedido Médico (PDF)</label>
+                  <input
+                    type="file"
+                    name="pedidoMedico"
+                    accept=".pdf"  // Aceita apenas arquivos PDF
+                    onChange={(e) => {
+                      const file = e.target.files[0];  // Pegando o primeiro arquivo selecionado
+                      if (file) {
+                        setFormDataExame(prev => ({
+                          ...prev,
+                          pedidoMedico: file  // Salva o arquivo no estado
+                        }));
+                        setMissingFields(prev => prev.filter(f => f !== 'pedidoMedico'));
+                      }
+                    }}
+                    className={isFieldMissing('pedidoMedico') ? 'campo-obrigatorio' : ''}
+                  />
+                </div>
+
+                <button onClick={handleAgendarExame} className="submit-btn">Agendar</button>
               </div>
             ) : (
               <div className="form-grid">
@@ -460,9 +585,9 @@ const Agendamentos = () => {
                   </select>
                 </div>
 
+                <button onClick={handleAgendar} className="submit-btn">Agendar</button>
               </div>
             )}
-            <button onClick={handleAgendar} className="submit-btn">Agendar</button>
             <br />
           </div>
           <br />
