@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Contato.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
@@ -11,85 +13,111 @@ const ContactInfo = [
 ];
 
 const Contatos = () => {
-  // Estados para os campos do formulário
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [assunto, setAssunto] = useState('');
   const [mensagem, setMensagem] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Estados para erros de validação
-  const [errors, setErrors] = useState({
-    nome: '',
-    email: '',
-    assunto: '',
-    mensagem: ''
-  });
-
-  // Função para validar o email
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  // Função para validar o formulário
   const validateForm = () => {
-    let valid = true;
-    const newErrors = { nome: '', email: '', assunto: '', mensagem: '' };
-
-    // Validação do Nome
-    if (!nome.trim()) {
-      newErrors.nome = 'O nome é obrigatório.';
-      valid = false;
-    }
-
-    // Validação do Email
+    const errors = [];
+    
+    if (!nome.trim()) errors.push('✖ O nome é obrigatório');
     if (!email.trim()) {
-      newErrors.email = 'O email é obrigatório.';
-      valid = false;
-    } else if (!validateEmail(email)) {
-      newErrors.email = 'Por favor, insira um email válido.';
-      valid = false;
+      errors.push('✖ O email é obrigatório');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.push('✖ Por favor, insira um email válido');
     }
+    if (!assunto.trim()) errors.push('✖ O assunto é obrigatório');
+    if (!mensagem.trim()) errors.push('✖ A mensagem é obrigatória');
 
-    // Validação do Assunto
-    if (!assunto.trim()) {
-      newErrors.assunto = 'O assunto é obrigatório.';
-      valid = false;
+    if (errors.length > 0) {
+      errors.forEach(error => toast.error(error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }));
+      return false;
     }
-
-    // Validação da Mensagem
-    if (!mensagem.trim()) {
-      newErrors.mensagem = 'A mensagem é obrigatória.';
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
+    return true;
   };
 
-  // Função para lidar com o envio do formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validateForm()) return;
 
-    if (validateForm()) {
-      // Se o formulário for válido, pode enviar os dados
-      alert('Formulário enviado com sucesso!');
-      // Aqui você pode adicionar a lógica para enviar os dados para o backend
-      console.log({ nome, email, assunto, mensagem });
+    setIsSubmitting(true);
 
-      // Limpar os campos após o envio
+    try {
+      const response = await fetch('http://localhost:5000/contato', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          nome, 
+          email, 
+          assunto, 
+          mensagem 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Erro ao enviar formulário');
+      }
+
+      toast.success('✓ Mensagem enviada com sucesso!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      
+      // Limpar campos
       setNome('');
       setEmail('');
       setAssunto('');
       setMensagem('');
-      setErrors({ nome: '', email: '', assunto: '', mensagem: '' });
-    } else {
-      alert('Por favor, corrija os erros antes de enviar.');
+
+    } catch (error) {
+      toast.error(`✖ ${error.message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
       <Navbar />
       <img src="../src/img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
       <br /><br />
@@ -118,10 +146,7 @@ const Contatos = () => {
                 placeholder="Nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                required
-                className={errors.nome ? 'input-error' : ''}
               />
-              {errors.nome && <span className="error-message">{errors.nome}</span>}
             </div>
             <div className="input-group">
               <input
@@ -130,10 +155,7 @@ const Contatos = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                className={errors.email ? 'input-error' : ''}
               />
-              {errors.email && <span className="error-message">{errors.email}</span>}
             </div>
           </div>
           <div className="input-group">
@@ -143,10 +165,7 @@ const Contatos = () => {
               placeholder="Assunto"
               value={assunto}
               onChange={(e) => setAssunto(e.target.value)}
-              required
-              className={errors.assunto ? 'input-error' : ''}
             />
-            {errors.assunto && <span className="error-message">{errors.assunto}</span>}
           </div>
           <div className="input-group">
             <textarea
@@ -154,12 +173,11 @@ const Contatos = () => {
               placeholder="Mensagem"
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
-              required
-              className={errors.mensagem ? 'input-error' : ''}
             />
-            {errors.mensagem && <span className="error-message">{errors.mensagem}</span>}
           </div>
-          <button type="submit">ENVIAR</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Enviando...' : 'ENVIAR'}
+          </button>
         </form>
       </div>
 
