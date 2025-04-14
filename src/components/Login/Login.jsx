@@ -92,7 +92,7 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/paciente/forgot-password', {
+            const response = await axios.post(' http://localhost:5000/admin/esqueciSenha/:id', {
                 email: forgotPasswordEmail
             });
 
