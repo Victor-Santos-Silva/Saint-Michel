@@ -121,11 +121,12 @@ const Agendamentos = () => {
   const handleSelecionar = (opcao) => {
     if (opcao === 'Outra pessoa') {
       navigate('/agendamentos/dependente');
-    } else {
-      setAgendamentoPara(opcao);
-      setShowModal(false);
-      setShowServiceTypeModal(true);
+      return; // Isso impede a execução do restante do código
     }
+    
+    setAgendamentoPara(opcao);
+    setShowModal(false);
+    setShowServiceTypeModal(true);
   };
 
   const handleServiceTypeSelect = (tipo) => {
@@ -319,41 +320,51 @@ const Agendamentos = () => {
         theme="colored"
       />
 
-      {showModal && (
-        <div className="container-modal">
-          <div className="modal">
-            <div className="modal-content">
-              <button
-                className="close-modal-button"
-                onClick={resetAllStates}
-              >
-                X
-              </button>
-              <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
-              <button onClick={() => handleSelecionar('consulta')}>Para mim</button>
-              <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
-            </div>
-          </div>
-        </div>
-      )}
+{showModal && (
+  <div className="container-modal">
+    <div className="modal">
+      <div className="modal-content">
+        <button
+          className="close-modal-button"
+          onClick= {() => {
+            navigate ('/')
+          }} 
+        >
+          X
+        </button>
+        <br/>
+        <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
+        <button onClick={() => handleSelecionar('consulta')}>Para mim</button>
+        <button onClick={() => handleSelecionar('Outra pessoa')}
+          >Outra pessoa
+        </button>
+    
+      </div>
+    </div>
+  </div>
+)}
 
-      {showServiceTypeModal && (
-        <div className="container-modal">
-          <div className="modal">
-            <div className="modal-content">
-              <button
-                className="close-modal-button"
-                onClick={resetAllStates}
-              >
-                X
-              </button>
-              <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
-              <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
-              <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
-            </div>
-          </div>
-        </div>
-      )}
+{showServiceTypeModal && (
+  <div className="container-modal">
+    <div className="modal">
+      <div className="modal-content">
+        <button
+          className="close-modal-button"
+          onClick= {() => {
+            navigate ('/')
+          }} 
+
+        >
+          X
+        </button>
+        <br/>
+        <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
+        <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
+        <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
+      </div>
+    </div>
+  </div>
+)}
 
       {!showModal && !showServiceTypeModal && (
         <>
