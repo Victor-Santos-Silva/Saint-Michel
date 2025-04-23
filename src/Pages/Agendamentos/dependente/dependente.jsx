@@ -8,7 +8,7 @@ import Footer from '../../../components/Footer/Footer';
 import Navbar from '../../../components/Navbar/NavBar';
 
 const AgendamentosDependentes = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [showServiceTypeModal, setShowServiceTypeModal] = useState(false);
   const [nomeCompleto, setNomeCompleto] = useState('');
   const [dataDeNascimento, setDataDeNascimento] = useState('');
