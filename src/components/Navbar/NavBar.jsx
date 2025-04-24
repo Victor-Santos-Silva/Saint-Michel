@@ -1,18 +1,95 @@
-import React from "react";
-import { FaPhone, FaClock, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaPhone, FaClock, FaMapMarkerAlt, FaBell } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Importando o hook de autenticação
-import fotoPerfil from '../../img/foto de perfil.png'
-import "./Navbar.css"; // Importando o CSS
+import { useAuth } from '../../context/AuthContext';
+import fotoPerfil from '../../img/foto de perfil.png';
+import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function Navbar() {
-
-  const { isLoggedIn, nomeCompleto, logout } = useAuth(); // Acessando o estado do usuário
+  const { isLoggedIn, nomeCompleto, logout } = useAuth();
   const navigate = useNavigate();
-  // Após o login bem-sucedido:
+  
+  const [notificacoes, setNotificacoes] = useState([]);
+  const [notificacoesNaoLidas, setNotificacoesNaoLidas] = useState(0);
+  const [mostrarNotificacoes, setMostrarNotificacoes] = useState(false);
+
+  // Função para formatar data (substitui o date-fns)
+  const formatarData = (dataString) => {
+    const data = new Date(dataString);
+    return data.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // Função simplificada para adicionar dias
+  const adicionarDias = (data, dias) => {
+    const result = new Date(data);
+    result.setDate(result.getDate() + dias);
+    return result;
+  };
+
+  // Função para buscar notificações do backend
+  const buscarNotificacoes = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/notificacoes', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setNotificacoes(data);
+        setNotificacoesNaoLidas(data.filter(n => !n.lida).length);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar notificações:", error);
+    }
+  };
+
+  // Funções de manipulação de notificações (marcar como lida, limpar)
+  const marcarComoLida = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await fetch(`http://localhost:5000/notificacoes/${id}/ler`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      buscarNotificacoes();
+    } catch (error) {
+      console.error("Erro ao marcar notificação como lida:", error);
+    }
+  };
+
+  const limparNotificacoes = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await fetch('http://localhost:5000/notificacoes/limpar', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setNotificacoes([]);
+      setNotificacoesNaoLidas(0);
+    } catch (error) {
+      console.error("Erro ao limpar notificações:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      buscarNotificacoes();
+    }
+  }, [isLoggedIn]);
 
   return (
     <header className="header">
@@ -59,18 +136,72 @@ export default function Navbar() {
 
         <div className="container-login-cadastro">
           {isLoggedIn ? (
-           <div className="perfil-usuario">
-           <p className="nome-usuario">Olá, {nomeCompleto}</p>
-           
-           <img
-             src={fotoPerfil}
-             alt="foto-perfil"
-             className="foto-de-Perfil"
-             style={{ cursor: "pointer" }}
-             onClick={() => navigate('/perfil')} 
-           />
-              <Link onClick={logout} className="btn-sair-perfil">Sair</Link>
+            <div className="perfil-usuario">
+              <p className="nome-usuario">Olá, {nomeCompleto}</p>
+              
+              <div className="notificacao-container">
+                <button 
+                  className="botao-notificacao"
+                  onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
+                >
+                  <FaBell 
+                    size={20} 
+                    style={{ 
+                      color: 'white',
+                      filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))'
+                    }} 
+                  />
+                  {notificacoesNaoLidas > 0 && (
+                    <span className="contador-notificacao">
+                      {notificacoesNaoLidas}
+                    </span>
+                  )}
+                </button>
+                
+                {mostrarNotificacoes && (
+                  <div className="lista-notificacoes">
+                    {notificacoes.length > 0 ? (
+                      <>
+                        {notificacoes.map((notificacao) => (
+                          <div 
+                            key={notificacao.id} 
+                            className={`notificacao-item ${notificacao.lida ? '' : 'nao-lida'}`}
+                            onClick={() => marcarComoLida(notificacao.id)}
+                          >
+                            <div className="notificacao-conteudo">
+                              <p className="notificacao-titulo">{notificacao.titulo}</p>
+                              <p className="notificacao-mensagem">{notificacao.mensagem}</p>
+                              <p className="notificacao-data">
+                                {formatarData(notificacao.data)}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                        <button 
+                          className="limpar-notificacoes"
+                          onClick={limparNotificacoes}
+                        >
+                          Limpar Todas
+                        </button>
+                      </>
+                    ) : (
+                      <div className="sem-notificacoes">
+                        Nenhuma notificação disponível
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
 
+              <img
+                src={fotoPerfil}
+                alt="foto-perfil"
+                className="foto-de-Perfil"
+                onClick={() => navigate('/perfil')} 
+              />
+              <button onClick={logout} className="btn-sair-perfil">
+                Sair
+              </button>
             </div>
           ) : (
             <>
@@ -82,9 +213,8 @@ export default function Navbar() {
               </div>
             </>
           )}
-
         </div>
-      </nav >
-    </header >
+      </nav>
+    </header>
   );
 }
