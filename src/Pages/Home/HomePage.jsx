@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'aos/dist/aos.css'; // Não se esqueça de importar o CSS do AOS!
-import Aos from 'aos'; // Importando a biblioteca AOS
+import 'aos/dist/aos.css';
+import Aos from 'aos';
 import './HomePage.css';
 
 import medicos from '../../img/medicos.png';
@@ -46,118 +46,108 @@ const especialidades = [
 ];
 
 const HomePage = () => {
+    const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
-        Aos.init({
-            duration: 1000, // Duração da animação
-            once: true, // A animação só ocorrerá uma vez
-            easing: "ease-in-out", // Tipo de animação
-        });
+        Aos.init({ duration: 1000, once: true, easing: "ease-in-out" });
     }, []);
-    
 
     return (
         <>
             <Navbar />
-            {/* Carrossel */}
-            <div className='carrossel' data-aos="fade-up">
-                <Carousel>
-                    <Carousel.Item>
-                        <img className='imagem' src={medicosFelizes} alt="Imagem dois" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className='imagem' src={cuidadoSaudeDoMedico} alt="Imagem dois" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className='imagem' src={casalDeMedicos} alt="Imagem dois" />
-                    </Carousel.Item>
-                </Carousel>
-            </div>
+            <div className={`homepage ${darkMode ? 'dark' : ''}`}>
+                <button className='toggle-theme' onClick={() => setDarkMode(!darkMode)}>
+                    {darkMode ? '🌞 Claro' : '🌙 Escuro'}
+                </button>
 
-            {/* Começo da página */}
-            <div className="homepage-container" data-aos="fade-up">
-                <p className='titulo'>BEM VINDO A SAINT-MICHEL</p>
-                <h4 className='segundoTitulo'>Um ótimo lugar para receber cuidados</h4>
-                <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
-                <p className='saibaMais'> <Link to='/sobre'>Saiba mais</Link>
-                    <img className='seta' src="../src/img/seta.png" />
-                </p>
+                <div className='carrossel' data-aos="fade-up">
+                    <Carousel>
+                        <Carousel.Item>
+                            <img className='imagem' src={medicosFelizes} alt="Imagem dois" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className='imagem' src={cuidadoSaudeDoMedico} alt="Imagem dois" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className='imagem' src={casalDeMedicos} alt="Imagem dois" />
+                        </Carousel.Item>
+                    </Carousel>
+                </div>
 
-                {/* Primeira Imagem */}
-                <img className='medico' src={medicos} data-aos="fade-right" />
-            </div>
+                <div className="homepage-container" data-aos="fade-up">
+                    <p className='titulo'>BEM VINDO A SAINT-MICHEL</p>
+                    <h4 className='segundoTitulo'>Um ótimo lugar para receber cuidados</h4>
+                    <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
+                    <p className='saibaMais'>
+                        <Link to='/sobre'>Saiba mais</Link>
+                        <img className='seta' src="../src/img/seta.png" />
+                    </p>
+                    <img className='medico' src={medicos} data-aos="fade-right" />
+                </div>
 
-            {/* Subtitulo */}
-            <p className='titulo' data-aos="fade-up">CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
-            <h4 className='segundoTitulo' data-aos="fade-up">Nossos Serviços</h4>
+                <p className='titulo' data-aos="fade-up">CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
+                <h4 className='segundoTitulo' data-aos="fade-up">Nossos Serviços</h4>
 
-            <div className='conjunto-nossos-servicos'>
-                {/* Serviços */}
-                <div className="menu-servicos-homepage" data-aos="fade-up">
-                    {services.map((service, index) => (
-                        <div key={index} className={'menu-item-homepage'}>
-                            <img src={service.img} alt="Serviço" className='img-menu-servicos' />
+                <div className='conjunto-nossos-servicos'>
+                    <div className="menu-servicos-homepage" data-aos="fade-up">
+                        {services.map((service, index) => (
+                            <div key={index} className={'menu-item-homepage'}>
+                                <img src={service.img} alt="Serviço" className='img-menu-servicos' />
+                            </div>
+                        ))}
+                        <div className="ver-tudo"><Link to='/servicos'>Ver tudo</Link></div>
+                    </div>
+
+                    <div>
+                        <h1 className='frase-homepage' data-aos="fade-up"><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
+                        <div className='lista-homepage'>
+                            <ul>
+                                <li>Uma paixão pela cura</li>
+                                <li>Um legado de excelência</li>
+                                <li>Profissionais capacitados</li>
+                            </ul>
+                            <ul>
+                                <li>Ambiente seguro e moderno</li>
+                                <li>Atendimento humanizado</li>
+                                <li>Tecnologia de ponta</li>
+                            </ul>
+                        </div>
+                        <div className='segundoParagrafoHome' data-aos="fade-up">
+                            <p>Na Rede Hospitalar Saint Michel, temos uma paixão pela cura que guia cada passo do nosso trabalho, sustentada por um legado de excelência em cuidados médicos...</p>
+                        </div>
+                    </div>
+
+                    <div className='imgLateral'>
+                        <img src={grupo} alt="Grupo" data-aos="fade-left" />
+                        <img src={cuidados} alt="Cuidados" data-aos="fade-left" />
+                    </div>
+                </div>
+
+                <div className='subtitulosHome' data-aos="fade-up">
+                    <p className='titulo'>SEMPRE CUIDANDO</p>
+                    <h4 className='segundoTitulo'>Nossas Especialidades</h4>
+                </div>
+
+                <div className="especialidades-grid" data-aos="fade-up">
+                    {especialidades.map((item, index) => (
+                        <div key={index} className={`especialidade`}>
+                            <img src={item.img} alt={item.nome} />
+                            <p>{item.nome}</p>
                         </div>
                     ))}
-                    <div className="ver-tudo"><Link to='/servicos'>Ver tudo</Link></div>
                 </div>
 
-                <div className=''>
-                    {/* Frase Principal */}
-                    <h1 className='frase-homepage' data-aos="fade-up"><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
-                    {/* Lista de Serviços */}
-                    <div className='lista-homepage'>
-                        <ul>
-                            <li>Uma paixão pela cura</li>
-                            <li>Um legado de excelência</li>
-                            <li>Profissionais capacitados</li>
-                        </ul>
-                        <ul>
-                            <li>Ambiente seguro e moderno</li>
-                            <li>Atendimento humanizado</li>
-                            <li>Tecnologia de ponta</li>
-                        </ul>
-                    </div>
-                    {/* Segundo Paragrafo */}
-                    <div className='segundoParagrafoHome' data-aos="fade-up">
-                        <p>Na Rede Hospitalar Saint Michel, temos uma paixão pela cura que guia cada passo do nosso trabalho, sustentada por um legado de excelência em cuidados médicos...</p>
-                    </div>
+                <img className='medicoBranco' src="../src/img/medicoBranco.png" data-aos="fade-up" />
+
+                <div className='titulosFinais' data-aos="fade-up">
+                    <p className='titulo'>CUIDADO CONFIÁVEL</p>
+                    <h4 className='segundoTitulo'>Nossos Médicos</h4>
                 </div>
 
-                {/* Imagens Laterais */}
-                <div className='imgLateral'>
-                    <img src={grupo} alt="Grupo" data-aos="fade-left"/>
-                    <img src={cuidados} alt="Cuidados" data-aos="fade-left"/>
-                </div>
+                <CarouselMedico />
+                <Contato />
+                <Footer />
             </div>
-
-            {/* Subtitulos */}
-            <div className='subtitulosHome' data-aos="fade-up">
-                <p className='titulo'>SEMPRE CUIDANDO</p>
-                <h4 className='segundoTitulo'>Nossas Especialidades</h4>
-            </div>
-
-            {/* Especialidades */}
-            <div className="especialidades-grid" data-aos="fade-up">
-                {especialidades.map((item, index) => (
-                    <div key={index} className={`especialidade`}>
-                        <img src={item.img} alt={item.nome} />
-                        <p>{item.nome}</p>
-                    </div>
-                ))}
-            </div>
-
-            {/* Segunda Imagem */}
-            <img className='medicoBranco' src="../src/img/medicoBranco.png" data-aos="fade-up" />
-
-            {/* Titulos finais */}
-            <div className='titulosFinais' data-aos="fade-up">
-                <p className='titulo'>CUIDADO CONFIÁVEL</p>
-                <h4 className='segundoTitulo'>Nossos Médicos</h4>
-            </div>
-            <CarouselMedico />
-            <Contato />
-            <Footer />
         </>
     );
 };

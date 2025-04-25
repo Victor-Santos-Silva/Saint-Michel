@@ -13,7 +13,7 @@
 }
 
 .agendamentos {
-    background-color: rgba(31, 43, 108, 255);
+    background-color: var(--color-dark-blue);
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -21,6 +21,13 @@
     height: 60px;
     color: white;
     display: flex;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.agendamentos:hover {
+    background-color: var(--color-light-blue);
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 .calendario {
@@ -55,7 +62,7 @@
 
 .segundoTitulo {
     text-align: center;
-    color: rgba(31, 43, 108, 255);
+    color: var(--color-dark-blue);
     font-weight: 500;
     font-size: 32px;
     font-family: var(--primary-font);
@@ -67,7 +74,7 @@
 
 .saibaMais {
     text-align: center;
-    color: rgba(79, 182, 240, 255);
+    color: var(--color-light-blue);
     font-size: 15px;
 }
 
@@ -96,7 +103,7 @@ a {
     font-size: 30px;
     width: 550px;
     text-align: center;
-    color: #333;
+    color: var(--color-dark-gray);
     margin: auto;
 }
 
@@ -105,6 +112,13 @@ a {
     color: white;
     padding: 10px 5px;
     text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.ver-tudo:hover {
+    background-color: var(--color-light-blue);
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
 .lista-homepage {
@@ -144,6 +158,7 @@ a {
     transform: scale(1.1);
     background-color: var(--color-dark-blue);
     color: white;
+    cursor: pointer;
 }
 
 .lista-homepage ul li {
@@ -282,4 +297,78 @@ a {
     .segundoParagrafoHome {
         font-size: 16px;
     }
+}
+
+/* ======= TEMA ESCURO ======= */
+
+.homepage.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.homepage.dark .titulo {
+    color: #90caf9;
+}
+
+.homepage.dark .segundoTitulo {
+    color: #ffffff;
+}
+
+.homepage.dark .paragrafoHome,
+.homepage.dark .segundoParagrafoHome,
+.homepage.dark .segundoParagrafoHome p {
+    color: #ccc;
+}
+
+.homepage.dark .saibaMais {
+    color: #90caf9;
+}
+
+.homepage.dark .frase-homepage {
+    color: #ffffff;
+}
+
+.homepage.dark .lista-homepage ul li {
+    color: #cccccc;
+}
+
+.homepage.dark .especialidade {
+    background-color: #1e1e1e;
+    border-color: #90caf9;
+}
+
+.homepage.dark .especialidade:hover {
+    background-color: #283593;
+    color: #ffffff;
+}
+
+.homepage.dark .menu-servicos-homepage {
+    border-color: #444;
+    background-color: #1e1e1e;
+}
+
+.homepage.dark .ver-tudo {
+    background-color: #283593;
+}
+
+.homepage.dark a {
+    color: #90caf9;
+}
+
+.toggle-theme {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+    padding: 8px 14px;
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.toggle-theme:hover {
+    background-color: #666;
 }
