@@ -21,7 +21,14 @@ export default function LoginPage() {
     });
 
     const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+    const [forgotPasswordData, setForgotPasswordData] = useState({
+        email: '',
+        senhaNova: ''
+    });
+    const [forgotPasswordErrors, setForgotPasswordErrors] = useState({
+        email: false,
+        senhaNova: false
+    });
 
     const { login } = useAuth();
 
@@ -29,6 +36,18 @@ export default function LoginPage() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         setError({ ...error, [name]: false });
+    };
+
+    const handleForgotPasswordChange = (e) => {
+        const { name, value } = e.target;
+        setForgotPasswordData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        setForgotPasswordErrors(prev => ({
+            ...prev,
+            [name]: false
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -53,22 +72,21 @@ export default function LoginPage() {
             login(response.data.usuario, response.data.token, response.data.id);
             setFormData({ email: '', senha: '' });
 
-            // Notificação de sucesso com redirecionamento
             toast.success('Login realizado com sucesso!', {
                 position: "top-right",
-                autoClose: 900, // Corrigido o tempo para 3 segundos
+                autoClose: 900,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 theme: "colored",
-                onClose: () => navigate('/') // Redireciona após fechar a notificação
+                onClose: () => navigate('/')
             });
 
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
             setError({ email: true, senha: true });
-            
+
             toast.error(error.response?.data?.error || 'Erro no login. Tente novamente.', {
                 position: "top-right",
                 autoClose: 5000,
@@ -81,35 +99,41 @@ export default function LoginPage() {
         }
     };
 
-    const handleForgotPassword = async () => {
-        if (!forgotPasswordEmail) {
-            toast.warn('Por favor, insira seu email.', {
-                position: "top-right",
-                autoClose: 3000,
-                theme: "colored",
-            });
+    const handlePasswordReset = async (e) => {
+        e.preventDefault();
+
+        // Validações
+        const errors = {
+            email: !forgotPasswordData.email,
+            senhaNova: !forgotPasswordData.senhaNova || forgotPasswordData.senhaNova.length < 6
+        };
+
+        setForgotPasswordErrors(errors);
+
+        if (errors.email || errors.senhaNova) {
+            if (errors.email) toast.error('Email é obrigatório!');
+            if (errors.senhaNova) toast.error('A senha deve ter no mínimo 6 caracteres');
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(forgotPasswordData.email)) {
+            toast.error('Email inválido');
+            setForgotPasswordErrors(prev => ({ ...prev, email: true }));
             return;
         }
 
         try {
-            const response = await axios.post(' http://localhost:5000/admin/esqueciSenha/:id', {
-                email: forgotPasswordEmail
+            const response = await axios.patch('http://localhost:5000/paciente/esqueciSenha', {
+                email: forgotPasswordData.email,
+                senhaNova: forgotPasswordData.senhaNova
             });
 
-            toast.success(response.data.message, {
-                position: "top-right",
-                autoClose: 4000,
-                theme: "colored",
-            });
-            
+            toast.success('Senha alterada com sucesso!');
             setShowForgotPassword(false);
+            setForgotPasswordData({ email: '', senhaNova: '' });
         } catch (error) {
-            console.error('Erro ao enviar email:', error.response?.data?.error || error.message);
-            toast.error(error.response?.data?.error || 'Erro ao enviar email. Tente novamente.', {
-                position: "top-right",
-                autoClose: 5000,
-                theme: "colored",
-            });
+            const errorMsg = error.response?.data?.error || 'Erro ao redefinir senha';
+            toast.error(errorMsg);
         }
     };
 
@@ -129,7 +153,7 @@ export default function LoginPage() {
                     pauseOnHover
                     theme="colored"
                 />
-                
+
                 <h1 className='title-cadastro'>Login</h1>
 
                 <form onSubmit={handleSubmit} className='form-login'>
@@ -172,15 +196,51 @@ export default function LoginPage() {
                 {showForgotPassword && (
                     <div className='forgot-password-popup'>
                         <div className='forgot-password-content'>
-                            <h2 className=''>Insira o seu E-mail</h2>
-                            <input
-                                type="email"
-                                placeholder="exemplo@gmail.com"
-                                value={forgotPasswordEmail}
-                                onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                            />
-                            <button onClick={handleForgotPassword}>Enviar</button>
-                            <button onClick={() => setShowForgotPassword(false)}>Fechar</button>
+                            <h2>Redefinir Senha</h2>
+                            <form onSubmit={handlePasswordReset}>
+                                <div className='text-field'>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        placeholder="Email cadastrado"
+                                        value={forgotPasswordData.email}
+                                        onChange={handleForgotPasswordChange}
+                                        style={{ borderColor: forgotPasswordErrors.email ? 'red' : '' }}
+                                    />
+                                    {forgotPasswordErrors.email && (
+                                        <p style={{ color: 'red', fontSize: '14px' }}>Email inválido</p>
+                                    )}
+                                </div>
+
+                                <div className='text-field'>
+                                    <input
+                                        type="password"
+                                        name="senhaNova"
+                                        placeholder="Nova senha (mínimo 6 caracteres)"
+                                        value={forgotPasswordData.senhaNova}
+                                        onChange={handleForgotPasswordChange}
+                                        style={{ borderColor: forgotPasswordErrors.senhaNova ? 'red' : '' }}
+                                    />
+                                    {forgotPasswordErrors.senhaNova && (
+                                        <p style={{ color: 'red', fontSize: '14px' }}>Mínimo 6 caracteres</p>
+                                    )}
+                                </div>
+
+                                <div className='button-group'>
+                                    <button type="submit" className='btn-confirm'>Redefinir Senha</button>
+                                    <button 
+                                        type="button" 
+                                        className='btn-cancel'
+                                        onClick={() => {
+                                            setShowForgotPassword(false);
+                                            setForgotPasswordData({ email: '', senhaNova: '' });
+                                            setForgotPasswordErrors({ email: false, senhaNova: false });
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 )}
