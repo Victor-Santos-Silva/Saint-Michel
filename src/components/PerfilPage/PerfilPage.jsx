@@ -8,6 +8,7 @@ import 'aos/dist/aos.css';
 function PerfilPage() {
     const [dadosUsuario, setDadosUsuario] = useState(null);
     const [editando, setEditando] = useState(false);
+    const [showDependenteModal, setShowDependenteModal] = useState(false);
     const { token, id } = useAuth();
 
     useEffect(() => {
@@ -61,6 +62,33 @@ function PerfilPage() {
         }
     };
 
+    const handleAdicionarDependente = async (e) => {
+        e.preventDefault();
+        try {
+            const novoDependente = {
+                nome: e.target.nome.value,
+                parentesco: e.target.parentesco.value,
+                dataNascimento: e.target.dataNascimento.value,
+                cpf: e.target.cpf.value,
+                tipoSanguineo: e.target.tipoSanguineo.value
+            };
+
+            await axios.post(`http://localhost:5000/paciente/${id}/dependentes`, novoDependente, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            // Atualiza os dados do usuário
+            const response = await axios.get(`http://localhost:5000/paciente/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            setDadosUsuario(response.data.usuario);
+            
+            setShowDependenteModal(false);
+        } catch (err) {
+            console.error("Erro ao adicionar dependente:", err);
+        }
+    };
+
     const handleCancel = () => setEditando(false);
 
     if (!dadosUsuario) {
@@ -69,6 +97,69 @@ function PerfilPage() {
 
     return (
         <div className='perfil-container' data-aos="fade-up">
+            {/* Pop-up com fundo desfocado */}
+            {showDependenteModal && (
+                <div className="modal-overlay" onClick={() => setShowDependenteModal(false)}>
+                    <div 
+                        className="popup-container" 
+                        onClick={(e) => e.stopPropagation()}
+                        data-aos="zoom-in"
+                    >
+                        <div className="popup-header">
+                            <h3>Adicionar Dependente</h3>
+                            <button 
+                                className="popup-close"
+                                onClick={() => setShowDependenteModal(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <form onSubmit={handleAdicionarDependente}>
+                            <div className='form-row'>
+                                <div className='form-group'>
+                                    <label>Nome Completo</label>
+                                    <input type="text" name="nome" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>Parentesco</label>
+                                    <input type="text" name="parentesco" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>Data de Nascimento</label>
+                                    <input type="date" name="dataNascimento" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>CPF</label>
+                                    <input type="text" name="cpf" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>RG</label>
+                                    <input type="text" name="cpf" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>Convênio</label>
+                                    <input type="text" name="cpf" required />
+                                </div>
+                                <div className='form-group'>
+                                    <label>Tipo Sanguíneo</label>
+                                    <input type="text" name="tipoSanguineo" required />
+                                </div>
+                            </div>
+                            <div className='button-group'>
+                                <button type="submit" className="btn-editar">Salvar</button>
+                                <button 
+                                    type="button" 
+                                    className="btn-editar"
+                                    onClick={() => setShowDependenteModal(false)}
+                                >
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             {editando ? (
                 <form 
                     className='edit-form' 
@@ -228,6 +319,13 @@ function PerfilPage() {
                             data-aos="zoom-in"
                         >
                             Editar Perfil
+                        </button>
+                        <button 
+                            className='btn-editar'
+                            onClick={() => setShowDependenteModal(true)}
+                            data-aos="zoom-in"
+                        >
+                            Adicionar Dependente
                         </button>
                     </div>
                 </div>

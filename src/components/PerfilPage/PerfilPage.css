@@ -226,3 +226,131 @@
     transform: translateX(30px);
     opacity: 0;
 }
+
+/* Estilos para o fundo desfocado */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-container {
+    background: #ffffffe5;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    height: 120%;
+    padding: 2rem;
+    animation: popupEntrance 0.3s ease-out;
+}
+
+@keyframes popupEntrance {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    color: #000000d8;
+    margin-top: 40px;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+    padding: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.popup-close:hover {
+    color: #333;
+}
+
+.btn-editar {
+    background: #3498db;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-editar:hover {
+    background: #2980b9;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.dados-grid-interno {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.dado-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.dado-item strong {
+    display: block;
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.dado-item span {
+    display: block;
+    color: #212529;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.user-header .user-info {
+    width: 140%;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.user-header .user-info h2 {
+    color: #ffffff;
+    font-size: 2em;
+}
+
+.user-header .user-info p {
+    margin: 5px 0 0;
+    color: #ffffff;
+    font-size: 0.95em;
+}
