@@ -1,126 +1,147 @@
 .container-page-cadastro {
   position: relative;
-}
-
-.formulario-cadastro {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: url('../../img/Paciente.png') no-repeat center center;
+  background-size: cover;
 }
 
 .container-formulario-cadastro {
-  position: absolute;
-  top: 20px;
-  right: 5%;
-  width: 35%;
-  padding: 2%;
-  text-align: justify;
-  background-color: #1f2b6c;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  background-color: rgba(31, 43, 108, 0.95);
   color: white;
   border-radius: 20px;
-  box-shadow: 0px 10px 40px #1f2b6c;
-
+  box-shadow: 0px 10px 40px rgba(31, 43, 108, 0.6);
+  box-sizing: border-box;
+  margin-left: 50%;
 }
 
 .title-cadastro {
   text-align: center;
   font-weight: 800;
-  letter-spacing: 4px;
-}
-
-.input-cadastro {
-  display: block;
-  background-color: #bfd2f8;
-  padding: 15px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
-  margin-top: 5px;
-}
-
-.input-cadastro::placeholder {
-  color: black;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
 }
 
 .text-field {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-
-.btn-cadastro {
-  width: 100%;
-  padding: 16px;
-  margin-top: 25px;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 4px;
-  font-size: 14px;
-  background-color: #bfd2f8;
-  color: black;
-  cursor: pointer;
-  box-shadow: 0px 10px 40px -12px #1f2b6c;
-  transition: 0.3s;
-  grid-column: span 2;
-  width: 100%;
-}
-
-.btn-cadastro:hover {
-  background-color: #1f2b6c;
-  color: white;
-}
-
-.container-imagem-fundo{
-  width:  90%;
-}
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  color: #333333;
-  max-width: 400px;
-  width: 90%;
-}
-
-.popup-content span {
-  font-size: 18px;
-  font-weight: 600;
-  display: block;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
-.popup-content button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: var(--color-light-hover);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+.text-field label {
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.9rem;
 }
 
-.popup-content button:hover {
-  background-color: #0056d2;
+.input-cadastro {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #bfd2f8;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.btn-prev,
+.btn-next,
+.btn-submit {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-prev {
+  background-color: #6c757d;
+  color: white;
+  margin-top: 8px;
+  height: 6vh;
+}
+
+.btn-next {
+  background-color: #4d56df;
+  color: white;
+}
+
+.btn-submit {
+  width: 100%;
+  height: 6vh;
+  background-color: #1db641 !important;
+  color: white;
+ align-items: center;
+}
+
+.btn-prev:hover {
+  background-color: #5a6268 ;
+}
+
+.btn-next:hover {
+  background-color: #3d46c5;
+}
+
+.btn-submit:hover {
+  background-color: #0b4115 !important;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.step-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.step-indicator.active {
+  background-color: #4d56df;
+}
+
+@media (max-width: 768px) {
+  .container-formulario-cadastro {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .title-cadastro {
+    font-size: 1.5rem;
+  }
+
+  .form-navigation {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-prev,
+  .btn-next,
+  .btn-submit {
+    width: 100%;
+  }
 }

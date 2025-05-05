@@ -3,11 +3,12 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './CadastroPage.css';
-import imagemFundo from '../../img/Paciente.png';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 function CadastroPage() {
     const navigate = useNavigate();
+    const [step, setStep] = useState(1);
 
     const [formData, setFormData] = useState({
         nomeCompleto: '',
@@ -27,12 +28,28 @@ function CadastroPage() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: name === 'cpf' || name === 'telefone' ? value.replace(/\D/g, '') : value,
+        setFormData(prev => ({
+            ...prev,
+            [name]: ['cpf', 'telefone'].includes(name) ? value.replace(/\D/g, '') : value,
             ...(name === "convenioMedico" && { planoConvenio: "" })
         }));
+    };
+
+    const nextStep = () => {
+        // Validação básica dos campos do passo atual
+        if (step === 1 && (!formData.nomeCompleto || !formData.dataDeNascimento || !formData.cpf)) {
+            toast.error("Preencha todos os campos antes de continuar");
+            return;
+        }
+        if (step === 2 && (!formData.endereco || !formData.telefone || !formData.email)) {
+            toast.error("Preencha todos os campos antes de continuar");
+            return;
+        }
+        setStep(step + 1);
+    };
+
+    const prevStep = () => {
+        setStep(step - 1);
     };
 
     const validateFields = () => {
@@ -78,18 +95,10 @@ function CadastroPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const validationError = validateFields();
+
         if (validationError) {
-            toast.error(validationError, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-            });
+            toast.error(validationError);
             return;
         }
 
@@ -98,49 +107,18 @@ function CadastroPage() {
                 '/img/pacienteOutro.png';
 
         try {
-            await axios.post('http://localhost:5000/paciente/cadastro', 
-                { ...formData, imagemGenero: generoImagem }, 
+            await axios.post('http://localhost:5000/paciente/cadastro',
+                { ...formData, imagemGenero: generoImagem },
                 { headers: { 'Content-Type': 'application/json' } }
             );
 
             toast.success('Cadastro realizado com sucesso!', {
-                position: "top-right",
-                autoClose: 900,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
                 onClose: () => navigate('/login')
-            });
-
-            setFormData({
-                nomeCompleto: '',
-                dataDeNascimento: '',
-                cpf: '',
-                rg: '',
-                genero: '',
-                endereco: '',
-                telefone: '',
-                convenioMedico: '',
-                planoConvenio: '',
-                tipoSanguineo: '',
-                email: '',
-                senha: '',
-                confirmar_senha: ''
             });
 
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Erro ao realizar cadastro';
-            toast.error(errorMessage, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-            });
+            toast.error(errorMessage);
         }
     };
 
@@ -155,117 +133,202 @@ function CadastroPage() {
         "Golden Cross": ["Essencial", "Clássico", "Especial"]
     };
 
-    return (
-        <div className='container-page-cadastro'>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
-            
-            <img src={imagemFundo} alt="Plano de Fundo" className="container-imagem-fundo" />
-
-            <div className='container-formulario-cadastro'>
-                <h1 className='title-cadastro'>Cadastro</h1>
-
-                <form onSubmit={handleSubmit} className='formulario-cadastro'>
-                    {[
-                        { label: "Nome Completo", name: "nomeCompleto", type: "text", placeholder: "Nome Completo" },
-                        { label: "Data de Nascimento", name: "dataDeNascimento", type: "date" },
-                        { label: "CPF", name: "cpf", type: "text", placeholder: "CPF", maxLength: "11" },
-                        { label: "RG", name: "rg", type: "text", placeholder: "RG", maxLength: "10" },
-                        { label: "Endereço", name: "endereco", type: "text", placeholder: "Endereço" },
-                        { label: "Telefone", name: "telefone", type: "text", placeholder: "Telefone", maxLength: "11" },
-                        { label: "Email", name: "email", type: "email", placeholder: "Email" },
-                        { label: "Senha", name: "senha", type: "password", placeholder: "Senha" },
-                        { label: "Confirmar Senha", name: "confirmar_senha", type: "password", placeholder: "Confirmar Senha" }
-                    ].map(({ label, name, type, placeholder, maxLength }) => (
-                        <div key={name} className='text-field'>
-                            <label>{label}</label>
-                            <input 
-                                type={type} 
-                                name={name} 
-                                placeholder={placeholder} 
-                                value={formData[name]} 
-                                onChange={handleChange} 
-                                maxLength={maxLength} 
-                                className='input-cadastro' 
+    const renderStep = () => {
+        switch (step) {
+            case 1:
+                return (
+                    <>
+                        <div className='text-field'>
+                            <label>Nome Completo</label>
+                            <input
+                                type="text"
+                                name="nomeCompleto"
+                                value={formData.nomeCompleto}
+                                onChange={handleChange}
+                                className='input-cadastro'
                             />
                         </div>
-                    ))}
-
-                    <div className='text-field'>
-                        <label>Gênero</label>
-                        <select 
-                            name="genero" 
-                            value={formData.genero} 
-                            onChange={handleChange} 
-                            className='input-cadastro'
-                        >
-                            <option value="">Selecione</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
-                            <option value="Outro">Outro</option>
-                        </select>
-                    </div>
-
-                    <div className='text-field'>
-                        <label>Convênio Médico</label>
-                        <select 
-                            name="convenioMedico" 
-                            value={formData.convenioMedico} 
-                            onChange={handleChange} 
-                            className='input-cadastro'
-                        >
-                            <option value="">Selecione um convênio</option>
-                            {Object.keys(convenios).map((convenio) => (
-                                <option key={convenio} value={convenio}>{convenio}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    {formData.convenioMedico && (
                         <div className='text-field'>
-                            <label>Plano do Convênio</label>
-                            <select 
-                                name="planoConvenio" 
-                                value={formData.planoConvenio} 
-                                onChange={handleChange} 
+                            <label>Data de Nascimento</label>
+                            <input
+                                type="date"
+                                name="dataDeNascimento"
+                                value={formData.dataDeNascimento}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>CPF</label>
+                            <input
+                                type="text"
+                                name="cpf"
+                                value={formData.cpf}
+                                onChange={handleChange}
+                                maxLength="11"
+                                className='input-cadastro'
+                            />
+                        </div>
+                    </>
+                );
+            case 2:
+                return (
+                    <>
+                        <div className='text-field'>
+                            <label>Endereço</label>
+                            <input
+                                type="text"
+                                name="endereco"
+                                value={formData.endereco}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>Telefone</label>
+                            <input
+                                type="text"
+                                name="telefone"
+                                value={formData.telefone}
+                                onChange={handleChange}
+                                maxLength="11"
+                                className='input-cadastro'
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            />
+                        </div>
+                    </>
+                );
+            case 3:
+                return (
+                    <>
+                        <div className='text-field'>
+                            <label>Gênero</label>
+                            <select
+                                name="genero"
+                                value={formData.genero}
+                                onChange={handleChange}
                                 className='input-cadastro'
                             >
-                                <option value="">Selecione um plano</option>
-                                {convenios[formData.convenioMedico].map((plano) => (
-                                    <option key={plano} value={plano}>{plano}</option>
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div className='text-field'>
+                            <label>Convênio Médico</label>
+                            <select
+                                name="convenioMedico"
+                                value={formData.convenioMedico}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            >
+                                <option value="">Selecione um convênio</option>
+                                {Object.keys(convenios).map(convenio => (
+                                    <option key={convenio} value={convenio}>{convenio}</option>
                                 ))}
                             </select>
                         </div>
-                    )}
+                        {formData.convenioMedico && (
+                            <div className='text-field'>
+                                <label>Plano do Convênio</label>
+                                <select
+                                    name="planoConvenio"
+                                    value={formData.planoConvenio}
+                                    onChange={handleChange}
+                                    className='input-cadastro'
+                                >
+                                    <option value="">Selecione um plano</option>
+                                    {convenios[formData.convenioMedico].map(plano => (
+                                        <option key={plano} value={plano}>{plano}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                    </>
+                );
+            case 4:
+                return (
+                    <>
+                        <div className='text-field'>
+                            <label>Senha</label>
+                            <input
+                                type="password"
+                                name="senha"
+                                value={formData.senha}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>Confirmar Senha</label>
+                            <input
+                                type="password"
+                                name="confirmar_senha"
+                                value={formData.confirmar_senha}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>Tipo Sanguíneo</label>
+                            <select
+                                name="tipoSanguineo"
+                                value={formData.tipoSanguineo}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                            >
+                                {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
+                                    <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
 
-                    <div className='text-field'>
-                        <label>Tipo Sanguíneo</label>
-                        <select 
-                            name="tipoSanguineo" 
-                            value={formData.tipoSanguineo} 
-                            onChange={handleChange} 
-                            className='input-cadastro'
-                        >
-                            {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
-                                <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
-                            ))}
-                        </select>
+    return (
+        <div className='container-page-cadastro'>
+            <ToastContainer />
+            
+            <div className='container-formulario-cadastro'>
+                <h1 className='title-cadastro'>Cadastro (Passo {step} de 4)</h1>
+
+                <form onSubmit={step === 4 ? handleSubmit : (e) => e.preventDefault()}>
+                    {renderStep()}
+
+                    <div className="form-navigation">
+                        {step > 1 && (
+                            <button type="button" className='btn-prev' onClick={prevStep}>
+                                Voltar
+                            </button>
+                        )}
+                        {step < 4 ? (
+                            <button type="button" className='btn-next' onClick={nextStep}>
+                                Próximo
+                            </button>
+                        ) : (
+                            <button type="submit" className='btn-submit'>
+                                Finalizar Cadastro
+                            </button>
+                        )}
                     </div>
-
-                    <button type="submit" className='btn-cadastro'>Cadastrar</button>
                 </form>
             </div>
         </div>
+        
     );
 }
 

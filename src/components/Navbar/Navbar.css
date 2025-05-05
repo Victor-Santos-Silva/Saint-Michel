@@ -157,6 +157,7 @@
 
 .foto-de-Perfil{
   width: 20px;
+  cursor: pointer;
 }
 .contador-notificacao {
   position: absolute;

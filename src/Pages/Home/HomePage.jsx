@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'aos/dist/aos.css';
@@ -46,8 +46,6 @@ const especialidades = [
 ];
 
 const HomePage = () => {
-    const [darkMode, setDarkMode] = useState(false);
-
     useEffect(() => {
         Aos.init({ duration: 1000, once: true, easing: "ease-in-out" });
     }, []);
@@ -55,11 +53,7 @@ const HomePage = () => {
     return (
         <>
             <Navbar />
-            <div className={`homepage ${darkMode ? 'dark' : ''}`}>
-                <button className='toggle-theme' onClick={() => setDarkMode(!darkMode)}>
-                    {darkMode ? '🌞 Claro' : '🌙 Escuro'}
-                </button>
-
+            <div className='homepage'>
                 <div className='carrossel' data-aos="fade-up">
                     <Carousel>
                         <Carousel.Item>
