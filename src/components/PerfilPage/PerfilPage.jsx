@@ -320,6 +320,7 @@ function PerfilPage() {
                         >
                             Editar Perfil
                         </button>
+                        <br /><br />
                         <button 
                             className='btn-editar'
                             onClick={() => setShowDependenteModal(true)}

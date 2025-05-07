@@ -105,11 +105,7 @@
     border: 2px solid white;
 }
 
-.user-info h2 {
-    color: #ffffff;
-    font-size: 1.6rem;
-    margin-bottom: 0.25rem;
-}
+
 
 .user-info p {
     color: #ffffff;
@@ -119,7 +115,7 @@
 .btn-editar {
     background: #3498db;
     color: white;
-    padding: 0.8rem 1.5rem;
+    padding: 0.6rem 1.5rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -246,10 +242,13 @@
     background: #ffffffe5;
     border-radius: 10px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    height: 120%;
-    padding: 2rem;
+    width: 600px;
+    max-height: 60vh;
+    padding: 1.5rem;
     animation: popupEntrance 0.3s ease-out;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes popupEntrance {
@@ -267,10 +266,9 @@
     display: flex;
     justify-content: space-between;
     color: #000000d8;
-    margin-top: 40px;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem 1rem;
     border-bottom: 1px solid #eee;
 }
 
@@ -289,29 +287,43 @@
     color: #333;
 }
 
-.btn-editar {
-    background: #3498db;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-editar:hover {
-    background: #2980b9;
-}
-
-.button-group {
+/* BOTÕES ATUALIZADOS AQUI */
+.popup-container .button-group {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     margin-top: 2rem;
+    justify-content: flex-end;
+}
+
+.popup-container .btn-editar {
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    color: #3857b3;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 8px rgba(108, 142, 255, 0.2);
+    margin: 0;
+}
+
+.popup-container .btn-editar:hover {
+    background: linear-gradient(145deg, #00000023, #00000036);
+    transform: translateY(-1px);
+    color: white;
+    box-shadow: 0 5px 15px rgba(108, 142, 255, 0.3);
+}
+
+.popup-container .btn-editar:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(108, 142, 255, 0.2);
 }
 
 .dados-grid-interno {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     width: 100%;
     margin-top: 20px;
@@ -353,4 +365,29 @@
     margin: 5px 0 0;
     color: #ffffff;
     font-size: 0.95em;
+}
+
+@media (max-width: 768px) {
+    .popup-container {
+        width: 90%;
+        padding: 1rem;
+    }
+    
+    .dados-grid-interno {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .popup-container {
+        width: 95%;
+    }
+    
+    .user-info h2 {
+        font-size: 1.4rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
 }
