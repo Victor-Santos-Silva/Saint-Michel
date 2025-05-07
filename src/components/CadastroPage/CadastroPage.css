@@ -1,137 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .container-page-cadastro {
   position: relative;
   width: 100%;
-  height: 80vh;
+  height: 75vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  background: url('../../img/Paciente.png') no-repeat center center;
+  background:url('../../img/Paciente.png') no-repeat center center;
   background-size: cover;
+  font-family: 'Poppins', sans-serif;
 }
 
 .container-formulario-cadastro {
   width: 100%;
-  max-width: 500px;
-  padding: 30px;
-  background-color: rgba(31, 43, 108, 0.95);
-  color: white;
+  max-width: 550px;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #1F2B6C;
   border-radius: 20px;
-  box-shadow: 0px 10px 40px rgba(31, 43, 108, 0.6);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  margin-left: 50%;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.6s ease-out;
+  margin: 0 auto;
+  margin-left: 70%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .title-cadastro {
   text-align: center;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-bottom: 30px;
-  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 35px;
+  font-size: 2rem;
+  color: #1F2B6C;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.title-cadastro::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #4d56df, #1db641);
+  border-radius: 3px;
 }
 
 .text-field {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .text-field label {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #1F2B6C;
+  margin-left: 5px;
 }
 
 .input-cadastro {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background-color: #bfd2f8;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 2px solid #e0e4f5;
+  background-color: #f8f9ff;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  color: #1F2B6C;
+  font-family: 'Poppins', sans-serif;
 }
 
+.input-cadastro:focus {
+  outline: none;
+  border-color: #4d56df;
+  box-shadow: 0 0 0 3px rgba(77, 86, 223, 0.2);
+  background-color: white;
+}
+
+.input-cadastro::placeholder {
+  color: #a0a5c0;
+  opacity: 1;
+}
+
+/* Navegação do formulário */
 .form-navigation {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.nav-buttons-group {
+  display: flex;
+  gap: 15px;
 }
 
 .btn-prev,
 .btn-next,
 .btn-submit {
-  padding: 12px 25px;
+  padding: 14px 28px;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-prev {
   background-color: #6c757d;
   color: white;
-  margin-top: 8px;
-  height: 6vh;
 }
 
 .btn-next {
-  background-color: #4d56df;
+  background: linear-gradient(135deg, #4d56df, #6a75ff);
   color: white;
+  box-shadow: 0 4px 15px rgba(77, 86, 223, 0.3);
+  margin-left: auto; /* Alinha apenas o Próximo à direita */
 }
 
 .btn-submit {
-  width: 100%;
-  height: 6vh;
-  background-color: #1db641 !important;
+  width: 50%;
+  background:  #1F2B6C;
   color: white;
- align-items: center;
 }
 
 .btn-prev:hover {
-  background-color: #5a6268 ;
+  background-color: #5a6268;
+  transform: translateY(-2px);
 }
 
 .btn-next:hover {
-  background-color: #3d46c5;
+  background: linear-gradient(135deg, #3d46c5, #5863e8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(77, 86, 223, 0.4);
 }
 
 .btn-submit:hover {
-  background-color: #0b4115 !important;
+  background: gray;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 182, 65, 0.4);
 }
 
-.progress-steps {
+select.input-cadastro {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F2B6C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 15px;
+  padding-right: 40px;
+}
+
+.progress-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .step-indicator {
-  width: 30px;
-  height: 30px;
+  position: relative;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background-color: #6c757d;
-  color: white;
+  background-color: #e0e4f5;
+  color: #6c757d;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px;
+  margin: 0 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 1;
 }
 
 .step-indicator.active {
+  background: linear-gradient(135deg, #4d56df, #6a75ff);
+  color: white;
+  box-shadow: 0 4px 10px rgba(77, 86, 223, 0.3);
+}
+
+.step-indicator.completed {
+  background-color: #1db641;
+  color: white;
+}
+
+.step-connector {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  width: 20px;
+  height: 2px;
+  background-color: #e0e4f5;
+}
+
+.step-connector.active {
   background-color: #4d56df;
 }
 
+.step-connector.completed {
+  background-color: #1db641;
+}
+
 @media (max-width: 768px) {
+  .container-page-cadastro {
+    padding: 15px;
+    align-items: flex-start;
+    min-height: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
   .container-formulario-cadastro {
-    padding: 20px;
-    max-width: 90%;
+    padding: 30px 20px;
+    max-width: 95%;
   }
 
   .title-cadastro {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
   }
 
   .form-navigation {
@@ -139,9 +245,37 @@
     gap: 10px;
   }
 
+  .nav-buttons-group {
+    width: 100%;
+    order: 1;
+  }
+
+  .btn-next {
+    margin-left: 0;
+  }
+
   .btn-prev,
   .btn-next,
   .btn-submit {
     width: 100%;
+    padding: 12px;
+  }
+
+  .btn-submit {
+    order: 2;
   }
 }
+
+@media (max-width: 480px) {
+  .title-cadastro {
+    font-size: 1.4rem;
+  }
+  
+  .input-cadastro {
+    padding: 12px 14px;
+  }
+  
+  .text-field label {
+    font-size: 0.9rem;
+  }
+} 

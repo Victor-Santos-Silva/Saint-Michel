@@ -1,18 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+
 :root {
   --primary-font: "Yeseva One", serif;
+  --second-font: "Poppins", sans-serif;
   --color-dark-blue: #1F2B6C;
-  --color-dark-hover: #1f2b6ca8;
-  --color-blue-contact: #0056b3;
-  --color-hover: #4b5dff9d;
-  --color-cadastro-hover: #4687ff;
-  --color-text: #fff;
-  --color-top-gray: #4a4a4a;
+  --color-light-blue: #159EEC;
+  --color-azul-claro: #BFD2F8;
+  --color-white: #FFFFFF;
+  --color-text: #212124;
+  --color-error: #ff3333;
+  --color-shadow: rgba(31, 43, 108, 0.4);
+  --color-notification: #ff4757;
+  --color-gray-light: #f1f1f1;
 }
 
-/* General Styles */
+/* Reset e Estilos Gerais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--second-font);
+}
+
+/* Header */
 .header {
   width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Top Bar */
@@ -21,32 +39,38 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 40px;
-  background-color: #f9f9f9;
+  background-color: var(--color-white);
   font-size: 14px;
-  color: var(--color-top-gray);
+  color: #4a4a4a;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
   width: 15%;
+  min-width: 150px;
 }
 
 .logo-img {
   width: 100%;
   max-width: 290px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.03);
 }
 
 .contact-info {
   display: flex;
   gap: 30px;
-  color: var(--color-blue-contact);
 }
 
 .info-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: var(--color-dark-blue);
+  font-weight: 500;
 }
 
 .icon-img {
@@ -59,9 +83,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to right, #2650d8, #1F2B6C);
+  background: linear-gradient(to right, #2650d8, var(--color-dark-blue));
   padding: 12px 40px;
-  color: var(--color-text);
+  color: var(--color-white);
 }
 
 .nav-links {
@@ -70,195 +94,303 @@
 }
 
 .nav-links a {
+  font-family: var(--second-font);
   font-size: 16px;
-  color: var(--color-text);
+  color: var(--color-white);
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 15px;
-  transition: background-color 0.3s, transform 0.2s;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover {
-  background-color: var(--color-dark-hover);
+  background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
-/* Login & Cadastro Buttons */
+/* Container Login/Cadastro */
 .container-login-cadastro {
   display: flex;
   gap: 15px;
   align-items: center;
 }
 
+/* Botões */
 .login-button,
-.cadastro-button,
-.btn-sair-perfil{
+.cadastro-button {
   padding: 10px 24px;
   border-radius: 25px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
-  text-align: center;
-  color: var(--color-text);
-  background-color: var(--color-hover);
-  transition: background-color 0.3s, transform 0.2s;
-  cursor: pointer;
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
 }
 
 .login-button:hover,
-.cadastro-button:hover,
-.btn-sair-perfil:hover{
-  background-color: var(--color-cadastro-hover);
-  transform: translateY(-3px);
-}
-
-/* Botão de Sair 
-.btn-sair-perfil {
-  padding: 10px 24px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  color: var(--color-text);
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 10px rgba(255, 65, 108, 0.3);
-}
-
-.btn-sair-perfil:hover {
-  background: linear-gradient(135deg, #ff3a1e, #ff3060);
+.cadastro-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(255, 65, 108, 0.4);
 }
 
-.btn-sair-perfil:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 6px rgba(255, 65, 108, 0.2);
-} */
-
-
-/* Perfil do usuário */
+/* Perfil do Usuário */
 .perfil-usuario {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .nome-usuario {
-  font-weight: bold;
-  text-transform: uppercase;
-  color: var(--color-text);
-  margin: 0;
+  font-family: var(--second-font);
+  font-weight: 600;
+  color: var(--color-white);
+  text-transform: capitalize;
 }
 
-
-.foto-de-Perfil{
-  width: 20px;
-  cursor: pointer;
-}
-.contador-notificacao {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #ff4757;
-  color: white;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: bold;
-}
+/* Notificações */
 .notificacao-container {
   position: relative;
-  margin-right: 15px;
 }
 
 .botao-notificacao {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
-  position: relative;
+  padding: 8px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
+.botao-notificacao:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
 
-/* Lista de notificações */
+.botao-notificacao svg {
+  color: var(--color-white);
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+.contador-notificacao {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--color-notification);
+  color: var(--color-white);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
 .lista-notificacoes {
   position: absolute;
   right: 0;
-  top: 100%;
-  width: 300px;
+  top: 50px;
+  width: 320px;
   max-height: 400px;
   overflow-y: auto;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  transform-origin: top right;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.mostrar-notificacoes .lista-notificacoes {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .notificacao-item {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-gray-light);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
+.notificacao-item:last-child {
+  border-bottom: none;
+}
+
 .notificacao-item.nao-lida {
-  background-color: #f8f9fa;
+  background-color: #f8f9ff;
 }
 
 .notificacao-item:hover {
-  background-color: #f1f1f1;
+  background-color: var(--color-gray-light);
 }
 
 .notificacao-conteudo {
-  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .notificacao-titulo {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
+  font-weight: 600;
+  color: var(--color-dark-blue);
 }
 
 .notificacao-mensagem {
   font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 5px;
+  color: var(--color-text);
 }
 
 .notificacao-data {
-  font-size: 0.7rem;
-  color: #999;
-  text-align: right;
+  font-size: 0.75rem;
+  color: #666;
+  align-self: flex-end;
 }
 
 .sem-notificacoes {
-  padding: 15px;
+  padding: 20px;
   text-align: center;
-  color: #777;
+  color: #666;
 }
 
 .limpar-notificacoes {
   width: 100%;
-  padding: 8px;
-  background-color: #f8f9fa;
+  padding: 10px;
+  background-color: var(--color-azul-claro);
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-gray-light);
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  color: var(--color-dark-blue);
+  transition: all 0.2s ease;
 }
 
 .limpar-notificacoes:hover {
-  background-color: #e9ecef;
+  background-color: #e0e4f5;
+}
+
+/* Foto de Perfil */
+.foto-de-Perfil {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid var(--color-white);
+  transition: all 0.3s ease;
+}
+
+.foto-de-Perfil:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Botão Sair */
+.btn-sair-perfil {
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-sair-perfil:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .top-bar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  .contact-info {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .navbar {
+    padding: 12px 20px;
+  }
+  
+  .nav-links {
+    gap: 10px;
+  }
+  
+  .nav-links a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .container-login-cadastro {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .lista-notificacoes {
+    width: 280px;
+    right: -50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-bar {
+    padding: 10px;
+  }
+  
+  .logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .contact-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .perfil-usuario {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .lista-notificacoes {
+    width: 250px;
+    right: -80px;
+  }
 }

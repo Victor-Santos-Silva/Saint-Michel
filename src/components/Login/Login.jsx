@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import imagemFundo from '../../img/planoDeFundo.png';
+import imagemFundo from '../../img/Paciente.png';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 
@@ -54,15 +54,7 @@ export default function LoginPage() {
         e.preventDefault();
 
         if (!formData.email || !formData.senha) {
-            toast.error('Preencha todos os campos!', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-            });
+            toast.error('Preencha todos os campos!');
             setError({ email: !formData.email, senha: !formData.senha });
             return;
         }
@@ -73,36 +65,19 @@ export default function LoginPage() {
             setFormData({ email: '', senha: '' });
 
             toast.success('Login realizado com sucesso!', {
-                position: "top-right",
-                autoClose: 900,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
                 onClose: () => navigate('/')
             });
 
         } catch (error) {
             console.error('Erro no login:', error.response?.data?.error || error.message);
             setError({ email: true, senha: true });
-
-            toast.error(error.response?.data?.error || 'Erro no login. Tente novamente.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-            });
+            toast.error(error.response?.data?.error || 'Erro no login. Tente novamente.');
         }
     };
 
     const handlePasswordReset = async (e) => {
         e.preventDefault();
 
-        // Validações
         const errors = {
             email: !forgotPasswordData.email,
             senhaNova: !forgotPasswordData.senhaNova || forgotPasswordData.senhaNova.length < 6
@@ -123,7 +98,7 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await axios.patch('http://localhost:5000/paciente/esqueciSenha', {
+            await axios.patch('http://localhost:5000/paciente/esqueciSenha', {
                 email: forgotPasswordData.email,
                 senhaNova: forgotPasswordData.senhaNova
             });
@@ -132,15 +107,13 @@ export default function LoginPage() {
             setShowForgotPassword(false);
             setForgotPasswordData({ email: '', senhaNova: '' });
         } catch (error) {
-            const errorMsg = error.response?.data?.error || 'Erro ao redefinir senha';
-            toast.error(errorMsg);
+            toast.error(error.response?.data?.error || 'Erro ao redefinir senha');
         }
     };
 
     return (
-        <>
-            <img src={imagemFundo} alt="imagem de fundo" className='imagem-fundo-login' />
-            <div className='container-login'>
+        <div className='container-page-login'>
+            <div className='container-formulario-login'>
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -154,12 +127,12 @@ export default function LoginPage() {
                     theme="colored"
                 />
 
-                <h1 className='title-cadastro'>Login</h1>
+                <h1 className='title-login'>Login</h1>
 
                 <form onSubmit={handleSubmit} className='form-login'>
                     <div className='text-field'>
                         <input
-                            className='input-cadastro'
+                            className='input-login'
                             type="text"
                             name="email"
                             placeholder="Email"
@@ -167,12 +140,12 @@ export default function LoginPage() {
                             onChange={handleChange}
                             style={{ borderColor: error.email ? 'red' : '' }}
                         />
-                        {error.email && <p style={{ color: 'red', fontSize: '14px' }}>Campo obrigatório</p>}
+                        {error.email && <p className="error-message">Campo obrigatório</p>}
                     </div>
 
                     <div className='text-field'>
                         <input
-                            className='input-cadastro'
+                            className='input-login'
                             type="password"
                             name="senha"
                             placeholder="Senha"
@@ -180,10 +153,10 @@ export default function LoginPage() {
                             onChange={handleChange}
                             style={{ borderColor: error.senha ? 'red' : '' }}
                         />
-                        {error.senha && <p style={{ color: 'red', fontSize: '14px' }}>Campo obrigatório</p>}
+                        {error.senha && <p className="error-message">Campo obrigatório</p>}
                     </div>
 
-                    <button className='btn-cadastro'>Entrar</button>
+                    <button type="submit" className='btn-login'>Entrar</button>
                 </form>
 
                 <button
@@ -200,6 +173,7 @@ export default function LoginPage() {
                             <form onSubmit={handlePasswordReset}>
                                 <div className='text-field'>
                                     <input
+                                        className='input-login'
                                         type="email"
                                         name="email"
                                         placeholder="Email cadastrado"
@@ -208,12 +182,13 @@ export default function LoginPage() {
                                         style={{ borderColor: forgotPasswordErrors.email ? 'red' : '' }}
                                     />
                                     {forgotPasswordErrors.email && (
-                                        <p style={{ color: 'red', fontSize: '14px' }}>Email inválido</p>
+                                        <p className="error-message">Email inválido</p>
                                     )}
                                 </div>
 
                                 <div className='text-field'>
                                     <input
+                                        className='input-login'
                                         type="password"
                                         name="senhaNova"
                                         placeholder="Nova senha (mínimo 6 caracteres)"
@@ -222,7 +197,7 @@ export default function LoginPage() {
                                         style={{ borderColor: forgotPasswordErrors.senhaNova ? 'red' : '' }}
                                     />
                                     {forgotPasswordErrors.senhaNova && (
-                                        <p style={{ color: 'red', fontSize: '14px' }}>Mínimo 6 caracteres</p>
+                                        <p className="error-message">Mínimo 6 caracteres</p>
                                     )}
                                 </div>
 
@@ -245,6 +220,6 @@ export default function LoginPage() {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }

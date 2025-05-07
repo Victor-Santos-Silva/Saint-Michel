@@ -218,16 +218,20 @@ function CadastroPage() {
                             />
                         </div>
                         <div className='text-field'>
-                            <label>Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
+                            <label>Tipo Sanguíneo</label>
+                            <select
+                                name="tipoSanguineo"
+                                value={formData.tipoSanguineo}
                                 onChange={handleChange}
                                 className='input-cadastro'
                                 required
-                            />
+                            >
+                                {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
+                                    <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
+                                ))}
+                            </select>
                         </div>
+                       
                     </>
                 );
             case 3:
@@ -285,6 +289,18 @@ function CadastroPage() {
             case 4:
                 return (
                     <>
+
+                        <div className='text-field'>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className='input-cadastro'
+                                required
+                            />
+                        </div>
                         <div className='text-field'>
                             <label>Senha</label>
                             <input
@@ -307,20 +323,7 @@ function CadastroPage() {
                                 required
                             />
                         </div>
-                        <div className='text-field'>
-                            <label>Tipo Sanguíneo</label>
-                            <select
-                                name="tipoSanguineo"
-                                value={formData.tipoSanguineo}
-                                onChange={handleChange}
-                                className='input-cadastro'
-                                required
-                            >
-                                {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
-                                    <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
-                                ))}
-                            </select>
-                        </div>
+                        
                     </>
                 );
             default:

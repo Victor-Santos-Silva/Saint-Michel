@@ -1,115 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-:root {
-    --primary-font: "Yeseva One", serif;
-    --second-font: "Ysabeau Infant", serif;
-    --color-dark-blue: #1F2B6C;
-    --color-dark-hover: #1f2b6ca8;
-    --color-blue-contact: #0056b3;
-    --color-hover: #4b5dff9d;
-    --color-cadastro-hover: #4687ff;
-    --color-text: #fff;
-    --color-top-gray: #4a4a4a;
-  }
-  
-
-.imagem-fundo-login {
-    object-fit: cover;
-    height: 70vh;
+/* Estilos base */
+.container-page-login {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: url('../../img/Paciente.png') no-repeat center center;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
 }
 
-.container-login {
-    width: 30%;
-    position: absolute;
-    top: 30%;
-    right: 10%;
-    background-color: #1f2b6c;
-    padding: 2%;
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-
+.container-formulario-login {
+  width: 100%;
+  max-width: 550px;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #1F2B6C;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.6s ease-out;
+  margin: 0 auto;
+  margin-left: 70%;
 }
 
-.form-login {
-    margin-top: 10%;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.btn-cadastro {
-    width: 100%;
-    padding: 16px;
-    margin-top: 25px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 4px;
-    font-size: 14px;
-    background-color: #bfd2f8;
-    color: black;
-    cursor: pointer;
-    box-shadow: 0px 10px 40px -12px #1f2b6c;
-    transition: 0.3s;
+.title-login {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 35px;
+  font-size: 2rem;
+  color: #1F2B6C;
+  position: relative;
+  padding-bottom: 10px;
 }
 
+.title-login::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #4d56df, #1db641);
+  border-radius: 3px;
+}
+
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.text-field label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #1F2B6C;
+  margin-left: 5px;
+}
+
+.input-login {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 2px solid #e0e4f5;
+  background-color: #f8f9ff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  color: #1F2B6C;
+  font-family: 'Poppins', sans-serif;
+}
+
+.input-login:focus {
+  outline: none;
+  border-color: #4d56df;
+  box-shadow: 0 0 0 3px rgba(77, 86, 223, 0.2);
+  background-color: white;
+}
+
+.input-login::placeholder {
+  color: #a0a5c0;
+  opacity: 1;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4d56df, #6a75ff);
+  color: white;
+  box-shadow: 0 4px 15px rgba(77, 86, 223, 0.3);
+  margin-top: 20px;
+  margin: auto;
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #3d46c5, #5863e8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(77, 86, 223, 0.4);
+}
 
 .btn-forgot-password {
-    margin-top: 10px;
-    background: none;
-    border: none;
-    color: #bfd2f8;
-    cursor: pointer;
-    text-decoration: underline;
+  margin-top: 15px;
+  background: none;
+  border: none;
+  color: #4d56df;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
+.btn-forgot-password:hover {
+  color: #3d46c5;
+  text-decoration: underline;
+}
+
+/* Popup de esqueci a senha */
 .forgot-password-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .forgot-password-content {
-    background-color: white;
-    padding: 20px;
-    opacity: 92%;
-    border-radius: 10px;
-    text-align: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .forgot-password-content h2 {
-    margin-bottom: 20px;
-    color: #1f2b6c;
+  color: #1F2B6C;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  position: relative;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
-.forgot-password-content input {
+.forgot-password-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #4d56df, #1db641);
+  border-radius: 3px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn-confirm {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(135deg, #4d56df, #6a75ff);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm:hover {
+  background: linear-gradient(135deg, #3d46c5, #5863e8);
+  transform: translateY(-2px);
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 14px;
+  background: #f8f9ff;
+  color: #1F2B6C;
+  border: 2px solid #e0e4f5;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: #e0e4f5;
+  transform: translateY(-2px);
+}
+
+/* Mensagens de erro */
+.text-field p {
+  color: #ff3333;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container-page-login {
+    padding: 15px;
+    align-items: flex-start;
+    min-height: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    height: auto;
+  }
+
+  .container-formulario-login {
+    padding: 30px 20px;
+    max-width: 95%;
+    margin-left: auto;
+  }
+
+  .title-login {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn-confirm,
+  .btn-cancel {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  }
 }
 
-.forgot-password-content button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #1f2b6c;
-    color: white;
+@media (max-width: 480px) {
+  .title-login {
+    font-size: 1.4rem;
+  }
+  
+  .input-login {
+    padding: 12px 14px;
+  }
+  
+  .text-field label {
+    font-size: 0.9rem;
+  }
+  
+  .forgot-password-content {
+    padding: 20px 15px;
+  }
 }
-
-.forgot-password-content button:hover {
-    background-color: #159EEC;
-}
-
-.title-email{
-    font-family: var(--second-font);
-}
-

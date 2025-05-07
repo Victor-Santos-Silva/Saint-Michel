@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Navbar() {
   const { isLoggedIn, nomeCompleto, logout } = useAuth();
   const navigate = useNavigate();
-  
+
   const [notificacoes, setNotificacoes] = useState([]);
   const [notificacoesNaoLidas, setNotificacoesNaoLidas] = useState(0);
   const [mostrarNotificacoes, setMostrarNotificacoes] = useState(false);
@@ -42,7 +42,7 @@ export default function Navbar() {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setNotificacoes(data);
@@ -138,18 +138,18 @@ export default function Navbar() {
           {isLoggedIn ? (
             <div className="perfil-usuario">
               <p className="nome-usuario">Olá, {nomeCompleto}</p>
-              
+
               <div className="notificacao-container">
-                <button 
+                <button
                   className="botao-notificacao"
                   onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
                 >
-                  <FaBell 
-                    size={20} 
-                    style={{ 
+                  <FaBell
+                    size={20}
+                    style={{
                       color: 'white',
                       filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))'
-                    }} 
+                    }}
                   />
                   {notificacoesNaoLidas > 0 && (
                     <span className="contador-notificacao">
@@ -157,14 +157,14 @@ export default function Navbar() {
                     </span>
                   )}
                 </button>
-                
+
                 {mostrarNotificacoes && (
                   <div className="lista-notificacoes">
                     {notificacoes.length > 0 ? (
                       <>
                         {notificacoes.map((notificacao) => (
-                          <div 
-                            key={notificacao.id} 
+                          <div
+                            key={notificacao.id}
                             className={`notificacao-item ${notificacao.lida ? '' : 'nao-lida'}`}
                             onClick={() => marcarComoLida(notificacao.id)}
                           >
@@ -177,7 +177,7 @@ export default function Navbar() {
                             </div>
                           </div>
                         ))}
-                        <button 
+                        <button
                           className="limpar-notificacoes"
                           onClick={limparNotificacoes}
                         >
@@ -197,7 +197,7 @@ export default function Navbar() {
                 src={fotoPerfil}
                 alt="foto-perfil"
                 className="foto-de-Perfil"
-                onClick={() => navigate('/perfil')} 
+                onClick={() => navigate('/perfil')}
               />
               <button onClick={logout} className="btn-sair-perfil">
                 Sair
