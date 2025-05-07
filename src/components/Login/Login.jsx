@@ -183,7 +183,7 @@ export default function LoginPage() {
                         {error.senha && <p style={{ color: 'red', fontSize: '14px' }}>Campo obrigatório</p>}
                     </div>
 
-                    <button className='btn-cadastro'>Logar</button>
+                    <button className='btn-cadastro'>Entrar</button>
                 </form>
 
                 <button

@@ -30,14 +30,14 @@ function CadastroPage() {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: ['cpf', 'telefone'].includes(name) ? value.replace(/\D/g, '') : value,
+            [name]: ['cpf', 'telefone', 'rg'].includes(name) ? value.replace(/\D/g, '') : value,
             ...(name === "convenioMedico" && { planoConvenio: "" })
         }));
     };
 
     const nextStep = () => {
         // Validação básica dos campos do passo atual
-        if (step === 1 && (!formData.nomeCompleto || !formData.dataDeNascimento || !formData.cpf)) {
+        if (step === 1 && (!formData.nomeCompleto || !formData.dataDeNascimento || !formData.cpf || !formData.rg)) {
             toast.error("Preencha todos os campos antes de continuar");
             return;
         }
@@ -74,7 +74,12 @@ function CadastroPage() {
         
         const birthDate = new Date(dataDeNascimento);
         const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
         if (age < 18 || isNaN(birthDate.getTime())) return "Você deve ter pelo menos 18 anos para se cadastrar.";
         if (cpf.length !== 11) return "CPF deve ter 11 dígitos.";
         if (rg.length < 7 || rg.length > 10) return "RG deve ter entre 7 e 10 dígitos.";
@@ -146,6 +151,7 @@ function CadastroPage() {
                                 value={formData.nomeCompleto}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -156,6 +162,7 @@ function CadastroPage() {
                                 value={formData.dataDeNascimento}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -167,6 +174,19 @@ function CadastroPage() {
                                 onChange={handleChange}
                                 maxLength="11"
                                 className='input-cadastro'
+                                required
+                            />
+                        </div>
+                        <div className='text-field'>
+                            <label>RG</label>
+                            <input
+                                type="text"
+                                name="rg"
+                                value={formData.rg}
+                                onChange={handleChange}
+                                maxLength="10"
+                                className='input-cadastro'
+                                required
                             />
                         </div>
                     </>
@@ -182,6 +202,7 @@ function CadastroPage() {
                                 value={formData.endereco}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -193,6 +214,7 @@ function CadastroPage() {
                                 onChange={handleChange}
                                 maxLength="11"
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -203,6 +225,7 @@ function CadastroPage() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                     </>
@@ -217,6 +240,7 @@ function CadastroPage() {
                                 value={formData.genero}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             >
                                 <option value="">Selecione</option>
                                 <option value="Masculino">Masculino</option>
@@ -231,6 +255,7 @@ function CadastroPage() {
                                 value={formData.convenioMedico}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             >
                                 <option value="">Selecione um convênio</option>
                                 {Object.keys(convenios).map(convenio => (
@@ -246,6 +271,7 @@ function CadastroPage() {
                                     value={formData.planoConvenio}
                                     onChange={handleChange}
                                     className='input-cadastro'
+                                    required
                                 >
                                     <option value="">Selecione um plano</option>
                                     {convenios[formData.convenioMedico].map(plano => (
@@ -267,6 +293,7 @@ function CadastroPage() {
                                 value={formData.senha}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -277,6 +304,7 @@ function CadastroPage() {
                                 value={formData.confirmar_senha}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             />
                         </div>
                         <div className='text-field'>
@@ -286,6 +314,7 @@ function CadastroPage() {
                                 value={formData.tipoSanguineo}
                                 onChange={handleChange}
                                 className='input-cadastro'
+                                required
                             >
                                 {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
                                     <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
@@ -327,8 +356,8 @@ function CadastroPage() {
                     </div>
                 </form>
             </div>
+            
         </div>
-        
     );
 }
 
