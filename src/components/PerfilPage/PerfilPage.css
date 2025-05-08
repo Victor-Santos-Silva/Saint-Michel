@@ -5,12 +5,7 @@
     --primary-font: "Yeseva One", serif;
     --second-font: "Ysabeau Infant", serif;
     --color-dark-blue: #1F2B6C;
-    --color-dark-hover: #1f2b6ca8;
-    --color-blue-contact: #0056b3;
-    --color-hover: #4b5dff9d;
-    --color-cadastro-hover: #4687ff;
     --color-text: #fff;
-    --color-top-gray: #4a4a4a;
 }
 
 .perfil-container {
@@ -20,20 +15,16 @@
     font-family: 'Segoe UI', sans-serif;
     background: var(--color-dark-blue);
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     color: white;
     min-height: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .profile-content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 200px 1fr;
     gap: 2rem;
     align-items: start;
-}
-
-.right-section {
-    padding-top: 1rem;
 }
 
 .user-header {
@@ -42,14 +33,19 @@
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .imagem-profile {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 4px solid #1F2B6C;
-    margin-bottom: 1rem;
+    border: 2px solid white;
+    margin-bottom: 1.5rem;
 }
 
 .dados-grid {
@@ -78,54 +74,30 @@
     word-break: break-word;
 }
 
-.profile-content {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 2rem;
-    align-items: start;
-}
-
-.user-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
 .user-info {
-    order: 2;
+    color: #ffffff;
 }
-
-.imagem-profile {
-    order: 1;
-    margin-bottom: 1.5rem;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-
 
 .user-info p {
-    color: #ffffff;
     font-size: 1.1rem;
 }
 
 .btn-editar {
-    background: #3498db;
-    color: white;
-    padding: 0.6rem 1.5rem;
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    color: #3857b3;
+    padding: 0.8rem 2rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-left: 20%;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 .btn-editar:hover {
-    background: #2980b9;
-    transform: translateY(-2px);
+    background: linear-gradient(145deg, #ffffff2d, #ffffff36);
+    color: white;
+    transform: translateY(-1px);
 }
 
 .edit-form {
@@ -168,62 +140,6 @@
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-@media (max-width: 768px) {
-    .perfil-container {
-        padding: 1.5rem;
-        margin: 1rem;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .user-header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .dados-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Animações */
-[data-aos] {
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.aos-animate {
-    opacity: 1 !important;
-    transform: translate3d(0, 0, 0) !important;
-}
-
-[data-aos="fade-up"] {
-    transform: translateY(30px);
-    opacity: 0;
-}
-
-[data-aos="fade-down"] {
-    transform: translateY(-30px);
-    opacity: 0;
-}
-
-[data-aos="zoom-in"] {
-    transform: scale(0.95);
-    opacity: 0;
-}
-
-[data-aos="fade-right"] {
-    transform: translateX(-30px);
-    opacity: 0;
-}
-
-[data-aos="fade-left"] {
-    transform: translateX(30px);
-    opacity: 0;
-}
-
-/* Estilos para o fundo desfocado */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -247,8 +163,109 @@
     padding: 1.5rem;
     animation: popupEntrance 0.3s ease-out;
     overflow-y: auto;
+}
+
+.popup-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 1rem 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.popup-close:hover {
+    color: #333;
+}
+
+/* ... (mantenha todo o css anterior) ... */
+
+.btn-editar {
+    background: linear-gradient(145deg, #4762ff, #0056b3);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 8px rgba(31, 43, 108, 0.2);
+    display: inline-block;
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.btn-editar:hover {
+    background: linear-gradient(145deg, #1a2457, #004899);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(31, 43, 108, 0.3);
+}
+
+.btn-editar:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(31, 43, 108, 0.2);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .btn-editar {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .perfil-container {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .popup-container {
+        width: 90%;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .popup-container {
+        width: 95%;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
 }
 
 @keyframes popupEntrance {
@@ -262,132 +279,11 @@
     }
 }
 
-.popup-header {
-    display: flex;
-    justify-content: space-between;
-    color: #000000d8;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding: 0 1rem 1rem;
-    border-bottom: 1px solid #eee;
+[data-aos] {
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.popup-close {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: #666;
-    line-height: 1;
-    padding: 0 0.5rem;
-    transition: color 0.3s ease;
-}
-
-.popup-close:hover {
-    color: #333;
-}
-
-/* BOTÕES ATUALIZADOS AQUI */
-.popup-container .button-group {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    justify-content: flex-end;
-}
-
-.popup-container .btn-editar {
-    background: linear-gradient(to right, #ffffff, #ffffff);
-    color: #3857b3;
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    box-shadow: 0 3px 8px rgba(108, 142, 255, 0.2);
-    margin: 0;
-}
-
-.popup-container .btn-editar:hover {
-    background: linear-gradient(145deg, #00000023, #00000036);
-    transform: translateY(-1px);
-    color: white;
-    box-shadow: 0 5px 15px rgba(108, 142, 255, 0.3);
-}
-
-.popup-container .btn-editar:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(108, 142, 255, 0.2);
-}
-
-.dados-grid-interno {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.dado-item {
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.dado-item strong {
-    display: block;
-    color: #6c757d;
-    font-size: 0.9em;
-    margin-bottom: 5px;
-}
-
-.dado-item span {
-    display: block;
-    color: #212529;
-    font-size: 1em;
-    font-weight: 500;
-}
-
-.user-header .user-info {
-    width: 140%;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.user-header .user-info h2 {
-    color: #ffffff;
-    font-size: 2em;
-}
-
-.user-header .user-info p {
-    margin: 5px 0 0;
-    color: #ffffff;
-    font-size: 0.95em;
-}
-
-@media (max-width: 768px) {
-    .popup-container {
-        width: 90%;
-        padding: 1rem;
-    }
-    
-    .dados-grid-interno {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .popup-container {
-        width: 95%;
-    }
-    
-    .user-info h2 {
-        font-size: 1.4rem;
-    }
-    
-    .button-group {
-        flex-direction: column;
-    }
+.aos-animate {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
 }

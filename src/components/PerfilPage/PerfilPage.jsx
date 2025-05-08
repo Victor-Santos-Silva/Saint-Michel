@@ -97,7 +97,6 @@ function PerfilPage() {
 
     return (
         <div className='perfil-container' data-aos="fade-up">
-            {/* Pop-up com fundo desfocado */}
             {showDependenteModal && (
                 <div className="modal-overlay" onClick={() => setShowDependenteModal(false)}>
                     <div 
@@ -242,7 +241,7 @@ function PerfilPage() {
                     </div>
 
                     <div className='button-group' data-aos="fade-up" data-aos-delay="1100">
-                        <button type='submit' className='btn-editar'>Salvar Alterações</button>
+                        <button type='submit' className='btn-salvarinfo'>Salvar Alterações</button>
                         <button type='button' className='btn-editar' onClick={handleCancel}>Cancelar</button>
                     </div>
                 </form>
