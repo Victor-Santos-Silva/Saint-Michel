@@ -14,7 +14,6 @@ export default function Navbar() {
   const [notificacoesNaoLidas, setNotificacoesNaoLidas] = useState(0);
   const [mostrarNotificacoes, setMostrarNotificacoes] = useState(false);
 
-  // Função para formatar data (substitui o date-fns)
   const formatarData = (dataString) => {
     const data = new Date(dataString);
     return data.toLocaleDateString('pt-BR', {
@@ -26,14 +25,6 @@ export default function Navbar() {
     });
   };
 
-  // Função simplificada para adicionar dias
-  const adicionarDias = (data, dias) => {
-    const result = new Date(data);
-    result.setDate(result.getDate() + dias);
-    return result;
-  };
-
-  // Função para buscar notificações do backend
   const buscarNotificacoes = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -53,7 +44,6 @@ export default function Navbar() {
     }
   };
 
-  // Funções de manipulação de notificações (marcar como lida, limpar)
   const marcarComoLida = async (id) => {
     try {
       const token = localStorage.getItem('token');
@@ -126,40 +116,33 @@ export default function Navbar() {
 
       <nav className="navbar">
         <div className="nav-links">
-          <Link to='/'>Home</Link>
-          <Link to='/sobre'>Sobre</Link>
-          <Link to='/servicos'>Serviços</Link>
-          <Link to='/doutores'>Doutores</Link>
-          <Link to='/agendamentos'>Agendamentos</Link>
-          <Link to='/contato'>Contato</Link>
+          <Link to='/' className="nav-link">Home</Link>
+          <Link to='/sobre' className="nav-link">Sobre</Link>
+          <Link to='/servicos' className="nav-link">Serviços</Link>
+          <Link to='/doutores' className="nav-link">Doutores</Link>
+          <Link to='/agendamentos' className="nav-link">Agendamentos</Link>
+          <Link to='/contato' className="nav-link">Contato</Link>
         </div>
 
         <div className="container-login-cadastro">
           {isLoggedIn ? (
             <div className="perfil-usuario">
-              <p className="nome-usuario">Olá, {nomeCompleto}</p>
+              <div className="usuario-info">
+                <p className="nome-usuario">Olá, {nomeCompleto}</p>
+                <div className="notificacao-container">
+                  <button
+                    className="botao-notificacao"
+                    onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
+                  >
+                    <FaBell size={20} />
+                    {notificacoesNaoLidas > 0 && (
+                      <span className="contador-notificacao">
+                        {notificacoesNaoLidas}
+                      </span>
+                    )}
+                  </button>
 
-              <div className="notificacao-container">
-                <button
-                  className="botao-notificacao"
-                  onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
-                >
-                  <FaBell
-                    size={20}
-                    style={{
-                      color: 'white',
-                      filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))'
-                    }}
-                  />
-                  {notificacoesNaoLidas > 0 && (
-                    <span className="contador-notificacao">
-                      {notificacoesNaoLidas}
-                    </span>
-                  )}
-                </button>
-
-                {mostrarNotificacoes && (
-                  <div className="lista-notificacoes">
+                  <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''}`}>
                     {notificacoes.length > 0 ? (
                       <>
                         {notificacoes.map((notificacao) => (
@@ -190,27 +173,25 @@ export default function Navbar() {
                       </div>
                     )}
                   </div>
-                )}
+                </div>
               </div>
 
-              <img
-                src={fotoPerfil}
-                alt="foto-perfil"
-                className="foto-de-Perfil"
-                onClick={() => navigate('/perfil')}
-              />
-              <button onClick={logout} className="btn-sair-perfil">
-                Sair
-              </button>
+              <div className="usuario-acoes">
+                <img
+                  src={fotoPerfil}
+                  alt="foto-perfil"
+                  className="foto-de-Perfil"
+                  onClick={() => navigate('/perfil')}
+                />
+                <button onClick={logout} className="btn-sair-perfil">
+                  Sair
+                </button>
+              </div>
             </div>
           ) : (
             <>
-              <div className="nav-actions">
-                <Link to='/login' className="login-button">Login</Link>
-              </div>
-              <div className="nav-actions">
-                <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
-              </div>
+              <Link to='/login' className="login-button">Login</Link>
+              <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
             </>
           )}
         </div>

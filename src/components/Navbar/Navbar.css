@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
   --primary-font: "Yeseva One", serif;
@@ -93,19 +94,40 @@ body {
   gap: 20px;
 }
 
-.nav-links a {
+.nav-link {
   font-family: var(--second-font);
-  font-size: 16px;
+  font-size: 20px;
   color: var(--color-white);
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 25px;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-link:hover {
+  color: var(--color-white);
   transform: translateY(-2px);
+  font-weight: bold; /* Negrito ao passar o mouse */
 }
 
 /* Container Login/Cadastro */
@@ -126,6 +148,7 @@ body {
   color: var(--color-white);
   background-color: rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .login-button:hover,
@@ -141,11 +164,26 @@ body {
   gap: 20px;
 }
 
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .nome-usuario {
   font-family: var(--second-font);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-white);
   text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.usuario-acoes {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 /* Notificações */
@@ -164,16 +202,17 @@ body {
   justify-content: center;
   transition: all 0.3s ease;
   position: relative;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .botao-notificacao:hover {
   background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
 }
 
 .botao-notificacao svg {
   color: var(--color-white);
   font-size: 1.2rem;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
 }
 
 .contador-notificacao {
@@ -197,28 +236,26 @@ body {
   right: 0;
   top: 50px;
   width: 320px;
-  max-height: 400px;
-  overflow-y: auto;
+  max-height: 0;
+  overflow: hidden;
   background-color: var(--color-white);
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  transform-origin: top right;
-  transform: scale(0);
-  opacity: 0;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.mostrar-notificacoes .lista-notificacoes {
-  transform: scale(1);
-  opacity: 1;
+.lista-notificacoes.mostrar {
+  max-height: 400px;
+  padding: 10px 0;
+  overflow-y: auto;
 }
 
 .notificacao-item {
   padding: 12px 16px;
   border-bottom: 1px solid var(--color-gray-light);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 .notificacao-item:last-child {
@@ -333,7 +370,7 @@ body {
     gap: 10px;
   }
   
-  .nav-links a {
+  .nav-link {
     padding: 8px 12px;
     font-size: 14px;
   }
@@ -387,6 +424,11 @@ body {
   .perfil-usuario {
     flex-direction: column;
     gap: 10px;
+  }
+  
+  .usuario-info, .usuario-acoes {
+    flex-direction: column;
+    align-items: center;
   }
   
   .lista-notificacoes {

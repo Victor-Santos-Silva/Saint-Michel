@@ -35,14 +35,36 @@ function CadastroPage() {
         }));
     };
 
-    const nextStep = () => {
-        // Validação básica dos campos do passo atual
-        if (step === 1 && (!formData.nomeCompleto || !formData.dataDeNascimento || !formData.cpf || !formData.rg)) {
-            toast.error("Preencha todos os campos antes de continuar");
-            return;
+    const validateStep = (currentStep) => {
+        if (currentStep === 1) {
+            if (!formData.nomeCompleto.trim()) return "O campo Nome Completo é obrigatório.";
+            if (!formData.dataDeNascimento) return "O campo Data de Nascimento é obrigatório.";
+            if (formData.cpf.length !== 11) return "CPF deve ter 11 dígitos.";
+            if (formData.rg.length < 7 || formData.rg.length > 10) return "RG deve ter entre 7 e 10 dígitos.";
+            return null;
         }
-        if (step === 2 && (!formData.endereco || !formData.telefone || !formData.email)) {
-            toast.error("Preencha todos os campos antes de continuar");
+        
+        if (currentStep === 2) {
+            if (!formData.endereco.trim()) return "O campo Endereço é obrigatório.";
+            if (formData.telefone.length !== 11) return "Telefone deve ter 11 dígitos.";
+            if (!formData.tipoSanguineo) return "O campo Tipo Sanguíneo é obrigatório.";
+            return null;
+        }
+        
+        if (currentStep === 3) {
+            if (!formData.genero) return "O campo Gênero é obrigatório.";
+            if (!formData.convenioMedico) return "O campo Convênio Médico é obrigatório.";
+            if (formData.convenioMedico && !formData.planoConvenio) return "O campo Plano do Convênio é obrigatório.";
+            return null;
+        }
+        
+        return null;
+    };
+
+    const nextStep = () => {
+        const validationError = validateStep(step);
+        if (validationError) {
+            toast.error(validationError);
             return;
         }
         setStep(step + 1);
@@ -52,26 +74,16 @@ function CadastroPage() {
         setStep(step - 1);
     };
 
-    const validateFields = () => {
+    const validateFinalFields = () => {
         const {
             nomeCompleto,
             dataDeNascimento,
-            cpf,
-            rg,
-            genero,
-            endereco,
-            telefone,
-            convenioMedico,
-            planoConvenio,
-            tipoSanguineo,
             email,
             senha,
             confirmar_senha
         } = formData;
 
-        if (!nomeCompleto.trim()) return "O campo Nome Completo é obrigatório.";
-        if (!dataDeNascimento) return "O campo Data de Nascimento é obrigatório.";
-        
+        // Validação da idade (18+)
         const birthDate = new Date(dataDeNascimento);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -81,17 +93,12 @@ function CadastroPage() {
         }
         
         if (age < 18 || isNaN(birthDate.getTime())) return "Você deve ter pelo menos 18 anos para se cadastrar.";
-        if (cpf.length !== 11) return "CPF deve ter 11 dígitos.";
-        if (rg.length < 7 || rg.length > 10) return "RG deve ter entre 7 e 10 dígitos.";
-        if (!genero) return "O campo Gênero é obrigatório.";
-        if (!endereco.trim()) return "O campo Endereço é obrigatório.";
-        if (telefone.length !== 11) return "Telefone deve ter 11 dígitos.";
-        if (!convenioMedico) return "O campo Convênio Médico é obrigatório.";
-        if (convenioMedico && !planoConvenio) return "O campo Plano do Convênio é obrigatório.";
-        if (!tipoSanguineo) return "O campo Tipo Sanguíneo é obrigatório.";
 
+        // Validação de email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) return "Email inválido.";
+
+        // Validação de senha
         if (senha.length < 6) return "A senha deve ter pelo menos 6 caracteres.";
         if (senha !== confirmar_senha) return "As senhas não coincidem.";
 
@@ -100,7 +107,7 @@ function CadastroPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const validationError = validateFields();
+        const validationError = validateFinalFields();
 
         if (validationError) {
             toast.error(validationError);
@@ -112,17 +119,31 @@ function CadastroPage() {
                 '/img/pacienteOutro.png';
 
         try {
-            await axios.post('http://localhost:5000/paciente/cadastro',
-                { ...formData, imagemGenero: generoImagem },
-                { headers: { 'Content-Type': 'application/json' } }
+            const response = await axios.post('http://localhost:5000/paciente/cadastro', 
+                { 
+                    ...formData, 
+                    imagemGenero: generoImagem 
+                },
+                { 
+                    headers: { 
+                        'Content-Type': 'application/json' 
+                    } 
+                }
             );
 
-            toast.success('Cadastro realizado com sucesso!', {
-                onClose: () => navigate('/login')
-            });
+            if (response.data.success) {
+                toast.success('Cadastro realizado com sucesso!', {
+                    onClose: () => navigate('/login')
+                });
+            } else {
+                toast.error(response.data.message || 'Erro ao realizar cadastro');
+            }
 
         } catch (error) {
-            const errorMessage = error.response?.data?.message || 'Erro ao realizar cadastro';
+            console.error('Erro no cadastro:', error);
+            const errorMessage = error.response?.data?.message || 
+                              error.response?.data?.error || 
+                              'Erro ao conectar com o servidor';
             toast.error(errorMessage);
         }
     };
@@ -231,7 +252,6 @@ function CadastroPage() {
                                 ))}
                             </select>
                         </div>
-                       
                     </>
                 );
             case 3:
@@ -289,7 +309,6 @@ function CadastroPage() {
             case 4:
                 return (
                     <>
-
                         <div className='text-field'>
                             <label>Email</label>
                             <input
@@ -323,7 +342,6 @@ function CadastroPage() {
                                 required
                             />
                         </div>
-                        
                     </>
                 );
             default:
@@ -359,7 +377,6 @@ function CadastroPage() {
                     </div>
                 </form>
             </div>
-            
         </div>
     );
 }
