@@ -122,12 +122,17 @@ const Agendamentos = () => {
     setShowModal(false);
     setShowServiceTypeModal(true);
   };
+  
 
   const handleServiceTypeSelect = (tipo) => {
+    if (tipo === 'servico') {
+      navigate('/agendamentos/servico');
+      return;
+    }
+    
     setServiceType(tipo);
     setShowServiceTypeModal(false);
   };
-
   const validateFields = () => {
     const requiredFields = [];
 
@@ -317,6 +322,7 @@ const Agendamentos = () => {
               <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
               <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
               <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
+              <button onClick={() => handleServiceTypeSelect('servico')}>Serviços Extras</button>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import Login from '../Pages/Login/LoginPage.jsx';
 import ErroPage from '../components/PaginaDeErro/ErrorPage.jsx';
 import AgendamentosDependentes from "../Pages/Agendamentos/dependente/dependente.jsx";
 import Perfil from '../Pages/Perfil/Perfil.jsx';
+import ServicosExtras from '../Pages/Agendamentos/servico/ServicosExtras.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,9 +26,10 @@ const router = createBrowserRouter([
       { path: "/contato", element: <Contatos /> },
       { path: "/agendamentos", element: <Agendamentos /> },
       { path: "/agendamentos/dependente", element: <AgendamentosDependentes /> },
+      { path: "/agendamentos/servico", element: <ServicosExtras /> },
       { path: "/cadastro", element: <Cadastro /> },
       { path: "/login", element: <Login /> },
-      {path: "/Perfil", element: <Perfil />}
+      { path: "/Perfil", element: <Perfil /> }
     ]
   }
 ]);
