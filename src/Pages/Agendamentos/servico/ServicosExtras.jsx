@@ -87,14 +87,19 @@ const ServicosExtras = () => {
     <>
       <Navbar />
       <ToastContainer />
+      <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
       
       <div className="servicos-container">
         <h1 className="tittle-contato">Agendamento</h1>
         <h1 className="team-title">Serviços Extras</h1>
+        <br />
 
         
         <form className="servicos-form" onSubmit={handleSubmit}>
           <div className="form-group">
+          <h2 className="title">
+              Agendamento
+            </h2>
             <label>Tipo de Serviço</label>
             <select
               value={serviceType}
@@ -112,7 +117,7 @@ const ServicosExtras = () => {
           </div>
 
           <div className="form-group">
-            <label>Detalhes do Paciente</label>
+            <label>Detalhes do serviço</label>
             <textarea
               value={patientDetails}
               onChange={(e) => {
