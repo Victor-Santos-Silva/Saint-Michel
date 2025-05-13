@@ -129,51 +129,7 @@ export default function Navbar() {
             <div className="perfil-usuario">
               <div className="usuario-info">
                 <p className="nome-usuario">Olá, {nomeCompleto}</p>
-                <div className="notificacao-container">
-                  <button
-                    className="botao-notificacao"
-                    onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
-                  >
-                    <FaBell size={20} />
-                    {notificacoesNaoLidas > 0 && (
-                      <span className="contador-notificacao">
-                        {notificacoesNaoLidas}
-                      </span>
-                    )}
-                  </button>
-
-                  <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''}`}>
-                    {notificacoes.length > 0 ? (
-                      <>
-                        {notificacoes.map((notificacao) => (
-                          <div
-                            key={notificacao.id}
-                            className={`notificacao-item ${notificacao.lida ? '' : 'nao-lida'}`}
-                            onClick={() => marcarComoLida(notificacao.id)}
-                          >
-                            <div className="notificacao-conteudo">
-                              <p className="notificacao-titulo">{notificacao.titulo}</p>
-                              <p className="notificacao-mensagem">{notificacao.mensagem}</p>
-                              <p className="notificacao-data">
-                                {formatarData(notificacao.data)}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                        <button
-                          className="limpar-notificacoes"
-                          onClick={limparNotificacoes}
-                        >
-                          Limpar Todas
-                        </button>
-                      </>
-                    ) : (
-                      <div className="sem-notificacoes">
-                        Nenhuma notificação disponível
-                      </div>
-                    )}
-                  </div>
-                </div>
+               
               </div>
 
               <div className="usuario-acoes">
