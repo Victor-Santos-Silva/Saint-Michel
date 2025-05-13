@@ -108,16 +108,16 @@ function CadastroPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationError = validateFinalFields();
-
+    
         if (validationError) {
             toast.error(validationError);
             return;
         }
-
+    
         const generoImagem = formData.genero === 'Masculino' ? '/img/pacienteM.png' :
             formData.genero === 'Feminino' ? '/img/pacienteF.png' :
                 '/img/pacienteOutro.png';
-
+    
         try {
             const response = await axios.post('http://localhost:5000/paciente/cadastro', 
                 { 
@@ -131,14 +131,14 @@ function CadastroPage() {
                 }
             );
 
-            if (response.data.success) {
+            if (response.status === 200 || response.status === 201) {
                 toast.success('Cadastro realizado com sucesso!', {
                     onClose: () => navigate('/login')
                 });
             } else {
                 toast.error(response.data.message || 'Erro ao realizar cadastro');
             }
-
+    
         } catch (error) {
             console.error('Erro no cadastro:', error);
             const errorMessage = error.response?.data?.message || 
