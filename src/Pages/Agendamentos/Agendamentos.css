@@ -121,9 +121,7 @@ select:focus {
   transform: scale(1.05);
 }
 
-.submit-btn:focus {
-  outline: 2px solid #0000ff;
-}
+
 
 /* Validação */
 .campo-obrigatorio {

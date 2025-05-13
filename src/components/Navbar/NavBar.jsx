@@ -141,6 +141,7 @@ export default function Navbar() {
                       </span>
                     )}
                   </button>
+                  
 
                   <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''}`}>
                     {notificacoes.length > 0 ? (
@@ -175,6 +176,8 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
+
+              
 
               <div className="usuario-acoes">
                 <img

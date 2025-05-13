@@ -105,7 +105,7 @@ function PerfilPage() {
                         data-aos="zoom-in"
                     >
                         <div className="popup-header">
-                            <h3>Adicionar Dependente</h3>
+                            <h3 className='title-dependete'>Adicionar Dependente</h3>
                             <button 
                                 className="popup-close"
                                 onClick={() => setShowDependenteModal(false)}
