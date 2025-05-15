@@ -113,10 +113,9 @@ export default function LoginPage() {
 
     return (
         <div className='container-page-login'>
-            <div className='container-formulario-login'>
-                <ToastContainer
+              <ToastContainer
                     position="top-right"
-                    autoClose={5000}
+                    autoClose={1000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
@@ -126,6 +125,8 @@ export default function LoginPage() {
                     pauseOnHover
                     theme="colored"
                 />
+            <div className='container-formulario-login'>
+              
 
                 <h1 className='title-login'>Login</h1>
 

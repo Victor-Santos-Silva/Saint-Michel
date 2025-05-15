@@ -5,6 +5,7 @@ import Footer from '../../../components/Footer/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ServicosExtras = () => {
   const [serviceType, setServiceType] = useState('');
@@ -13,7 +14,8 @@ const ServicosExtras = () => {
   const [hora, setHora] = useState('');
   const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
   const [missingFields, setMissingFields] = useState([]);
-  
+  const [endereco, setEndereco] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,28 +59,55 @@ const ServicosExtras = () => {
     if (!data) requiredFields.push('data');
     if (!hora) requiredFields.push('hora');
 
+    if (serviceType === 'Atendimento Domiciliar' && !endereco) {
+      requiredFields.push('endereco');
+    }
+
     setMissingFields(requiredFields);
     return requiredFields.length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateFields()) {
       toast.error('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
 
-    const formData = {
-      serviceType,
-      patientDetails,
-      data,
-      hora
-    };
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error("Você precisa estar logado para agendar o serviço!");
+      navigate('/login');
+      return;
+    }
 
-    // Simular envio para API
-    console.log('Dados do formulário:', formData);
-    toast.success('Agendamento realizado com sucesso!');
-    navigate('/');
+    try {
+      const formData = {
+        tipo_servico: serviceType,
+        detalhes: patientDetails,
+        data,
+        hora,
+        ...(serviceType === 'Atendimento Domiciliar' && { endereco })
+      };
+
+      const response = await axios.post(
+        'http://localhost:5000/servicos-extras',
+        formData,
+        
+        
+        
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        toast.success('Serviço agendado com sucesso!');
+        navigate('/');
+      }
+      
+    } catch (error) {
+      console.error('Erro:', error);
+      const errorMessage = error.response?.data?.message || 'Erro ao processar agendamento';
+      toast.error(errorMessage);
+    }
   };
 
   const isFieldMissing = (fieldName) => missingFields.includes(fieldName);
@@ -88,24 +117,22 @@ const ServicosExtras = () => {
       <Navbar />
       <ToastContainer />
       <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
-      
+
       <div className="servicos-container">
         <h1 className="tittle-contato">Agendamento</h1>
         <h1 className="team-title">Serviços Extras</h1>
         <br />
 
-        
         <form className="servicos-form" onSubmit={handleSubmit}>
           <div className="form-group">
-          <h2 className="title">
-              Agendamento
-            </h2>
+            <h2 className="title">Agendamento</h2>
             <label>Tipo de Serviço</label>
             <select
               value={serviceType}
               onChange={(e) => {
                 setServiceType(e.target.value);
                 setMissingFields(prev => prev.filter(f => f !== 'serviceType'));
+                if (e.target.value !== 'Atendimento Domiciliar') setEndereco('');
               }}
               className={isFieldMissing('serviceType') ? 'campo-obrigatorio' : ''}
             >
@@ -115,6 +142,22 @@ const ServicosExtras = () => {
               <option value="Fisioterapia">Fisioterapia</option>
             </select>
           </div>
+
+          {serviceType === 'Atendimento Domiciliar' && (
+            <div className="form-group">
+              <label>Endereço</label>
+              <textarea
+                value={endereco}
+                onChange={(e) => {
+                  setEndereco(e.target.value);
+                  setMissingFields(prev => prev.filter(f => f !== 'endereco'));
+                }}
+                className={isFieldMissing('endereco') ? 'campo-obrigatorio' : ''}
+                placeholder="Digite o endereço completo (Rua, número, bairro, cidade - Estado)"
+                rows="2"
+              />
+            </div>
+          )}
 
           <div className="form-group">
             <label>Detalhes do serviço</label>
