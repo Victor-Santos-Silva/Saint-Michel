@@ -115,7 +115,7 @@ export default function LoginPage() {
         <div className='container-page-login'>
               <ToastContainer
                     position="top-right"
-                    autoClose={1000}
+                    autoClose={800}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
