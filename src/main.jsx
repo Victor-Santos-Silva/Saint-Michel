@@ -3,13 +3,17 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
-import { AuthProvider } from './context/AuthContext.jsx'; // Contexto de autenticação
-import router from './router/router.jsx'; // Importando as rotas
+// Importe os providers separadamente
+import { AuthProvider } from './context/AuthContext.jsx';
+import { ThemeProvider } from './context/ThemeContext.jsx'; 
+import router from './router/router.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <AuthProvider>
+    <AuthProvider>
+      <ThemeProvider>
         <RouterProvider router={router} />
-      </AuthProvider>
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>
 );

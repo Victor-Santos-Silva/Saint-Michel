@@ -5,9 +5,11 @@ import { useAuth } from '../../context/AuthContext';
 import fotoPerfil from '../../img/foto de perfil.png';
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Navbar() {
   const { isLoggedIn, nomeCompleto, logout } = useAuth();
+  const { darkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const [notificacoes, setNotificacoes] = useState([]);
@@ -86,9 +88,10 @@ export default function Navbar() {
       <div className="top-bar">
         <div className="logo">
           <Link to="/">
-            <img src="../src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
+            <img src="src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
           </Link>
         </div>
+
         <div className="contact-info">
           <div className="info-item modern-item">
             <FaPhone className="icon-img" />
@@ -114,7 +117,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className="navbar">
+      <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
         <div className="nav-links">
           <Link to='/' className="nav-link">Home</Link>
           <Link to='/sobre' className="nav-link">Sobre</Link>
@@ -125,6 +128,10 @@ export default function Navbar() {
         </div>
 
         <div className="container-login-cadastro">
+          <button onClick={toggleTheme} className="theme-toggle">
+            {darkMode ? '🌞' : '🌙'}
+          </button>
+
           {isLoggedIn ? (
             <div className="perfil-usuario">
               <div className="usuario-info">
@@ -141,7 +148,6 @@ export default function Navbar() {
                       </span>
                     )}
                   </button>
-                  
 
                   <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''}`}>
                     {notificacoes.length > 0 ? (
@@ -175,10 +181,7 @@ export default function Navbar() {
                     )}
                   </div>
                 </div>
-               
               </div>
-
-              
 
               <div className="usuario-acoes">
                 <img
