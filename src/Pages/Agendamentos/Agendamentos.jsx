@@ -96,11 +96,15 @@ const Agendamentos = () => {
     const horarios = [];
     const dataAtual = getDataAtual();
     const horaAtual = getHoraAtual();
+    const [horaAtualH, horaAtualM] = horaAtual.split(':').map(Number);
+    const minutosAtuais = horaAtualH * 60 + horaAtualM;
 
-    for (let h = 8; h <= 18; h++) {
+    for (let h = 8; h < 18; h++) {
       for (let m = 0; m < 60; m += 30) {
         const horaStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-        const isPassado = data === dataAtual && horaStr < horaAtual;
+        const minutosHorario = h * 60 + m;
+        
+        const isPassado = data === dataAtual && minutosHorario < minutosAtuais;
 
         horarios.push({
           value: horaStr,
@@ -122,7 +126,6 @@ const Agendamentos = () => {
     setShowModal(false);
     setShowServiceTypeModal(true);
   };
-  
 
   const handleServiceTypeSelect = (tipo) => {
     if (tipo === 'servico') {
@@ -133,6 +136,7 @@ const Agendamentos = () => {
     setServiceType(tipo);
     setShowServiceTypeModal(false);
   };
+
   const validateFields = () => {
     const requiredFields = [];
 
@@ -167,14 +171,21 @@ const Agendamentos = () => {
       return;
     }
 
-    if (data === dataAtual && hora < horaAtual) {
-      toast.error('Não é possível agendar para horários passados.');
-      return;
+    if (data === dataAtual) {
+      const [horaSelecionadaH, horaSelecionadaM] = hora.split(':').map(Number);
+      const [horaAtualH, horaAtualM] = horaAtual.split(':').map(Number);
+      const minutosSelecionados = horaSelecionadaH * 60 + horaSelecionadaM;
+      const minutosAtuais = horaAtualH * 60 + horaAtualM;
+
+      if (minutosSelecionados < minutosAtuais) {
+        toast.error('Não é possível agendar para horários passados.');
+        return;
+      }
     }
 
     const [horaSelecionada] = hora.split(':').map(Number);
-    if (horaSelecionada < 8 || horaSelecionada > 18) {
-      toast.error('O horário deve estar entre 08:00 e 18:00.');
+    if (horaSelecionada < 8 || horaSelecionada >= 18) {
+      toast.error('O horário deve estar entre 08:00 e 17:30.');
       return;
     }
 
