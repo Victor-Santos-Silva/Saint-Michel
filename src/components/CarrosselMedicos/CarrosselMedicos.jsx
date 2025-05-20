@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios'; // ou sua biblioteca HTTP preferida
+import axios from 'axios';
+import { useTheme } from '../../context/ThemeContext'; // Ajuste o caminho conforme necessário
 import './carrosselMedicos.css';
 
 function CarouselMedico() {
@@ -10,12 +11,12 @@ function CarouselMedico() {
   const [medicos, setMedicos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { darkMode } = useTheme(); // Usando o contexto de tema
 
   // Busca os médicos do banco de dados
   useEffect(() => {
     const fetchMedicos = async () => {
       try {
-        // Substitua pela URL da sua API
         const response = await axios.get('http://localhost:5000/medico');
         setMedicos(response.data);
         setLoading(false);
@@ -37,12 +38,16 @@ function CarouselMedico() {
     }
   }, [medicos]);
 
-  if (loading) return <div className="loading">Carregando médicos...</div>;
-  if (error) return <div className="error">Erro: {error}</div>;
+  if (loading) return <div className={`loading ${darkMode ? 'dark' : ''}`}>Carregando médicos...</div>;
+  if (error) return <div className={`error ${darkMode ? 'dark' : ''}`}>Erro: {error}</div>;
 
   return (
-    <div className='divPrincipal'>
-      <motion.div ref={carousel} className='carrosselMedicos' whileTap={{ cursor: "grabbing" }}>
+    <div className={`divPrincipal ${darkMode ? 'dark' : ''}`}>
+      <motion.div 
+        ref={carousel} 
+        className={`carrosselMedicos ${darkMode ? 'dark' : ''}`} 
+        whileTap={{ cursor: "grabbing" }}
+      >
         <motion.div
           ref={innerCarousel}
           className='inner'
@@ -54,12 +59,16 @@ function CarouselMedico() {
         >
           {medicos.map((medico) => (
             <motion.div className='item' key={medico.id}>
-              <div className="card-medico">
+              <div className={`card-medico ${darkMode ? 'dark' : ''}`}>
                 <div className="info-medico">
-                  <img src={`http://localhost:5000${medico.foto}`} alt="" className='img-carrosel'/>
-                  <h3>Dr. {medico.nome_completo}</h3>
-                  <p>{medico.especialidade}</p>
-                  <p>CRM: {medico.crm}</p>
+                  <img 
+                    src={`http://localhost:5000${medico.foto}`} 
+                    alt="" 
+                    className='img-carrosel'
+                  />
+                  <h3 className={darkMode ? 'dark' : ''}>Dr. {medico.nome_completo}</h3>
+                  <p className={darkMode ? 'dark' : ''}>{medico.especialidade}</p>
+                  <p className={darkMode ? 'dark' : ''}>CRM: {medico.crm}</p>
                 </div>
               </div>
             </motion.div>

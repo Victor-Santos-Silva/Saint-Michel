@@ -64,14 +64,12 @@
 }
 
 .info-medico h3 {
-  color: #1F2B6C;
   margin-bottom: 0.4rem;
   font-size: 1.1rem;
   font-weight: 600;
 }
 
 .info-medico p {
-  color: #2c3e50;
   margin: 0.2rem 0;
   font-size: 0.85rem;
   line-height: 1.4;
@@ -98,6 +96,35 @@
   margin: auto;
 }
 
+/* Modo Escuro */
+.divPrincipal.dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.card-medico.dark {
+  background-color: #2d2d2d !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.card-medico.dark h3,
+.card-medico.dark p {
+  color: #000000 !important;
+}
+
+.carrosselMedicos.dark {
+  background-color: #1a1a1a;
+}
+
+.loading.dark,
+.error.dark {
+  color: #ffffff;
+  background-color: #2d2d2d;
+}
+
+/* Mantenha o restante do CSS original abaixo */
+/* ... [seu CSS existente] ... */
+
 @media (max-width: 768px) {
   .item {
     min-width: 200px;
@@ -107,7 +134,6 @@
   .info-medico {
     padding: 0.8rem;
   } 
-  
   
   .info-medico h3 {
     font-size: 1rem;
