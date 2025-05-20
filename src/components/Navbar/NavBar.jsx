@@ -84,31 +84,35 @@ export default function Navbar() {
   }, [isLoggedIn]);
 
   return (
-    <header className="header">
+    <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
       <div className="top-bar">
         <div className="logo">
           <Link to="/">
-            <img src="src/img/LogoTipo+Frase.png" alt="Logo" className="logo-img" />
+            <img 
+              src="src/img/LogoTipo+Frase.png" 
+              alt="Logo" 
+              className={`logo-img ${darkMode ? 'dark-logo' : ''}`}
+            />
           </Link>
         </div>
 
-        <div className="contact-info">
-          <div className="info-item modern-item">
-            <FaPhone className="icon-img" />
+      <div className="contact-info">
+          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
+            <FaPhone className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
             <div>
               <strong>EMERGÊNCIA</strong>
               <br /> (11) 6818-1255
             </div>
           </div>
-          <div className="info-item modern-item">
-            <FaClock className="icon-img" />
+          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
+            <FaClock className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
             <div>
               <strong>HORÁRIO DE FUNCIONAMENTO</strong>
               <br /> 24 HORAS POR DIA
             </div>
           </div>
-          <div className="info-item modern-item">
-            <FaMapMarkerAlt className="icon-img" />
+          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
+            <FaMapMarkerAlt className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
             <div>
               <strong>LOCALIZAÇÃO</strong>
               <br /> Av. Marechal Tito, 3400
@@ -119,43 +123,52 @@ export default function Navbar() {
 
       <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
         <div className="nav-links">
-          <Link to='/' className="nav-link">Home</Link>
-          <Link to='/sobre' className="nav-link">Sobre</Link>
-          <Link to='/servicos' className="nav-link">Serviços</Link>
-          <Link to='/doutores' className="nav-link">Doutores</Link>
-          <Link to='/agendamentos' className="nav-link">Agendamentos</Link>
-          <Link to='/contato' className="nav-link">Contato</Link>
+          {['/', '/sobre', '/servicos', '/doutores', '/agendamentos', '/contato'].map((path, idx) => (
+            <Link 
+              key={idx}
+              to={path}
+              className="nav-link"
+              style={{ transition: 'all 0.3s ease-in-out' }}
+            >
+              {['Home', 'Sobre', 'Serviços', 'Doutores', 'Agendamentos', 'Contato'][idx]}
+            </Link>
+          ))}
         </div>
 
         <div className="container-login-cadastro">
-          <button onClick={toggleTheme} className="theme-toggle">
+          <button 
+            onClick={toggleTheme} 
+            className={`theme-toggle ${darkMode ? 'dark-toggle' : ''}`}
+            style={{ transition: 'all 0.3s ease-in-out' }}
+          >
             {darkMode ? '🌞' : '🌙'}
           </button>
 
           {isLoggedIn ? (
             <div className="perfil-usuario">
               <div className="usuario-info">
-                <p className="nome-usuario">Olá, {nomeCompleto}</p>
+                <p className={`nome-usuario ${darkMode ? 'dark-text' : ''}`}>Olá, {nomeCompleto}</p>
                 <div className="notificacao-container">
                   <button
-                    className="botao-notificacao"
+                    className={`botao-notificacao ${darkMode ? 'dark-notification' : ''}`}
                     onClick={() => setMostrarNotificacoes(!mostrarNotificacoes)}
+                    style={{ transition: 'all 0.3s ease-in-out' }}
                   >
-                    <FaBell size={20} />
+                    <FaBell size={20} className={darkMode ? 'dark-icon' : ''} />
                     {notificacoesNaoLidas > 0 && (
-                      <span className="contador-notificacao">
+                      <span className={`contador-notificacao ${darkMode ? 'dark-counter' : ''}`}>
                         {notificacoesNaoLidas}
                       </span>
                     )}
                   </button>
 
-                  <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''}`}>
+                  <div className={`lista-notificacoes ${mostrarNotificacoes ? 'mostrar' : ''} ${darkMode ? 'dark-list' : ''}`}>
                     {notificacoes.length > 0 ? (
                       <>
                         {notificacoes.map((notificacao) => (
                           <div
                             key={notificacao.id}
-                            className={`notificacao-item ${notificacao.lida ? '' : 'nao-lida'}`}
+                            className={`notificacao-item ${notificacao.lida ? '' : 'nao-lida'} ${darkMode ? 'dark-item' : ''}`}
                             onClick={() => marcarComoLida(notificacao.id)}
                           >
                             <div className="notificacao-conteudo">
@@ -168,7 +181,7 @@ export default function Navbar() {
                           </div>
                         ))}
                         <button
-                          className="limpar-notificacoes"
+                          className={`limpar-notificacoes ${darkMode ? 'dark-clear' : ''}`}
                           onClick={limparNotificacoes}
                         >
                           Limpar Todas
@@ -187,18 +200,35 @@ export default function Navbar() {
                 <img
                   src={fotoPerfil}
                   alt="foto-perfil"
-                  className="foto-de-Perfil"
+                  className={`foto-de-Perfil ${darkMode ? 'dark-profile' : ''}`}
                   onClick={() => navigate('/perfil')}
+                  style={{ transition: 'all 0.3s ease-in-out' }}
                 />
-                <button onClick={logout} className="btn-sair-perfil">
+                <button 
+                  onClick={logout} 
+                  className={`btn-sair-perfil ${darkMode ? 'dark-logout' : ''}`}
+                  style={{ transition: 'all 0.3s ease-in-out' }}
+                >
                   Sair
                 </button>
               </div>
             </div>
           ) : (
             <>
-              <Link to='/login' className="login-button">Login</Link>
-              <Link to='/cadastro' className="cadastro-button">Cadastro</Link>
+              <Link 
+                to='/login' 
+                className={`login-button ${darkMode ? 'dark-link' : ''}`}
+                style={{ transition: 'all 0.3s ease-in-out' }}
+              >
+                Login
+              </Link>
+              <Link 
+                to='/cadastro' 
+                className={`cadastro-button ${darkMode ? 'dark-link' : ''}`}
+                style={{ transition: 'all 0.3s ease-in-out' }}
+              >
+                Cadastro
+              </Link>
             </>
           )}
         </div>

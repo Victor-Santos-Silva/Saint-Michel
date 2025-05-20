@@ -1,7 +1,6 @@
 import React from "react";
 import "./Contato.css";
-
-
+import { useTheme } from '../../context/ThemeContext'; // Importe o hook do tema
 
 const ContactInfo = [
   { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "../src/img/icons8-siren-96.png" },
@@ -11,18 +10,22 @@ const ContactInfo = [
 ];
 
 export default function Contato() {
+  const { darkMode } = useTheme(); // Use o hook do tema
+
   return (
     <>
-    
-
-      <div className="contact-section">
-        <h2>ENTRE EM CONTATO</h2>
+      <div className={`contact-section ${darkMode ? 'dark' : ''}`}>
+        <p  className="titulo">ENTRE EM CONTATO</p>
         <h3 className="CONTATO">Contato</h3>
         <div className="contact-grid">
           {ContactInfo.map((item, index) => (
-            <div key={index} className="contact-card">
+            <div key={index} className={`contact-card ${darkMode ? 'dark' : ''}`}>
               <div className="contact-img">
-                <img src={item.img} alt={item.title} />
+                <img 
+                  src={item.img} 
+                  alt={item.title} 
+                  className={darkMode ? 'dark-icon' : ''} // Classe para ícones
+                />
               </div>
               <h4>{item.title}</h4>
               <p>{item.info}</p>
@@ -30,7 +33,6 @@ export default function Contato() {
           ))}
         </div>
       </div>
-
     </>
   );
 }

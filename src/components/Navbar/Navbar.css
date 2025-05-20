@@ -348,6 +348,240 @@ body {
   transform: translateY(-2px);
 }
 
+/* Estilos para o modo escuro */
+.header.dark-mode {
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+.dark-mode .top-bar {
+  background-color: #121212;
+  border-bottom: 1px solid #333;
+}
+
+.dark-logo {
+  filter: brightness(0.8);
+}
+
+.dark-item {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-item strong {
+  color: #90caf9 !important;
+}
+
+.dark-mode .nav-link {
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .nav-link:hover {
+  color: #90caf9 !important;
+}
+
+.dark-toggle {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-toggle:hover {
+  background-color: #444;
+}
+
+.dark-text {
+  color: #e0e0e0 !important;
+}
+
+.dark-notification {
+  color: #e0e0e0 !important;
+}
+
+.dark-counter {
+  background-color: #90caf9 !important;
+  color: #1a1a1a !important;
+}
+
+.dark-list {
+  background-color: #2d2d2d;
+  border: 1px solid #444;
+}
+
+.dark-list .notificacao-item {
+  color: #e0e0e0;
+  border-bottom: 1px solid #444;
+}
+
+.dark-list .nao-lida {
+  background-color: #1e1e1e;
+}
+
+.dark-clear {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.dark-clear:hover {
+  background-color: #444 !important;
+}
+
+.dark-profile {
+  border: 2px solid #90caf9 !important;
+}
+
+.dark-logout {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.dark-logout:hover {
+  background-color: #444 !important;
+}
+
+.dark-link {
+  color: #e0e0e0 !important;
+}
+
+.dark-link:hover {
+  color: #90caf9 !important;
+}
+
+/* Transições suaves */
+* {
+  transition: background-color 0.3s ease-in-out, 
+             color 0.3s ease-in-out, 
+             border-color 0.3s ease-in-out,
+             filter 0.3s ease-in-out;
+}
+
+/* Modo Escuro */
+.header.dark-mode {
+  background-color: #121212;
+  border-bottom: 1px solid #333;
+}
+
+.dark-mode .top-bar {
+  background-color: #000;
+}
+
+.dark-logo {
+  filter: brightness(0) invert(1);
+}
+
+.dark-item {
+  background-color: #1e1e1e !important;
+  color: #fff !important;
+}
+
+.dark-icon {
+  color: #fff !important;
+}
+
+.dark-mode .nav-link {
+  color: #e0e0e0 !important;
+}
+
+.dark-mode .nav-link:hover {
+  color: #fff !important;
+}
+
+/* Botão de Tema */
+.theme-toggle {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.dark-toggle {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Notificações */
+.dark-notification {
+  color: #fff !important;
+}
+
+.dark-counter {
+  background-color: #fff !important;
+  color: #121212 !important;
+}
+
+.dark-list {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+.dark-list .notificacao-item {
+  color: #fff;
+  border-bottom: 1px solid #333;
+}
+
+.dark-list .nao-lida {
+  background-color: #2d2d2d;
+}
+
+.dark-clear {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+/* Perfil */
+.dark-profile {
+  border: 2px solid #fff !important;
+}
+
+.dark-logout {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+/* Links */
+.dark-link {
+  color: #fff !important;
+}
+
+.dark-link:hover {
+  color: #90caf9 !important;
+}
+
+/* Transições suaves */
+* {
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* Itens de contato - Modo Claro */
+.info-item.modern-item {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Itens de contato - Modo Escuro */
+.dark-item {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Ícones */
+.dark-icon {
+  color: #ffffff !important;
+  filter: brightness(0) invert(1);
+}
+
+/* Texto */
+.dark-item strong {
+  color: #ffffff !important;
+}
+
+/* Efeito hover */
+.info-item.modern-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dark-item:hover {
+  box-shadow: 0 2px 8px rgba(255,255,255,0.2);
+}
+
 /* Responsividade */
 @media (max-width: 1024px) {
   .top-bar {

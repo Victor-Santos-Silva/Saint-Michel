@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'aos/dist/aos.css';
 import Aos from 'aos';
 import './HomePage.css';
+import { useTheme } from '../../context/ThemeContext';
 
 import medicos from '../../img/medicos.png';
 import medicosFelizes from '../../img/medicos-felizes.png';
@@ -46,6 +47,8 @@ const especialidades = [
 ];
 
 const HomePage = () => {
+    const { darkMode } = useTheme();
+
     useEffect(() => {
         Aos.init({ duration: 1000, once: true, easing: "ease-in-out" });
     }, []);
@@ -53,7 +56,7 @@ const HomePage = () => {
     return (
         <>
             <Navbar />
-            <div className='homepage'>
+            <div className={`homepage ${darkMode ? 'dark' : ''}`}>
                 <div className='carrossel' data-aos="fade-up">
                     <Carousel>
                         <Carousel.Item>
@@ -74,9 +77,9 @@ const HomePage = () => {
                     <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
                     <p className='saibaMais'>
                         <Link to='/sobre'>Saiba mais</Link>
-                        <img className='seta' src="../src/img/seta.png" />
+                        <img className='seta' src="../src/img/seta.png" alt="Seta" />
                     </p>
-                    <img className='medico' src={medicos} data-aos="fade-right" />
+                    <img className='medico' src={medicos} data-aos="fade-right" alt="Médicos" />
                 </div>
 
                 <p className='titulo' data-aos="fade-up">CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
@@ -131,7 +134,7 @@ const HomePage = () => {
                     ))}
                 </div>
 
-                <img className='medicoBranco' src="../src/img/medicoBranco.png" data-aos="fade-up" />
+                <img className='medicoBranco' src="../src/img/medicoBranco.png" alt="Médico" data-aos="fade-up" />
 
                 <div className='titulosFinais' data-aos="fade-up">
                     <p className='titulo'>CUIDADO CONFIÁVEL</p>
