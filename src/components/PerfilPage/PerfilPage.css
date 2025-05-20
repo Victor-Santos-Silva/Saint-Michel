@@ -1,152 +1,263 @@
+/* PerfilPage.css */
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,1..1000;1,1..1000&display=swap');
 
 :root {
     --primary-font: "Yeseva One", serif;
-    --second-font: "Ysabeau Infant", serif;
+    --second-font: "Ysabeau Infant", sans-serif;
     --color-dark-blue: #1F2B6C;
+    --color-light-blue: #5dc3ff;
     --color-text: #fff;
+    --color-error: #ff4757;
+    --color-success: #2ed573;
+    --color-bg: #f8f9fa;
+}
+
+/* Estilos Gerais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 .perfil-container {
-    width: 1000px;
-    margin: 2rem auto;
-    padding: 2rem;
-    font-family: 'Segoe UI', sans-serif;
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    font-family: var(--second-font);
     background: var(--color-dark-blue);
     border-radius: 12px;
-    color: white;
-    min-height: 600px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    color: var(--color-text);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.carregando {
+    font-size: 1.5rem;
+    color: var(--color-dark-blue);
+}
+
+/* Sistema de Botões */
+.btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    margin: 0.3rem;
+    
+}
+
+.btn--primary {
+    background: linear-gradient(145deg, #4762ff, #0056b3);
+    color: white;
+    margin-left: 60%;
+  
+}
+
+.btn--primary:hover {
+    background: linear-gradient(145deg, #3a52e0, #004899);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn--secondary {
+    background: linear-gradient(145deg, #ff4757, #b30000);
+    color: white;
+    height: 55px;
+    margin-top: 10px;
+}
+
+.btn--secondary:hover {
+    background: linear-gradient(145deg, #e63c4a, #800000);
+    transform: translateY(-2px);
+}
+
+/* Layout do Perfil */
 .profile-content {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 2rem;
-    align-items: start;
+    grid-template-columns: 300px 1fr;
+    gap: 1.5rem;
+}
+
+.user-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .user-header {
-    background: var(--color-dark-blue);
-    padding: 2rem;
-    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .imagem-profile {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 3px solid white;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    color: var(--color-text);
+}
+
+.user-info h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-family: var(--primary-font);
+}
+
+.user-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.dados-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.dados-section {
     margin-bottom: 1.5rem;
+}
+
+.dados-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-family: var(--primary-font);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .dados-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
 }
 
 .dados-item {
-    padding: 1rem;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    border-left: 4px solid #5dc3ff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.dados-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+.dados-item .icon {
+    font-size: 1.2rem;
+    color: var(--color-light-blue);
+}
+
+.dados-item div {
+    flex: 1;
 }
 
 .dados-item strong {
     display: block;
-    color: var(--color-dark-blue);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.2rem;
 }
 
 .dados-item span {
-    color: #000000;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: white;
     word-break: break-word;
 }
 
-.user-info {
-    color: #ffffff;
+.button-group {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: -110px;
+    padding-top: 1rem;
+    flex-wrap: wrap;
 }
 
-.user-info p {
-    font-size: 1.1rem;
-}
-
-.btn-editar {
-    background: linear-gradient(to right, #ffffff, #ffffff);
-    color: #3857b3;
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-.btn-editar:hover {
-    background: linear-gradient(145deg, #ffffff2d, #ffffff36);
-    color: white;
-    transform: translateY(-1px);
-}
-
+/* Formulários */
 .edit-form {
-    background: #f8f9fa;
-    padding: 2rem;
+    background: white;
     border-radius: 10px;
-    margin-top: 2rem;
+    padding: 1.5rem;
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .form-group label {
     display: block;
-    color: #7f8c8d;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
 }
 
-.form-group input {
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #bdc3c7;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: border-color 0.3s ease;
+    font-family: var(--second-font);
 }
 
-.form-group input:focus {
-    border-color: #3498db;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-light-blue);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    box-shadow: 0 0 0 3px rgba(93, 195, 255, 0.1);
 }
 
+/* Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
@@ -155,13 +266,13 @@
 }
 
 .popup-container {
-    background: #ffffffe5;
+    background: white;
     border-radius: 10px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-    width: 600px;
-    max-height: 60vh;
+    width: 500px;
+    max-width: 95%;
+    max-height: 90vh;
     padding: 1.5rem;
-    animation: popupEntrance 0.3s ease-out;
     overflow-y: auto;
 }
 
@@ -170,14 +281,14 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    padding: 0 1rem 1rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #eee;
 }
 
 .popup-close {
     background: none;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     cursor: pointer;
     color: #666;
     transition: color 0.3s ease;
@@ -187,91 +298,12 @@
     color: #333;
 }
 
-/* ... (mantenha todo o css anterior) ... */
-
-.btn-editar {
-    background: linear-gradient(145deg, #4762ff, #0056b3);
-    color: white;
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    box-shadow: 0 3px 8px rgba(31, 43, 108, 0.2);
-    display: inline-block;
-    text-align: center;
-    margin: 0.5rem;
+.title-dependente {
+    color: #333;
+    font-size: 1.3rem;
 }
 
-.btn-editar:hover {
-    background: linear-gradient(145deg, #1a2457, #004899);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(31, 43, 108, 0.3);
-}
-
-.btn-editar:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(31, 43, 108, 0.2);
-}
-
-.title-dependete{
-    color: #000000;
-}
-
-.button-group {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
-
-@media (max-width: 768px) {
-    .btn-editar {
-        width: 100%;
-        margin: 0.5rem 0;
-    }
-    
-    .button-group {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .perfil-container {
-        width: 95%;
-        padding: 1.5rem;
-        margin: 1rem;
-    }
-
-    .profile-content {
-        grid-template-columns: 1fr;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .popup-container {
-        width: 90%;
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .popup-container {
-        width: 95%;
-    }
-    
-    .button-group {
-        flex-direction: column;
-    }
-}
-
+/* Animações */
 @keyframes popupEntrance {
     from {
         transform: scale(0.95);
@@ -284,10 +316,117 @@
 }
 
 [data-aos] {
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .aos-animate {
     opacity: 1 !important;
     transform: translate3d(0, 0, 0) !important;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .user-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .user-header {
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 0;
+    }
+    
+    .imagem-profile {
+        margin: 0;
+    }
+    
+    .button-group {
+        margin-top: 1rem;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .perfil-container {
+        padding: 1rem;
+        margin: 0.5rem auto;
+    }
+    
+    .user-card {
+        flex-direction: column;
+    }
+    
+    .user-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .dados-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        margin: 0.3rem 0;
+    }
+    
+    .dados-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .dados-item .icon {
+        margin-bottom: 0.3rem;
+    }
+}
+
+/* Dark Mode */
+.dark-mode .perfil-container {
+    background-color: #0f1a4a;
+}
+
+.dark-mode .edit-form {
+    background-color: #2d2d2d;
+    color: #f5f5f5;
+}
+
+.dark-mode .form-group label {
+    color: #bdc3c7;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-color: #444;
+}
+
+.dark-mode .popup-container {
+    background-color: #2d2d2d;
+    color: #f5f5f5;
+}
+
+.dark-mode .title-dependente {
+    color: #f5f5f5;
 }
