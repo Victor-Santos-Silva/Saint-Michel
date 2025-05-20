@@ -86,7 +86,59 @@
     font-weight: 400;
 }
 
-/* Media Queries para Responsividade */
+/* sobrePage.css */
+/* Modo Claro (padrão) */
+.sobre-page {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s ease;
+}
+
+.titulo-sobre, .subTitulo-sobre, .texto-sobre {
+    color: #2d2d2d;
+}
+
+.ul-container-listas {
+    border-color: #e0e0e0;
+}
+
+.li-container-listas {
+    color: #4a4a4a;
+}
+
+.container-texto-sobre {
+    background-color: #f8f9fa;
+}
+
+/* Modo Escuro */
+.sobre-page.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.sobre-page.dark .titulo-sobre,
+.sobre-page.dark .subTitulo-sobre,
+.sobre-page.dark .texto-sobre {
+    color: #ffffff;
+}
+
+.sobre-page.dark .ul-container-listas {
+    border-color: #333333;
+}
+
+.sobre-page.dark .li-container-listas {
+    color: #e0e0e0;
+}
+
+.sobre-page.dark .container-texto-sobre {
+    background-color: #2d2d2d;
+}
+
+.sobre-page.dark img {
+    filter: brightness(0.85);
+}
+
+/* Mantenha todos os outros estilos de animação e layout originais */
 
 @media (max-width: 1200px) {
     .container-sobre-master {
