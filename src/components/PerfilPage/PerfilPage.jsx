@@ -4,6 +4,12 @@ import { useAuth } from '../../context/AuthContext';
 import './PerfilPage.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import {
+  FaPhone, FaMapMarkerAlt, FaEnvelope, FaEdit,
+  FaSave, FaTimes, FaUser, FaIdCard,
+  FaBirthdayCake, FaVenusMars, FaTint, FaHospital,
+  FaFileAlt, FaUserPlus
+} from 'react-icons/fa';
 
 function PerfilPage() {
     const [dadosUsuario, setDadosUsuario] = useState(null);
@@ -20,6 +26,7 @@ function PerfilPage() {
     }, []);
 
     const calcularIdade = (dataNascimento) => {
+        if (!dataNascimento) return 'Não informada';
         const nascimento = new Date(dataNascimento);
         const hoje = new Date();
         let idade = hoje.getFullYear() - nascimento.getFullYear();
@@ -77,7 +84,6 @@ function PerfilPage() {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            // Atualiza os dados do usuário
             const response = await axios.get(`http://localhost:5000/paciente/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -92,7 +98,7 @@ function PerfilPage() {
     const handleCancel = () => setEditando(false);
 
     if (!dadosUsuario) {
-        return <p className='carregando'>Carregando...</p>;
+        return <div className="loading-container"><p className='carregando'>Carregando...</p></div>;
     }
 
     return (
@@ -105,7 +111,7 @@ function PerfilPage() {
                         data-aos="zoom-in"
                     >
                         <div className="popup-header">
-                            <h3 className='title-dependete'>Adicionar Dependente</h3>
+                            <h3 className='title-dependente'>Adicionar Dependente</h3>
                             <button 
                                 className="popup-close"
                                 onClick={() => setShowDependenteModal(false)}
@@ -132,26 +138,20 @@ function PerfilPage() {
                                     <input type="text" name="cpf" required />
                                 </div>
                                 <div className='form-group'>
-                                    <label>RG</label>
-                                    <input type="text" name="cpf" required />
-                                </div>
-                                <div className='form-group'>
-                                    <label>Convênio</label>
-                                    <input type="text" name="cpf" required />
-                                </div>
-                                <div className='form-group'>
                                     <label>Tipo Sanguíneo</label>
                                     <input type="text" name="tipoSanguineo" required />
                                 </div>
                             </div>
                             <div className='button-group'>
-                                <button type="submit" className="btn-editar">Salvar</button>
+                                <button type="submit" className="btn btn--primary">
+                                    <FaSave /> Salvar
+                                </button>
                                 <button 
                                     type="button" 
-                                    className="btn-editar"
+                                    className="btn btn--secondary"
                                     onClick={() => setShowDependenteModal(false)}
                                 >
-                                    Cancelar
+                                    <FaTimes /> Cancelar
                                 </button>
                             </div>
                         </form>
@@ -195,11 +195,11 @@ function PerfilPage() {
                     </div>
 
                     <div className='dados-section' data-aos="fade-up" data-aos-delay="500">
-                        <h3 className='dados-title' data-aos="fade-down">Informações Pessoais</h3>
+                        <h3 className='dados-title'>Informações Pessoais</h3>
                         <div className='form-row'>
                             <div className='form-group' data-aos="fade-up" data-aos-delay="600">
                                 <label>Data de Nascimento</label>
-                                <input type='text' name='dataDeNascimento' defaultValue={dadosUsuario.dataDeNascimento} />
+                                <input type='date' name='dataDeNascimento' defaultValue={dadosUsuario.dataDeNascimento} />
                             </div>
                             <div className='form-group' data-aos="fade-up" data-aos-delay="650">
                                 <label>CPF</label>
@@ -211,7 +211,12 @@ function PerfilPage() {
                             </div>
                             <div className='form-group' data-aos="fade-up" data-aos-delay="750">
                                 <label>Gênero</label>
-                                <input type='text' name='genero' defaultValue={dadosUsuario.genero} />
+                                <select name='genero' defaultValue={dadosUsuario.genero}>
+                                    <option value="">Selecione</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
                             </div>
                             <div className='form-group' data-aos="fade-up" data-aos-delay="800">
                                 <label>Endereço</label>
@@ -240,14 +245,18 @@ function PerfilPage() {
                         </div>
                     </div>
 
-                    <div className='button-group' data-aos="fade-up" data-aos-delay="1100">
-                        <button type='submit' className='btn-salvarinfo'>Salvar Alterações</button>
-                        <button type='button' className='btn-editar' onClick={handleCancel}>Cancelar</button>
+                    <div className='button-group'>
+                        <button type='submit' className='btn btn--primary'>
+                            <FaSave /> Salvar
+                        </button>
+                        <button type='button' className='btn btn--secondary' onClick={handleCancel}>
+                            <FaTimes /> Cancelar
+                        </button>
                     </div>
                 </form>
             ) : (
                 <div className='profile-content'>
-                    <div className='left-section' data-aos="fade-right" data-aos-delay="200">
+                    <div className='user-card'>
                         <div className='user-header'>
                             <img 
                                 src={dadosUsuario.imagemGenero} 
@@ -258,75 +267,92 @@ function PerfilPage() {
                             />
                             <div className='user-info' data-aos="fade-left" data-aos-delay="400">
                                 <h2>{dadosUsuario.nomeCompleto}</h2>
-                                <p>{dadosUsuario.email}</p>
+                                <p><FaEnvelope /> {dadosUsuario.email}</p>
+                                <p><FaPhone /> {dadosUsuario.telefone || 'Não informado'}</p>
+                                <p><FaMapMarkerAlt /> {dadosUsuario.endereco || 'Não informado'}</p>
                             </div>
+                        </div>
+                        
+                        <div className='button-group'>
+                            <button 
+                                className='btn btn--primary' 
+                                onClick={() => setEditando(true)}
+                                data-aos="zoom-in"
+                            >
+                                <FaEdit /> Editar Perfil
+                            </button>
+                            <button 
+                                className='btn btn--primary'
+                                onClick={() => setShowDependenteModal(true)}
+                                data-aos="zoom-in"
+                            >
+                                <FaUserPlus /> Adicionar Dependente
+                            </button>
                         </div>
                     </div>
 
-                    <div className='right-section' data-aos="fade-left" data-aos-delay="500">
+                    <div className='dados-container'>
                         <div className='dados-section'>
-                            <h3 className='dados-title' data-aos="fade-down" data-aos-delay="600">Dados do Perfil</h3>
+                            <h3 className='dados-title' data-aos="fade-down">Informações Pessoais</h3>
                             <div className='dados-grid'>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="700">
-                                    <strong>Idade</strong>
-                                    <span>{calcularIdade(dadosUsuario.dataDeNascimento)} anos</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaBirthdayCake className="icon" />
+                                    <div>
+                                        <strong>Idade</strong>
+                                        <span>{calcularIdade(dadosUsuario.dataDeNascimento)} anos</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="750">
-                                    <strong>Data de Nascimento</strong>
-                                    <span>{dadosUsuario.dataDeNascimento}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaBirthdayCake className="icon" />
+                                    <div>
+                                        <strong>Data de Nascimento</strong>
+                                        <span>{dadosUsuario.dataDeNascimento || 'Não informada'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="800">
-                                    <strong>CPF</strong>
-                                    <span>{dadosUsuario.cpf}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaIdCard className="icon" />
+                                    <div>
+                                        <strong>CPF</strong>
+                                        <span>{dadosUsuario.cpf || 'Não informado'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="850">
-                                    <strong>RG</strong>
-                                    <span>{dadosUsuario.rg}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaIdCard className="icon" />
+                                    <div>
+                                        <strong>RG</strong>
+                                        <span>{dadosUsuario.rg || 'Não informado'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="900">
-                                    <strong>Gênero</strong>
-                                    <span>{dadosUsuario.genero}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaVenusMars className="icon" />
+                                    <div>
+                                        <strong>Gênero</strong>
+                                        <span>{dadosUsuario.genero || 'Não informado'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="950">
-                                    <strong>Endereço</strong>
-                                    <span>{dadosUsuario.endereco}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaTint className="icon" />
+                                    <div>
+                                        <strong>Tipo Sanguíneo</strong>
+                                        <span>{dadosUsuario.tipoSanguineo || 'Não informado'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="1000">
-                                    <strong>Telefone</strong>
-                                    <span>{dadosUsuario.telefone}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaHospital className="icon" />
+                                    <div>
+                                        <strong>Convênio Médico</strong>
+                                        <span>{dadosUsuario.convenioMedico || 'Não informado'}</span>
+                                    </div>
                                 </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="1050">
-                                    <strong>Convênio Médico</strong>
-                                    <span>{dadosUsuario.convenioMedico}</span>
-                                </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="1100">
-                                    <strong>Plano do Convênio</strong>
-                                    <span>{dadosUsuario.planoConvenio}</span>
-                                </div>
-                                <div className='dados-item' data-aos="fade-up" data-aos-delay="1150">
-                                    <strong>Tipo Sanguíneo</strong>
-                                    <span>{dadosUsuario.tipoSanguineo}</span>
+                                <div className='dados-item' data-aos="fade-up">
+                                    <FaFileAlt className="icon" />
+                                    <div>
+                                        <strong>Plano do Convênio</strong>
+                                        <span>{dadosUsuario.planoConvenio || 'Não informado'}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className='button-group' data-aos="fade-up" data-aos-delay="1200">
-                        <button 
-                            className='btn-editar' 
-                            onClick={() => setEditando(true)}
-                            data-aos="zoom-in"
-                        >
-                            Editar Perfil
-                        </button>
-                        <br /><br />
-                        <button 
-                            className='btn-editar'
-                            onClick={() => setShowDependenteModal(true)}
-                            data-aos="zoom-in"
-                        >
-                            Adicionar Dependente
-                        </button>
                     </div>
                 </div>
             )}
