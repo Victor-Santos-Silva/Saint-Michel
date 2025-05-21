@@ -67,6 +67,111 @@
   margin-bottom: 1rem;
 }
 
+/* Modo Escuro - Apenas cores */
+.medico-header.dark {
+  background-color: #1a1a1a;
+}
+
+.medico-header.dark .titulo-contato {
+  color: var(--color-light-blue);
+}
+
+.medico-header.dark .subtitulo-contato{
+  color: white;
+}
+
+.medicos-container.dark {
+  background-color: #121212;
+}
+
+/* Mantém tamanho original das imagens */
+.img-servicos {
+  width: 100%;/* Tamanho original */
+  margin: 0 auto;
+}
+
+/* Ajustes apenas de cor para modo escuro */
+.img-servicos.dark {
+  filter: brightness(0.85);
+}
+
+.loading-spinner.dark {
+  color: #ffffff;
+}
+
+.loading-spinner.dark .spinner {
+  border-color: #f3f3f3;
+  border-top-color: #3498db;
+}
+
+.error-message.dark {
+  color: #ff9999;
+}
+
+.error-message.dark button {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.error-message.dark button:hover {
+  background-color: #3d3d3d;
+}
+
+/* Mantenha o restante do CSS original */
+.titulo-contato {
+  font-size: 2.5rem;
+  color: #2c3e50;
+}
+
+.subtitulo-contato {
+  font-size: 1.8rem;
+  color: #3498db;
+}
+
+.medicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+  color: #e74c3c;
+}
+
+.error-message button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

@@ -98,6 +98,16 @@
     color: #2d2d2d;
 }
 
+.titulo-sobre {
+    color: var(--color-light-blue); /* Mantenha sua cor original do modo claro */
+}
+
+/* Modo Escuro - Mantém a mesma cor */
+.sobre-page.dark .titulo-sobre {
+    color: var(--color-light-blue) !important; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Opcional: adiciona contraste */
+}
+
 .ul-container-listas {
     border-color: #e0e0e0;
 }

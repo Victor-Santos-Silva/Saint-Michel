@@ -70,8 +70,8 @@ export default function SobrePage() {
 
                         <div className="container-texto-sobre" data-aos="fade-up">
                             <p className="texto-sobre">
-                                Na Rede Hospitalar Saint Michel...
-                            </p>
+                                   Na Rede Hospitalar Saint Michel, temos uma paixão pela cura, dedicando todo o nosso melhor em cada detalhe do cuidado com o paciente. Nosso compromisso é cuidar sempre, oferecendo uma atenção personalizada e acolhedora que faz a diferença na vida de quem confia em nós. Reconhecidos por um atendimento 5 estrelas, unimos tecnologia de ponta e profissionais experientes para garantir a melhor experiência possível. Ao escolher a Saint Michel, você pode acreditar em nós e em um legado de excelência que coloca sua saúde e bem-estar em primeiro lugar.
+                        </p>
                         </div>
                     </div>
                 </div>

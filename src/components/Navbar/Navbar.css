@@ -552,7 +552,7 @@ body {
 /* Itens de contato - Modo Claro */
 .info-item.modern-item {
   background-color: #f8f9fa;
-  color: #333;
+  color: var(--color-dark-blue);
 }
 
 /* Itens de contato - Modo Escuro */
