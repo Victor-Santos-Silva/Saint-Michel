@@ -319,7 +319,7 @@ const AgendamentosDependentes = () => {
       )}
 
 
-      <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
+      <img src="../img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
       <div className="calendar-container">
         <h1 className="tittle-contato">Faça já seu agendamento</h1>
         <h1 className="team-title">Agende agora</h1>
