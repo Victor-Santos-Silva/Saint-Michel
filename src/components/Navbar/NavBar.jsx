@@ -89,7 +89,7 @@ export default function Navbar() {
         <div className="logo">
           <Link to="/">
             <img 
-              src="src/img/LogoTipo+Frase.png" 
+              src="puplic/img/LogoTipo+Frase.png" 
               alt="Logo" 
               className={`logo-img ${darkMode ? 'dark-logo' : ''}`}
             />
