@@ -6,9 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import imagemFundo from '../../img/Paciente.png';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function LoginPage() {
     const navigate = useNavigate();
+    const { darkMode } = useTheme();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -112,28 +114,26 @@ export default function LoginPage() {
     };
 
     return (
-        <div className='container-page-login'>
-              <ToastContainer
-                    position="top-right"
-                    autoClose={800}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                />
-            <div className='container-formulario-login'>
-              
+        <div className={`container-page-login ${darkMode ? 'dark' : ''}`}>
+            <ToastContainer
+                position="top-right"
+                autoClose={800}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={darkMode ? 'dark' : 'light'}
+            />
+            <div className={`container-formulario-login ${darkMode ? 'dark' : ''}`}>
+                <h1 className={`title-login ${darkMode ? 'dark' : ''}`}>Login</h1>
 
-                <h1 className='title-login'>Login</h1>
-
-                <form onSubmit={handleSubmit} className='form-login'>
+                <form onSubmit={handleSubmit} className={`form-login ${darkMode ? 'dark' : ''}`}>
                     <div className='text-field'>
                         <input
-                            className='input-login'
+                            className={`input-login ${darkMode ? 'dark' : ''}`}
                             type="text"
                             name="email"
                             placeholder="Email"
@@ -146,7 +146,7 @@ export default function LoginPage() {
 
                     <div className='text-field'>
                         <input
-                            className='input-login'
+                            className={`input-login ${darkMode ? 'dark' : ''}`}
                             type="password"
                             name="senha"
                             placeholder="Senha"
@@ -157,24 +157,26 @@ export default function LoginPage() {
                         {error.senha && <p className="error-message">Campo obrigatório</p>}
                     </div>
 
-                    <button type="submit" className='btn-login'>Entrar</button>
+                    <button type="submit" className={`btn-login ${darkMode ? 'dark' : ''}`}>
+                        Entrar
+                    </button>
                 </form>
 
                 <button
-                    className='btn-forgot-password'
+                    className={`btn-forgot-password ${darkMode ? 'dark' : ''}`}
                     onClick={() => setShowForgotPassword(true)}
                 >
                     Esqueci a senha
                 </button>
 
                 {showForgotPassword && (
-                    <div className='forgot-password-popup'>
-                        <div className='forgot-password-content'>
-                            <h2>Redefinir Senha</h2>
+                    <div className={`forgot-password-popup ${darkMode ? 'dark' : ''}`}>
+                        <div className={`forgot-password-content ${darkMode ? 'dark' : ''}`}>
+                            <h2 className={darkMode ? 'dark' : ''}>Redefinir Senha</h2>
                             <form onSubmit={handlePasswordReset}>
                                 <div className='text-field'>
                                     <input
-                                        className='input-login'
+                                        className={`input-login ${darkMode ? 'dark' : ''}`}
                                         type="email"
                                         name="email"
                                         placeholder="Email cadastrado"
@@ -189,7 +191,7 @@ export default function LoginPage() {
 
                                 <div className='text-field'>
                                     <input
-                                        className='input-login'
+                                        className={`input-login ${darkMode ? 'dark' : ''}`}
                                         type="password"
                                         name="senhaNova"
                                         placeholder="Nova senha (mínimo 6 caracteres)"
@@ -203,10 +205,12 @@ export default function LoginPage() {
                                 </div>
 
                                 <div className='button-group'>
-                                    <button type="submit" className='btn-confirm'>Redefinir Senha</button>
+                                    <button type="submit" className={`btn-confirm ${darkMode ? 'dark' : ''}`}>
+                                        Redefinir Senha
+                                    </button>
                                     <button 
                                         type="button" 
-                                        className='btn-cancel'
+                                        className={`btn-cancel ${darkMode ? 'dark' : ''}`}
                                         onClick={() => {
                                             setShowForgotPassword(false);
                                             setForgotPasswordData({ email: '', senhaNova: '' });

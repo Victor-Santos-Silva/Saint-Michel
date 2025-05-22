@@ -193,6 +193,59 @@ select.input-cadastro {
   color: white !important;
 }
 
+/* Modo Escuro */
+.container-page-cadastro.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.container-formulario-cadastro.dark {
+    background-color: #2d2d2d;
+    border: 1px solid #444444;
+}
+
+.title-cadastro.dark {
+    color: #ffffff;
+}
+
+.input-cadastro.dark {
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-color: #555555;
+}
+
+.input-cadastro.dark::placeholder {
+    color: #cccccc;
+}
+
+.select-cadastro.dark {
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-color: #555555;
+}
+
+.btn-next.dark, .btn-prev.dark {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-submit.dark {
+    background-color: #2196F3;
+    color: white;
+}
+
+.text-field label.dark {
+    color: #ffffff;
+}
+
+.form-navigation.dark {
+    border-top-color: #444444;
+}
+
+.error-message {
+    color: #ff4444;
+}
+
 @media (max-width: 768px) {
   .container-page-cadastro {
     padding: 15px;
