@@ -239,7 +239,7 @@ const AgendamentosDependentes = () => {
         const errorMsg = dataDados.message || 'Erro no agendamento';
         toast.error(errorMsg, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 800,
           theme: "colored"
         });
         throw new Error(errorMsg);
@@ -247,7 +247,7 @@ const AgendamentosDependentes = () => {
 
       toast.success('Agendamento realizado com sucesso!', {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 800,
         theme: "colored",
         onClose: () => window.location.reload()
       });
@@ -271,7 +271,7 @@ const AgendamentosDependentes = () => {
       <Navbar />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={800}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
