@@ -119,7 +119,7 @@ const Contatos = () => {
       />
       
       <Navbar />
-      <img src="../src/img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
+      <img src="../img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
       <br /><br />
       <div className="map-container">
         <iframe
