@@ -8,7 +8,9 @@ function Perfil() {
   return (
     <>
       <NavBar />
+      <br />
       <PerfilPage />
+      <br />
       <Footer />
     </>
   )
