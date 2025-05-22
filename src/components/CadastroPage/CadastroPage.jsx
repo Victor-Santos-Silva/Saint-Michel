@@ -342,7 +342,7 @@ function CadastroPage() {
                             />
                         </div>
                     </>
-                    
+                
                 );
             default:
                 return null;
