@@ -35,7 +35,7 @@ export default function HealthPage() {
   return (
     <>
       <Navbar />
-      <img src="../src/img/logo servico.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
+      <img src="../img/logo servico.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
       <h1 className="tittle-contato" data-aos="fade-right">Nossos Serviços</h1>
       <h1 className="team-title" data-aos="fade-left">Principais serviços da nossa rede</h1>
 
