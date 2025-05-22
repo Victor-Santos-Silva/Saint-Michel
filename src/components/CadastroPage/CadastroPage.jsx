@@ -340,7 +340,9 @@ function CadastroPage() {
                                 className={`input-cadastro ${darkMode ? 'dark' : ''}`}
                                 required
                             />
+                            
                         </div>
+
                     </>
                 );
             default:
