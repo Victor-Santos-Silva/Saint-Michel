@@ -240,6 +240,73 @@
   margin-left: 5px;
 }
 
+/* Modo Escuro */
+.container-page-login.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.container-formulario-login.dark {
+    background-color: #2d2d2d;
+    border: 1px solid #444444;
+}
+
+.title-login.dark {
+    color: #ffffff;
+}
+
+.form-login.dark .input-login.dark {
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-color: #555555;
+}
+
+.form-login.dark .input-login.dark::placeholder {
+    color: #cccccc;
+}
+
+.btn-login.dark {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-forgot-password.dark {
+    color: #90caf9;
+}
+
+.forgot-password-popup.dark {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.forgot-password-content.dark {
+    background-color: #2d2d2d;
+    border: 1px solid #444444;
+    color: #ffffff;
+}
+
+.forgot-password-content.dark h2 {
+    color: #ffffff;
+}
+
+.forgot-password-content.dark .input-login.dark {
+    background-color: #3d3d3d;
+    color: #ffffff;
+}
+
+.button-group .btn-confirm.dark {
+    background-color: #2196F3;
+    color: white;
+}
+
+.button-group .btn-cancel.dark {
+    background-color: #f44336;
+    color: white;
+}
+
+.error-message {
+    color: #ff4444;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .container-page-login {
