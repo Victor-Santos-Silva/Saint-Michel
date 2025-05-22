@@ -341,8 +341,8 @@ function CadastroPage() {
                                 required
                             />
                         </div>
+                        
                     </>
-                
                 );
             default:
                 return null;
