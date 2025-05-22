@@ -43,7 +43,7 @@ export default function Medico() {
     <>
       <Navbar />
       <img
-        src="../src/img/nossos-medicos.png"
+        src="../img/nossos-medicos.png"
         alt="Nossos Médicos"
         className="img-servicos"
         data-aos="fade-down"
