@@ -27,7 +27,7 @@ export default function SobrePage() {
             <Navbar />
             <div className={`sobre-page ${darkMode ? 'dark' : ''}`}>
                 <img 
-                    src="../src/img/medicos em sobre.png" 
+                    src="../../img/medicos em sobre.png" 
                     alt="" 
                     className="img-doutores-sobre" 
                     data-aos="fade-down"
@@ -35,7 +35,7 @@ export default function SobrePage() {
 
                 <div className="container-sobre-master">
                     <img 
-                        src="../src/img/medicas em sobre.png" 
+                        src="../../img/medicas em sobre.png" 
                         alt="" 
                         className="img-medicas-sobre" 
                         data-aos="fade-right"

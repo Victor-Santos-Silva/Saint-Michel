@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-container">
         <div className="footer-logo">
-          <img src="../src/img/FooterLogo.png" />
+          <img src="../img/FooterLogo.png" />
         </div>
 
         <div className="footer-section">

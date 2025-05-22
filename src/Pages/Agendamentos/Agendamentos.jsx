@@ -341,7 +341,7 @@ const Agendamentos = () => {
 
       {!showModal && !showServiceTypeModal && (
         <>
-          <img src="../src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
+          <img src="../img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
 
           <div className="calendar-container" data-aos="fade-up">
             <h1 className="tittle-contato" data-aos="fade-right">Faça já seu agendamento</h1>

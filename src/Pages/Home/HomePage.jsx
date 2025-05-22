@@ -134,7 +134,7 @@ const HomePage = () => {
                     ))}
                 </div>
 
-                <img className='medicoBranco' src="../src/img/medicoBranco.png" alt="Médico" data-aos="fade-up" />
+                <img className='medicoBranco' src="../img/medicoBranco.png" alt="Médico" data-aos="fade-up" />
 
                 <div className='titulosFinais' data-aos="fade-up">
                     <p className='titulo'>CUIDADO CONFIÁVEL</p>
