@@ -116,7 +116,7 @@ const ServicosExtras = () => {
     <>
       <Navbar />
       <ToastContainer />
-      <img src="/src/img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
+      <img src="../img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
 
       <div className="servicos-container">
         <h1 className="tittle-contato">Agendamento</h1>
