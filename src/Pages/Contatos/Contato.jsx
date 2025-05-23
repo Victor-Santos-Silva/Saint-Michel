@@ -4,13 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Contato.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
-
-const ContactInfo = [
-  { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "/img/icons8-siren-96.png" },
-  { title: "LOCALIZAÇÃO", info: "Av. Marechal Tito, 3400", img: "/img/LocationIcon.png" },
-  { title: "E-MAIL", info: "saintmichiel@gmail.com", img: "../img/emailicon.png" },
-  { title: "HORÁRIO DE TRABALHO", info: "Dom-Dom 24 Horas", img: "/img/icons8-clock-50.png" }
-];
+import Contato from '../../components/Contato/Contato';
 
 const Contatos = () => {
   const [nome, setNome] = useState('');
@@ -21,7 +15,7 @@ const Contatos = () => {
 
   const validateForm = () => {
     const errors = [];
-    
+
     if (!nome.trim()) errors.push('✖ O nome é obrigatório');
     if (!email.trim()) {
       errors.push('✖ O email é obrigatório');
@@ -48,7 +42,7 @@ const Contatos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
@@ -59,11 +53,11 @@ const Contatos = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          nome, 
-          email, 
-          assunto, 
-          mensagem 
+        body: JSON.stringify({
+          nome,
+          email,
+          assunto,
+          mensagem
         }),
       });
 
@@ -82,7 +76,7 @@ const Contatos = () => {
         draggable: true,
         progress: undefined,
       });
-      
+
       // Limpar campos
       setNome('');
       setEmail('');
@@ -117,7 +111,7 @@ const Contatos = () => {
         draggable
         pauseOnHover
       />
-      
+
       <Navbar />
       <img src="../img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
       <br /><br />
@@ -181,19 +175,7 @@ const Contatos = () => {
         </form>
       </div>
 
-      <div className="contact-section">
-        <div className="contact-grid">
-          {ContactInfo.map((item, index) => (
-            <div key={index} className="contact-card">
-              <div className="contact-img">
-                <img src={item.img} alt={item.title} />
-              </div>
-              <h4>{item.title}</h4>
-              <p>{item.info}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Contato />
       <Footer />
     </>
   );
