@@ -77,7 +77,7 @@ const HomePage = () => {
                     <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
                     <p className='saibaMais'>
                         <Link to='/sobre'>Saiba mais</Link>
-                        <img className='seta' src="../src/img/seta.png" alt="Seta" />
+                        <img className='seta' src="../img/seta.png" alt="Seta" />
                     </p>
                     <img className='medico' src={medicos} data-aos="fade-right" alt="Médicos" />
                 </div>
