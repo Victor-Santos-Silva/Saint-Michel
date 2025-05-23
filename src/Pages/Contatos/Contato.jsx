@@ -6,10 +6,10 @@ import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
 
 const ContactInfo = [
-  { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "../src/img/icons8-siren-96.png" },
-  { title: "LOCALIZAÇÃO", info: "Av. Manoel da Silva, 3400", img: "../src/img/LocationIcon.png" },
-  { title: "E-MAIL", info: "saintmichiel@gmail.com", img: "../src/img/emailicon.png" },
-  { title: "HORÁRIO DE TRABALHO", info: "Dom-Dom 09:00-20:00", img: "../src/img/icons8-clock-50.png" }
+  { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "/img/icons8-siren-96.png" },
+  { title: "LOCALIZAÇÃO", info: "Av. Manoel da Silva, 3400", img: "/img/LocationIcon.png" },
+  { title: "E-MAIL", info: "saintmichiel@gmail.com", img: "/img/emailicon.png" },
+  { title: "HORÁRIO DE TRABALHO", info: "Dom-Dom 09:00-20:00", img: "/img/icons8-clock-50.png" }
 ];
 
 const Contatos = () => {
