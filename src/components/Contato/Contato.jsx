@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext'; // Importe o hook do tema
 const ContactInfo = [
   { title: "EMERGÊNCIA", info: "(11) 6918-1525", img: "../img/icons8-siren-96.png" },
   { title: "LOCALIZAÇÃO", info: "Av. Marechal Tito, 3400", img: "../img/LocationIcon.png" },
-  { title: "E-MAIL", info: "saintmichiel@gmail.com", img: "../img/emailicon.png" },
+  { title: "E-MAIL", info: "saintmichiel@gmail.com", img: "../img/emailIcon.png" },
   { title: "HORÁRIO DE TRABALHO", info: "Dom-Dom 24 Horas", img: "../img/icons8-clock-50.png" }
 ];
 
