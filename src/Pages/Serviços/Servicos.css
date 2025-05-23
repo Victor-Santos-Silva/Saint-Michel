@@ -42,7 +42,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    background: linear-gradient(to right, #ffffff, #003cff1a);
+    background-color: var(--color-background-card); /* Cor sólida no modo claro */
     border-radius: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -119,6 +119,51 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Modo Escuro para HealthPage */
+.health-page.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.health-page.dark .team-title,
+.health-page.dark .title-card,
+.health-page.dark .card-description,
+.health-page.dark .team-button {
+    color: #ffffff;
+}
+
+.health-page.dark .tittle-contato {
+    color: #90caf9;
+}
+
+.health-page.dark .team-section {
+    background-color: transparent;
+}
+
+.health-page.dark .card-servico {
+    background-color: #2d2d2d; /* Preto suave sólido */
+    color: #ffffff;
+    box-shadow: none;
+    border: 1px solid #444444;
+}
+
+.health-page.dark .img-servicos,
+.health-page.dark .imgCard-servico {
+    filter: brightness(0.85);
+}
+
+.health-page.dark .team-button {
+    background-color: #444444;
+    border: 1px solid #666666;
+    color: #ffffff;
+}
+
+.health-page.dark .team-button:hover {
+    background-color: #555555;
+    border-color: #888888;
+    cursor: pointer;
 }
 
 /* Responsividade */
