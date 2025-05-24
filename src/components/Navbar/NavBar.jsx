@@ -6,6 +6,7 @@
   import "./Navbar.css";
   import { useNavigate } from "react-router-dom";
   import { useTheme } from '../../context/ThemeContext';
+  import { FaSun, FaMoon } from "react-icons/fa";
 
   export default function Navbar() {
     const { isLoggedIn, nomeCompleto, logout } = useAuth();
@@ -83,18 +84,18 @@
       }
     }, [isLoggedIn]);
 
-    return (
-      <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
-        <div className="top-bar">
-          <div className="logo">
-            <Link to="/">
-              <img 
-                src="../img/LogoTipo+Frase.png" 
-                alt="Logo" 
-                className={`logo-img ${darkMode ? 'dark-logo' : ''}`}
-              />
-            </Link>
-          </div>
+  return (
+    <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="top-bar">
+        <div className="logo">
+          <Link to="/">
+            <img 
+              src="../img/LogoTipo+Frase.png" 
+              alt="Logo" 
+              className={`logo-img ${darkMode ? 'dark-logo' : ''}`}
+            />
+          </Link>
+        </div>
 
         <div className="contact-info">
             <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
@@ -121,28 +122,28 @@
           </div>
         </div>
 
-        <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
-          <div className="nav-links">
-            {['/', '/sobre', '/servicos', '/doutores', '/agendamentos', '/contato'].map((path, idx) => (
-              <Link 
-                key={idx}
-                to={path}
-                className="nav-link"
-                style={{ transition: 'all 0.3s ease-in-out' }}
-              >
-                {['Home', 'Sobre', 'Serviços', 'Doutores', 'Agendamentos', 'Contato'][idx]}
-              </Link>
-            ))}
-          </div>
-
-          <div className="container-login-cadastro">
-            <button 
-              onClick={toggleTheme} 
-              className={`theme-toggle ${darkMode ? 'dark-toggle' : ''}`}
+      <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
+        <div className="nav-links">
+          {['/', '/sobre', '/servicos', '/doutores', '/agendamentos', '/contato'].map((path, idx) => (
+            <Link 
+              key={idx}
+              to={path}
+              className="nav-link"
               style={{ transition: 'all 0.3s ease-in-out' }}
             >
-              {darkMode ? '🌞' : '🌙'}
-            </button>
+              {['Home', 'Sobre', 'Serviços', 'Doutores', 'Agendamentos', 'Contato'][idx]}
+            </Link>
+          ))}
+        </div>
+
+          <div className="container-login-cadastro">
+           <button 
+  onClick={toggleTheme} 
+  className="theme-togglcls
+  style={{ transition: 'all 0.3s ease-in-out' }}
+>
+  {darkMode ? <FaSun color="white" /> : <FaMoon color="white" />}
+</button>
 
             {isLoggedIn ? (
               <div className="perfil-usuario">

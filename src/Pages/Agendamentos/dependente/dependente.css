@@ -1,13 +1,53 @@
-  :root {
+:root {
   --primary-font: "Yeseva One", serif;
   --color-dark-blue: #1F2B6C;
   --color-light-blue: #3eacec;
   --color-azul-calcinha: #BFD2F8;
   --color-dark-gray: #333;
   --color-dark-green: #2da37c;
+  
+  /* Light mode colors */
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --border-color: #d3d3d3;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --disabled-bg: #e9ecef;
+  --error-border: #ff4444;
+  --title-color: #000000;
+  --modal-bg: #ffffff;
+  --modal-text: #333333;
+  --button-bg: var(--color-dark-blue);
+  --button-text: #ffffff;
 }
 
-/* Centralizar o calendário e manter largura uniforme */
+/* Dark mode colors */
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --input-bg: #2d2d2d;
+  --border-color: #444444;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --disabled-bg: #3a3a3a;
+  --error-border: #ff6666;
+  --title-color: #ffffff;
+  --modal-bg: #2d2d2d;
+  --modal-text: #e0e0e0;
+  --button-bg: #3a3a3a;
+  --button-text: #ffffff;
+}
+
+/* Base styles */
+.app-container {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+}
+
+/* Calendar styles */
 .calendar-container {
   display: flex;
   flex-direction: column;
@@ -19,160 +59,37 @@
   margin: 20px auto;
 }
 
-/* Ajustar tamanho e estilo do calendário */
 .react-calendar {
   width: 100% !important;
   max-width: 420px;
-  background: white;
-  border: 1px solid #d3d3d3;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px var(--shadow-color);
+  color: var(--text-color);
 }
 
-/* Estilizar o título "Escolha uma data para o agendamento" */
-.calendar-container h2 {
-  font-size: 1.2rem;
-  /* Reduzir o tamanho da fonte */
-  font-weight: 100;
-  text-align: center;
-  width: 100%;
-  max-width: 350px;
-  /* Mesma largura do calendário */
-  white-space: nowrap;
-  /* Impede a quebra de linha */
-  overflow: hidden;
-  /* Esconde qualquer conteúdo extra */
-  margin-bottom: 10px;
-}
-
-
-/* Centralizar mês e ano */
-.react-calendar__navigation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Estilizar mês e ano */
-.react-calendar__navigation button {
-  color: black;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-/* Estilizar setas de navegação */
-.react-calendar__navigation button:enabled {
-  color: black;
-}
-
-/* Estilizar os dias com fonte cinza e borda minimalista */
-.react-calendar__tile {
-  color: #808080;
-  border: 1px solid #d3d3d3;
-  padding: 10px;
-  text-align: center;
-}
-
-/* Destacar dias com lembretes */
-.react-calendar__tile.highlight {
-  background-color: var(--color-dark-green);
-  color: black;
-  border-radius: none;
-}
-
-/* Destacar o dia atual */
-.react-calendar__tile--now {
-  background-color: var(--color-light-blue) !important;
-  color: white !important;
-  border-radius: none;
-  font-weight: bold;
-}
-
-/* Estilizar a seção de lembretes */
-.reminder-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-  margin: 20px auto;
-
-}
-
-/* Estilizar os inputs */
-.reminder-container input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-/* Ajustar largura dos campos */
-.reminder-container input[type="text"] {
-  flex: 2;
-}
-
-.reminder-container input[type="time"] {
-  flex: 1;
-}
-
-/* Estilizar o botão */
-.reminder-container button {
-  padding: 8px 12px;
-  border: none;
-  background-color: var(--color-light-blue);
-  color: white;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.reminder-container button:hover {
-  background-color: #1178b5;
-}
-
-/* Adicionar uma linha separadora entre os dias da semana e os dias do mês */
-.react-calendar__month-view__weekdays {
-  border-bottom: 1px solid #d3d3d3;
-  border-top: 1px solid #d3d3d3;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-}
-
-/* Estilizar o título "Lembretes para" */
-.reminder-display h3 {
-  font-size: 1rem;
-  /* Reduzir o tamanho da fonte */
-  font-weight: bold;
-  white-space: nowrap;
-  /* Impede que o texto quebre em várias linhas */
-  overflow: hidden;
-  /* Esconde qualquer conteúdo extra */
-  text-overflow: ellipsis;
-  /* Adiciona "..." caso o texto seja muito longo */
-  margin-bottom: 5px;
-}
-
-/* estilização do formularaio */
+/* Form styles */
 .container-form-dependente {
   width: 600px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  box-shadow: 0 0 10px var(--shadow-color);
   border-radius: 8px;
   margin: auto;
   padding: 1%;
+}
+
+.container-form-dependente.dark {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
 }
 
 .title {
   text-align: center;
   font-size: 20px;
   margin-bottom: 20px;
+  color: var(--title-color);
 }
 
 .form-grid-dependente {
@@ -186,75 +103,258 @@
   flex-direction: column;
 }
 
-
-.full-width {
-  grid-column: span 1;
+.form-group label {
+  color: var(--text-color);
+  margin-bottom: 5px;
 }
 
 input,
 select {
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 20px;
-
+  background-color: var(--input-bg);
+  color: var(--text-color);
 }
 
 .submit-btn-dependente {
   width: 100%;
   padding: 10px;
-  background: var(--color-dark-blue);
-  color: rgb(255, 255, 255);
+  background: var(--button-bg);
+  color: var(--button-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px;
+  transition: background-color 0.3s;
 }
 
-.submit-btn:hover {
-  background: darkblue;
-
+.submit-btn-dependente:hover {
+  opacity: 0.9;
 }
 
-.input-cadastro {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background-color: white;
+/* Modal styles */
+.modal {
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
 }
 
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.modal.dark {
+  background-color: var(--card-bg);
+  color: var(--text-color);
 }
 
-.form-group select:disabled {
-  background-color: #e9ecef;
+.modal-content button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
 }
 
-.form-group input[type="date"],
-.form-group select {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-}
-
+/* Error styles */
 .campo-obrigatorio {
-  border: 2px solid #ff4444 !important;
-  border-radius: 4px;
+  border: 2px solid var(--error-border) !important;
 }
-
 
 label::after {
-  position: relative;
   content: '*';
-  color: #ff4444;
+  color: var(--error-border);
   margin-left: 4px;
-  position: absolute;
 }
 
-.opcional::after{
-  color: #000000;
+.opcional::after {
   content: '';
+}
+
+/* Text styles */
+.tittle-contato,
+.team-title {
+  color: var(--title-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container-form-dependente {
+    width: 90%;
+  }
+  
+  .form-grid-dependente {
+    grid-template-columns: 1fr;
+  }
+}
+:root {
+  --primary-font: "Yeseva One", serif;
+  --color-dark-blue: #1F2B6C;
+  --color-light-blue: #3eacec;
+  --color-azul-calcinha: #BFD2F8;
+  --color-dark-gray: #333;
+  --color-dark-green: #2da37c;
+  
+  /* Light mode */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --border-primary: #d3d3d3;
+  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --error-color: #ff4444;
+  --button-bg: #1F2B6C;
+  --button-text: #ffffff;
+  --input-bg: #ffffff;
+  --card-bg: #ffffff;
+  --modal-bg: #ffffff;
+}
+
+/* Dark mode */
+.dark-mode {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #bbbbbb;
+  --border-primary: #444444;
+  --shadow-primary: rgba(0, 0, 0, 0.3);
+  --error-color: #ff6666;
+  --button-bg: #3a3a3a;
+  --button-text: #ffffff;
+  --input-bg: #2d2d2d;
+  --card-bg: #1e1e1e;
+  --modal-bg: #2d2d2d;
+}
+
+/* Base styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+/* Container principal */
+.container-form-dependente {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 0 10px var(--shadow-primary);
+}
+
+/* Todos os elementos de texto */
+.tittle-contato,
+.team-title,
+.title,
+label,
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+}
+
+/* Todos os inputs e selects */
+input,
+select,
+textarea,
+.input-cadastro,
+.form-group input,
+.form-group select {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+}
+
+/* Placeholder */
+::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 1;
+}
+
+/* Modal */
+.modal,
+.modal-content {
+  background-color: var(--modal-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Botões */
+button,
+.submit-btn-dependente,
+.modal-content button {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+}
+
+/* Calendário */
+.react-calendar {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.react-calendar__tile {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.react-calendar__navigation button {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Lembretes */
+.reminder-container {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Mensagens de erro */
+.error-message {
+  color: var(--error-color) !important;
+}
+
+/* Campos obrigatórios */
+.campo-obrigatorio {
+  border: 2px solid var(--error-color) !important;
+}
+
+/* Ícones e imagens - ajuste de brilho */
+img:not([src*='.svg']) {
+  filter: brightness(var(--img-brightness, 100%));
+}
+
+.dark-mode img:not([src*='.svg']) {
+  --img-brightness: 85%;
+}
+
+/* Ajustes específicos para o formulário */
+.form-group {
+  background-color: transparent !important;
+}
+
+.form-grid-dependente {
+  background-color: transparent !important;
+}
+
+/* Ajuste para dropdowns */
+option {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Footer */
+footer {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Links */
+a {
+  color: var(--text-secondary) !important;
+}
+
+/* Efeito hover em botões */
+button:hover {
+  opacity: 0.9 !important;
+}
+
+/* Ajuste para o calendário */
+.react-calendar__month-view__weekdays {
+  color: var(--text-primary) !important;
+}
+
+/* Ajuste para campos desabilitados */
+:disabled {
+  background-color: var(--bg-secondary) !important;
+  opacity: 0.7 !important;
 }

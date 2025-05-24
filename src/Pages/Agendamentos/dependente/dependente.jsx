@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify'; // Correto
+import { ToastContainer, toast } from 'react-toastify';
 import './dependente.css';
-// Adicionar no topo com as outras importações
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Footer from '../../../components/Footer/Footer';
 import Navbar from '../../../components/Navbar/NavBar';
+import { useTheme } from '../../../context/ThemeContext';
 
 const AgendamentosDependentes = () => {
+  const { darkMode, toggleTheme } = useTheme();
   const [showModal, setShowModal] = useState(false);
   const [showServiceTypeModal, setShowServiceTypeModal] = useState(false);
   const [nomeCompleto, setNomeCompleto] = useState('');
@@ -17,7 +18,6 @@ const AgendamentosDependentes = () => {
   const [genero, setGenero] = useState('');
   const [imagemPaciente, setImagemPaciente] = useState('/img/pacienteOutro.png');
   const [imagemGenero, setImagemGenero] = useState('/img/pacienteOutro.png');
-
   const [endereco, setEndereco] = useState('');
   const [telefone, setTelefone] = useState('');
   const [convenioMedico, setConvenioMedico] = useState('');
@@ -26,35 +26,27 @@ const AgendamentosDependentes = () => {
   const [problemaSaude, setProblemaSaude] = useState('');
   const [parentesco, setParentesco] = useState('');
   const [tipoSanguineo, setTipoSanguineo] = useState('');
-
   const [medicos, setMedicos] = useState([]);
   const [especialidade, setEspecialidade] = useState('');
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
-
   const [availableTimes, setAvailableTimes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [camposFaltantes, setCamposFaltantes] = useState([]);
 
-  // Função para resetar todos os estados
   const resetAllStates = () => {
     setShowModal(true);
     setShowServiceTypeModal(false);
-    setAgendamentoPara('');
-    setServiceType('');
     setEspecialidade('');
     setMedicos([]);
-    setData('');
-    setHora('');
+    setSelectedDate('');
+    setSelectedTime('');
     setMedicoSelecionado('');
     setError('');
-    setMissingFields([]);
-    setTipoExame('');
-    setExameSelecionado('');
+    setCamposFaltantes([]);
   };
-
 
   const handleSelecionar = (tipo) => {
     setShowModal(false);
@@ -63,9 +55,6 @@ const AgendamentosDependentes = () => {
   useEffect(() => {
     Aos.init({ duration: 1000, once: true });
   }, []);
-
-
-
 
   const convenios = {
     "Amil": ["Amil 400", "Amil 500", "Amil 700", "Amil One", "Amil Fácil"],
@@ -79,18 +68,13 @@ const AgendamentosDependentes = () => {
     "Particular": ["Consulta Particular"],
   };
 
-
-
   useEffect(() => {
     let imgSrc = '/img/pacienteOutro.png';
-
     if (genero === 'Masculino') {
       imgSrc = '/img/pacienteM.png';
     } else if (genero === 'Feminino') {
       imgSrc = '/img/pacienteF.png';
     }
-
-
     setImagemPaciente(imgSrc);
     setImagemGenero(imgSrc);
   }, [genero]);
@@ -155,7 +139,6 @@ const AgendamentosDependentes = () => {
     setError('');
     setCamposFaltantes([]);
 
-
     try {
       const camposObrigatorios = {
         nomeCompleto,
@@ -174,7 +157,6 @@ const AgendamentosDependentes = () => {
         medicoSelecionado,
         convenioMedico,
         planoConvenio: convenioMedico !== 'Particular' ? planoConvenio || 'Não informado' : true
-
       };
 
       const faltantes = Object.keys(camposObrigatorios)
@@ -196,12 +178,11 @@ const AgendamentosDependentes = () => {
         toast.error('Não é possível agendar para datas/horários passados!', {
           position: "top-right",
           autoClose: 5000,
-          theme: "colored"
+          theme: darkMode ? "dark" : "light"
         });
         throw new Error('Não é possível agendar para datas/horários passados!');
       }
 
-      // Codigo da requisição da api 
       const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:5000/agendamentoDocente/agendarDocente', {
         method: 'POST',
@@ -233,14 +214,12 @@ const AgendamentosDependentes = () => {
       });
 
       const dataDados = await response.json();
-      console.log(dataDados);
-
       if (!response.ok) {
         const errorMsg = dataDados.message || 'Erro no agendamento';
         toast.error(errorMsg, {
           position: "top-right",
           autoClose: 800,
-          theme: "colored"
+          theme: darkMode ? "dark" : "light"
         });
         throw new Error(errorMsg);
       }
@@ -248,7 +227,7 @@ const AgendamentosDependentes = () => {
       toast.success('Agendamento realizado com sucesso!', {
         position: "top-right",
         autoClose: 800,
-        theme: "colored",
+        theme: darkMode ? "dark" : "light",
         onClose: () => window.location.reload()
       });
 
@@ -257,7 +236,7 @@ const AgendamentosDependentes = () => {
       toast.error(error.message, {
         position: "top-right",
         autoClose: 5000,
-        theme: "colored"
+        theme: darkMode ? "dark" : "light"
       });
     } finally {
       setLoading(false);
@@ -267,7 +246,7 @@ const AgendamentosDependentes = () => {
   const isCampoFaltante = (campo) => camposFaltantes.includes(campo);
 
   return (
-    <>
+    <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <Navbar />
       <ToastContainer
         position="top-right"
@@ -279,22 +258,32 @@ const AgendamentosDependentes = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme={darkMode ? "dark" : "light"}
       />
 
       {showModal && (
         <div className="container-modal">
-          <div className="modal">
+          <div className={`modal ${darkMode ? 'dark-mode' : ''}`}>
             <div className="modal-content">
               <button
-                className="close-modal-button"
+                className={`close-modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={resetAllStates}
               >
                 X
               </button>
               <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
-              <button onClick={() => handleSelecionar('consulta')}>Para mim</button>
-              <button onClick={() => handleSelecionar('Outra pessoa')}>Outra pessoa</button>
+              <button 
+                className={`modal-button ${darkMode ? 'dark' : ''}`}
+                onClick={() => handleSelecionar('consulta')}
+              >
+                Para mim
+              </button>
+              <button 
+                className={`modal-button ${darkMode ? 'dark' : ''}`}
+                onClick={() => handleSelecionar('Outra pessoa')}
+              >
+                Outra pessoa
+              </button>
             </div>
           </div>
         </div>
@@ -302,51 +291,66 @@ const AgendamentosDependentes = () => {
 
       {showServiceTypeModal && (
         <div className="container-modal">
-          <div className="modal">
+          <div className={`modal ${darkMode ? 'dark-mode' : ''}`}>
             <div className="modal-content">
               <button
-                className="close-modal-button"
+                className={`close-modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={resetAllStates}
               >
                 X
               </button>
               <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
-              <button onClick={() => handleServiceTypeSelect('consulta')}>Consulta Médica</button>
-              <button onClick={() => handleServiceTypeSelect('exame')}>Exame</button>
+              <button 
+                className={`modal-button ${darkMode ? 'dark' : ''}`}
+                onClick={() => handleServiceTypeSelect('consulta')}
+              >
+                Consulta Médica
+              </button>
+              <button 
+                className={`modal-button ${darkMode ? 'dark' : ''}`}
+                onClick={() => handleServiceTypeSelect('exame')}
+              >
+                Exame
+              </button>
             </div>
           </div>
         </div>
       )}
 
+      <img 
+        src="../img/Faça um agendamento.png" 
+        className={`img-servicos ${darkMode ? 'dark-img' : ''}`} 
+        alt="Logo Servicos" 
+      />
 
-      <img src="../img/Faça um agendamento.png" className="img-servicos" alt="Logo Servicos" />
-      <div className="calendar-container">
+      <div className={`calendar-container ${darkMode ? 'dark-mode' : ''}`}>
         <h1 className="tittle-contato">Faça já seu agendamento</h1>
         <h1 className="team-title">Agende agora</h1>
       </div>
 
-      <div className="container-form-dependente">
+      <div className={`container-form-dependente ${darkMode ? 'dark-mode' : ''}`}>
         <h2 className="title">Agendamento para Dependentes</h2>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className={`error-message ${darkMode ? 'dark' : ''}`}>{error}</div>}
 
         <div className="form-grid-dependente">
-          {/* Campos do formulário com validação */}
-          <div className={`form-group ${isCampoFaltante('nome') ? 'campo-obrigatorio' : ''}`}>
+          <div className={`form-group ${isCampoFaltante('nomeCompleto') ? 'campo-obrigatorio' : ''}`}>
             <label>Nome Completo</label>
             <input
               type="text"
               value={nomeCompleto}
               onChange={(e) => setNomeCompleto(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
-          <div className={`form-group ${isCampoFaltante('dataNascimento') ? 'campo-obrigatorio' : ''}`}>
+          <div className={`form-group ${isCampoFaltante('dataDeNascimento') ? 'campo-obrigatorio' : ''}`}>
             <label>Data de Nascimento</label>
             <input
               type="date"
               value={dataDeNascimento}
               onChange={(e) => setDataDeNascimento(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
@@ -356,6 +360,7 @@ const AgendamentosDependentes = () => {
               type="text"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
@@ -365,6 +370,7 @@ const AgendamentosDependentes = () => {
               type="text"
               value={rg}
               onChange={(e) => setRg(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
@@ -374,6 +380,7 @@ const AgendamentosDependentes = () => {
               type="text"
               value={endereco}
               onChange={(e) => setEndereco(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
@@ -383,12 +390,17 @@ const AgendamentosDependentes = () => {
               type="text"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${isCampoFaltante('genero') ? 'campo-obrigatorio' : ''}`}>
             <label>Gênero</label>
-            <select value={genero} onChange={(e) => setGenero(e.target.value)}>
+            <select 
+              value={genero} 
+              onChange={(e) => setGenero(e.target.value)}
+              className={darkMode ? 'dark-select' : ''}
+            >
               <option value="">Selecione</option>
               <option value="Masculino">Masculino</option>
               <option value="Feminino">Feminino</option>
@@ -398,7 +410,11 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('etnia') ? 'campo-obrigatorio' : ''}`}>
             <label>Etnia</label>
-            <select value={etnia} onChange={(e) => setEtnia(e.target.value)}>
+            <select 
+              value={etnia} 
+              onChange={(e) => setEtnia(e.target.value)}
+              className={darkMode ? 'dark-select' : ''}
+            >
               <option value="">Selecione</option>
               <option value="Preto">Preto</option>
               <option value="Branco">Branco</option>
@@ -414,13 +430,17 @@ const AgendamentosDependentes = () => {
               type="text"
               value={problemaSaude}
               onChange={(e) => setProblemaSaude(e.target.value)}
-
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
           <div className={`form-group ${isCampoFaltante('parentesco') ? 'campo-obrigatorio' : ''}`}>
             <label>Parentesco</label>
-            <select value={parentesco} onChange={(e) => setParentesco(e.target.value)}>
+            <select 
+              value={parentesco} 
+              onChange={(e) => setParentesco(e.target.value)}
+              className={darkMode ? 'dark-select' : ''}
+            >
               <option value="">Selecione</option>
               <option value="Pai/Mãe">Pai/Mãe</option>
               <option value="Filho(a)">Filho(a)</option>
@@ -438,6 +458,7 @@ const AgendamentosDependentes = () => {
               value={selectedDate}
               min={new Date().toISOString().split('T')[0]}
               onChange={(e) => setSelectedDate(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
 
@@ -447,6 +468,7 @@ const AgendamentosDependentes = () => {
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
               disabled={!selectedDate}
+              className={darkMode ? 'dark-select' : ''}
             >
               <option value="">Selecione um horário</option>
               {availableTimes.map((time, index) => (
@@ -457,7 +479,11 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('especialidade') ? 'campo-obrigatorio' : ''}`}>
             <label>Especialidade</label>
-            <select value={especialidade} onChange={(e) => setEspecialidade(e.target.value)}>
+            <select 
+              value={especialidade} 
+              onChange={(e) => setEspecialidade(e.target.value)}
+              className={darkMode ? 'dark-select' : ''}
+            >
               <option value="">Selecione</option>
               <option value="Ortopedista">Ortopedista</option>
               <option value="Proctologista">Proctologista</option>
@@ -480,6 +506,7 @@ const AgendamentosDependentes = () => {
               value={medicoSelecionado}
               onChange={(e) => setMedicoSelecionado(e.target.value)}
               disabled={loading || !especialidade}
+              className={darkMode ? 'dark-select' : ''}
             >
               <option value="">Selecione um médico</option>
               {medicos.map((medico) => (
@@ -495,6 +522,7 @@ const AgendamentosDependentes = () => {
             <select
               value={convenioMedico}
               onChange={(e) => setConvenioMedico(e.target.value)}
+              className={darkMode ? 'dark-select' : ''}
             >
               <option value="">Selecione</option>
               {Object.keys(convenios).map((convenio) => (
@@ -509,6 +537,7 @@ const AgendamentosDependentes = () => {
               <select
                 value={planoConvenio}
                 onChange={(e) => setPlanoConvenio(e.target.value)}
+                className={darkMode ? 'dark-select' : ''}
               >
                 <option value="">Selecione um plano</option>
                 {convenios[convenioMedico].map((plano) => (
@@ -523,7 +552,7 @@ const AgendamentosDependentes = () => {
             <select
               value={tipoSanguineo}
               onChange={(e) => setTipoSanguineo(e.target.value)}
-
+              className={darkMode ? 'dark-select' : ''}
             >
               {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(tipo => (
                 <option key={tipo} value={tipo}>{tipo || "Selecione"}</option>
@@ -532,18 +561,17 @@ const AgendamentosDependentes = () => {
           </div>
     
           <button
-            className="submit-btn-dependente"
+            className={`submit-btn-dependente ${darkMode ? 'dark-btn' : ''}`}
             onClick={handleAgendar}
             disabled={loading}
           >
-      
             {loading ? 'Agendando...' : 'Confirmar Agendamento'}
           </button>
         </div>
       </div>
       <br />
-      <Footer />
-    </>
+      <Footer darkMode={darkMode} />
+    </div>
   );
 };
 

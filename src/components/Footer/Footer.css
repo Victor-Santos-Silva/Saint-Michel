@@ -93,3 +93,25 @@
 .direitos{
   font-weight: bold;
 }
+.footer {
+    /* Estilos padrão (light mode) */
+    background-color: #1F2B6C;
+    color: white;
+}
+
+.footer.dark-mode {
+    /* Mantém as mesmas cores mesmo no dark mode */
+    background-color: #1F2B6C !important;
+    color: white !important;
+}
+
+/* Garante que todos os textos e links no footer sejam brancos */
+.footer,
+.footer *:not(.dark-ignore) {
+    color: white !important;
+}
+
+/* Ícones no footer */
+.footer .icon {
+    color: white !important;
+}

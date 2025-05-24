@@ -73,7 +73,9 @@ const HomePage = () => {
 
                 <div className="homepage-container" data-aos="fade-up">
                     <p className='titulo'>BEM VINDO A SAINT-MICHEL</p>
-                    <h4 className='segundoTitulo'>Um ótimo lugar para receber cuidados</h4>
+                    <h4 className={`segundoTitulo ${darkMode ? 'dark-text' : ''}`} data-aos="fade-up">
+                        Um ótimo lugar para receber cuidados
+                    </h4>
                     <p className='paragrafoHome'>Confira a história do nosso hospital.</p>
                     <p className='saibaMais'>
                         <Link to='/sobre'>Saiba mais</Link>
@@ -83,7 +85,9 @@ const HomePage = () => {
                 </div>
 
                 <p className='titulo' data-aos="fade-up">CUIDADO EM QUE VOCÊ PODE ACREDITAR</p>
-                <h4 className='segundoTitulo' data-aos="fade-up">Nossos Serviços</h4>
+                <h4 className={`segundoTitulo ${darkMode ? 'dark-text' : ''}`} data-aos="fade-up">
+                    Nossos Serviços
+                </h4>
 
                 <div className='conjunto-nossos-servicos'>
                     <div className="menu-servicos-homepage" data-aos="fade-up">
@@ -96,7 +100,7 @@ const HomePage = () => {
                     </div>
 
                     <div>
-                        <h1 className='frase-homepage' data-aos="fade-up"><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
+                        <h1 className={`frase-homepage ${darkMode ? 'dark-text' : ''}`} data-aos="fade-up"><b>Paixão por colocar os pacientes em primeiro lugar.</b></h1>
                         <div className='lista-homepage'>
                             <ul>
                                 <li>Uma paixão pela cura</li>
@@ -122,7 +126,9 @@ const HomePage = () => {
 
                 <div className='subtitulosHome' data-aos="fade-up">
                     <p className='titulo'>SEMPRE CUIDANDO</p>
-                    <h4 className='segundoTitulo'>Nossas Especialidades</h4>
+                    <h4 className={`segundoTitulo ${darkMode ? 'dark-text' : ''}`}>
+                        Nossas Especialidades
+                    </h4>
                 </div>
 
                 <div className="especialidades-grid" data-aos="fade-up">
@@ -138,7 +144,9 @@ const HomePage = () => {
 
                 <div className='titulosFinais' data-aos="fade-up">
                     <p className='titulo'>CUIDADO CONFIÁVEL</p>
-                    <h4 className='segundoTitulo'>Nossos Médicos</h4>
+                    <h4 className={`segundoTitulo ${darkMode ? 'dark-text' : ''}`} data-aos="fade-up">
+                        Nossos Médicos
+                    </h4>
                 </div>
 
                 <CarouselMedico />

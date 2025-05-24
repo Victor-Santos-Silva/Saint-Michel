@@ -93,10 +93,8 @@
   margin-bottom: 1rem;
 }
 
-.CONTATO {
-  color: #159EEC;
-  text-align: center;
-  margin-bottom: 3rem;
+.titulo {
+  padding:10px;
 }
 
 .contact-card {
