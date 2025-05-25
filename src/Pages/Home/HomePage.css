@@ -107,6 +107,14 @@ a {
     margin: auto;
 }
 
+.dark-text {
+    color: #f0f0f0; /* cor clara para o texto no modo escuro */
+}
+
+.homepage.dark .frase-homepage {
+    color: #f0f0f0; /* opcional, caso queira aplicar diretamente na classe */
+}
+
 .ver-tudo {
     background-color: var(--color-dark-blue);
     color: white;
@@ -244,6 +252,7 @@ a {
 
     .segundoTitulo {
         font-size: 28px;
+        color: var(--color-azul-calcinha);
     }
 
     .frase-homepage {
@@ -276,6 +285,7 @@ a {
 
     .segundoTitulo {
         font-size: 24px;
+        
     }
 
     .frase-homepage {
@@ -371,4 +381,35 @@ a {
 
 .toggle-theme:hover {
     background-color: #666;
+}
+/* Adicione estas regras ao seu arquivo CSS existente */
+
+/* Estilo base para o segundoTitulo */
+.segundoTitulo {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+/* Modo escuro - aplica azul escuro */
+.segundoTitulo.dark-text {
+  color: #dbdbdc;
+}
+
+/* Garante que a cor seja aplicada mesmo com outros estilos */
+.homepage.dark .segundoTitulo.dark-text {
+  color: #e9ecf8 !important;
+}
+
+/* Mantém os outros estilos existentes */
+.titulo {
+  /* seus estilos existentes */
+}
+
+.homepage-container {
+  /* seus estilos existentes */
+}
+
+/* ... outros estilos existentes ... */
+.homepage.dark .frase-homepage {
+    color: #f0f0f0 !important;
 }

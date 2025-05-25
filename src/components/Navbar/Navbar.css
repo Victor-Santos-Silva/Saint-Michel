@@ -81,6 +81,7 @@ body {
 
 /* Navbar */
 .navbar {
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -359,8 +360,8 @@ body {
   border-bottom: 1px solid #333;
 }
 
-.dark-logo {
-  filter: brightness(0.8);
+.header.dark-mode .dark-logo {
+  filter: brightness(0) invert(1);
 }
 
 .dark-item {
@@ -486,15 +487,54 @@ body {
 }
 
 /* Botão de Tema */
+/* Botão de Tema Minimalista com CSS puro */
 .theme-toggle {
-  background-color: #f0f0f0;
-  color: #333;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
-.dark-toggle {
-  background-color: #333;
-  color: #fff;
+/* Botão de Tema - Estilo Simplificado */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: 10px;
 }
+
+/* Remove qualquer fundo no modo escuro */
+.dark-mode .theme-toggle {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.1);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
 
 /* Notificações */
 .dark-notification {
@@ -669,4 +709,46 @@ body {
     width: 250px;
     right: -80px;
   }
+}
+/* Garante que todos os textos na navbar sejam brancos */
+.navbar,
+.navbar *:not(.dark-ignore) {  /* Exceção para elementos que não devem ser afetados */
+  color: white !important;
+}
+
+/* Links da navbar */
+.nav-link,
+.nav-link:hover,
+.nav-link:focus {
+  color: white !important;
+}
+
+/* Textos de usuário */
+.nome-usuario {
+  color: white !important;
+}
+
+/* Botões na navbar */
+.login-button,
+.cadastro-button,
+.btn-sair-perfil {
+  color: white !important;
+}
+
+/* Ícones na navbar */
+.icon-img,
+.botao-notificacao svg {
+  color: white !important;
+}
+
+/* Remove qualquer regra de dark mode que afete a cor do texto na navbar */
+.dark-mode .navbar,
+.dark-mode .nav-link,
+.dark-mode .nome-usuario,
+.dark-mode .login-button,
+.dark-mode .cadastro-button,
+.dark-mode .btn-sair-perfil,
+.dark-mode .icon-img,
+.dark-mode .botao-notificacao svg {
+  color: white !important;
 }

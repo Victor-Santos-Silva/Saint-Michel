@@ -16,7 +16,6 @@ export default function Contato() {
     <>
       <div className={`contact-section ${darkMode ? 'dark' : ''}`}>
         <p className="titulo">ENTRE EM CONTATO</p>
-        <h3 className="CONTATO">Contato</h3>
         <div className="contact-grid">
           {ContactInfo.map((item, index) => (
             <div key={index} className={`contact-card ${darkMode ? 'dark' : ''}`}>

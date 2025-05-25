@@ -6,6 +6,7 @@ import fotoPerfil from '../../img/foto de perfil.png';
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from '../../context/ThemeContext';
+import { FaSun, FaMoon } from "react-icons/fa";
 
 export default function Navbar() {
   const { isLoggedIn, nomeCompleto, logout } = useAuth();
@@ -88,15 +89,15 @@ export default function Navbar() {
       <div className="top-bar">
         <div className="logo">
           <Link to="/">
-            <img 
-              src="../img/LogoTipo+Frase.png" 
-              alt="Logo" 
+            <img
+              src="../img/LogoTipo+Frase.png"
+              alt="Logo"
               className={`logo-img ${darkMode ? 'dark-logo' : ''}`}
             />
           </Link>
         </div>
 
-      <div className="contact-info">
+        <div className="contact-info">
           <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
             <FaPhone className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
             <div>
@@ -124,7 +125,7 @@ export default function Navbar() {
       <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
         <div className="nav-links">
           {['/', '/sobre', '/servicos', '/doutores', '/agendamentos', '/contato'].map((path, idx) => (
-            <Link 
+            <Link
               key={idx}
               to={path}
               className="nav-link"
@@ -136,13 +137,14 @@ export default function Navbar() {
         </div>
 
         <div className="container-login-cadastro">
-          <button 
-            onClick={toggleTheme} 
-            className={`theme-toggle ${darkMode ? 'dark-toggle' : ''}`}
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
             style={{ transition: 'all 0.3s ease-in-out' }}
           >
-            {darkMode ? '🌞' : '🌙'}
+            {darkMode ? <FaSun color="white" /> : <FaMoon color="white" />}
           </button>
+
 
           {isLoggedIn ? (
             <div className="perfil-usuario">
@@ -204,8 +206,8 @@ export default function Navbar() {
                   onClick={() => navigate('/perfil')}
                   style={{ transition: 'all 0.3s ease-in-out' }}
                 />
-                <button 
-                  onClick={logout} 
+                <button
+                  onClick={logout}
                   className={`btn-sair-perfil ${darkMode ? 'dark-logout' : ''}`}
                   style={{ transition: 'all 0.3s ease-in-out' }}
                 >
@@ -215,15 +217,15 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link 
-                to='/login' 
+              <Link
+                to='/login'
                 className={`login-button ${darkMode ? 'dark-link' : ''}`}
                 style={{ transition: 'all 0.3s ease-in-out' }}
               >
                 Login
               </Link>
-              <Link 
-                to='/cadastro' 
+              <Link
+                to='/cadastro'
                 className={`cadastro-button ${darkMode ? 'dark-link' : ''}`}
                 style={{ transition: 'all 0.3s ease-in-out' }}
               >

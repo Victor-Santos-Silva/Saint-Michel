@@ -6,8 +6,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTheme } from '../../../context/ThemeContext';
 
 const ServicosExtras = () => {
+  const { darkMode } = useTheme();
   const [serviceType, setServiceType] = useState('');
   const [patientDetails, setPatientDetails] = useState('');
   const [data, setData] = useState('');
@@ -70,13 +72,17 @@ const ServicosExtras = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateFields()) {
-      toast.error('Por favor, preencha todos os campos obrigatórios!');
+      toast.error('Por favor, preencha todos os campos obrigatórios!', {
+        theme: darkMode ? 'dark' : 'light'
+      });
       return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-      toast.error("Você precisa estar logado para agendar o serviço!");
+      toast.error("Você precisa estar logado para agendar o serviço!", {
+        theme: darkMode ? 'dark' : 'light'
+      });
       navigate('/login');
       return;
     }
@@ -93,40 +99,55 @@ const ServicosExtras = () => {
       const response = await axios.post(
         'http://localhost:5000/servicos-extras',
         formData,
-        
-        
-        
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
 
       if (response.status === 200 || response.status === 201) {
-        toast.success('Serviço agendado com sucesso!');
+        toast.success('Serviço agendado com sucesso!', {
+          theme: darkMode ? 'dark' : 'light'
+        });
         navigate('/');
       }
       
     } catch (error) {
       console.error('Erro:', error);
       const errorMessage = error.response?.data?.message || 'Erro ao processar agendamento';
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        theme: darkMode ? 'dark' : 'light'
+      });
     }
   };
 
   const isFieldMissing = (fieldName) => missingFields.includes(fieldName);
 
   return (
-    <>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
       <Navbar />
-      <ToastContainer />
-      <img src="../img/Faça um agendamento.png" className="img-servicos" alt="Logo Serviços" data-aos="fade-down" />
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        theme={darkMode ? "dark" : "light"}
+      />
+      <img 
+        src="../img/Faça um agendamento.png" 
+        className={`img-servicos ${darkMode ? 'dark-img' : ''}`} 
+        alt="Logo Serviços" 
+        data-aos="fade-down" 
+      />
 
-      <div className="servicos-container">
-        <h1 className="tittle-contato">Agendamento</h1>
-        <h1 className="team-title">Serviços Extras</h1>
+      <div className={`servicos-container ${darkMode ? 'dark' : ''}`}>
+        <h1 className={`tittle-contato ${darkMode ? 'dark-text' : ''}`}>Agendamento</h1>
+        <h1 className={`team-title ${darkMode ? 'dark-text' : ''}`}>Serviços Extras</h1>
         <br />
 
-        <form className="servicos-form" onSubmit={handleSubmit}>
+        <form className={`servicos-form ${darkMode ? 'dark-form' : ''}`} onSubmit={handleSubmit}>
           <div className="form-group">
-            <h2 className="title">Agendamento</h2>
-            <label>Tipo de Serviço</label>
+            <h2 className={`title ${darkMode ? 'dark-text' : ''}`}>Agendamento</h2>
+            <label className={darkMode ? 'dark-label' : ''}>Tipo de Serviço</label>
             <select
               value={serviceType}
               onChange={(e) => {
@@ -134,7 +155,7 @@ const ServicosExtras = () => {
                 setMissingFields(prev => prev.filter(f => f !== 'serviceType'));
                 if (e.target.value !== 'Atendimento Domiciliar') setEndereco('');
               }}
-              className={isFieldMissing('serviceType') ? 'campo-obrigatorio' : ''}
+              className={`${isFieldMissing('serviceType') ? 'campo-obrigatorio' : ''} ${darkMode ? 'dark-input' : ''}`}
             >
               <option value="">Selecione o serviço</option>
               <option value="Atendimento Domiciliar">Atendimento Domiciliar</option>
@@ -145,14 +166,14 @@ const ServicosExtras = () => {
 
           {serviceType === 'Atendimento Domiciliar' && (
             <div className="form-group">
-              <label>Endereço</label>
+              <label className={darkMode ? 'dark-label' : ''}>Endereço</label>
               <textarea
                 value={endereco}
                 onChange={(e) => {
                   setEndereco(e.target.value);
                   setMissingFields(prev => prev.filter(f => f !== 'endereco'));
                 }}
-                className={isFieldMissing('endereco') ? 'campo-obrigatorio' : ''}
+                className={`${isFieldMissing('endereco') ? 'campo-obrigatorio' : ''} ${darkMode ? 'dark-input' : ''}`}
                 placeholder="Digite o endereço completo (Rua, número, bairro, cidade - Estado)"
                 rows="2"
               />
@@ -160,20 +181,20 @@ const ServicosExtras = () => {
           )}
 
           <div className="form-group">
-            <label>Detalhes do serviço</label>
+            <label className={darkMode ? 'dark-label' : ''}>Detalhes do serviço</label>
             <textarea
               value={patientDetails}
               onChange={(e) => {
                 setPatientDetails(e.target.value);
                 setMissingFields(prev => prev.filter(f => f !== 'patientDetails'));
               }}
-              className={isFieldMissing('patientDetails') ? 'campo-obrigatorio' : ''}
+              className={`${isFieldMissing('patientDetails') ? 'campo-obrigatorio' : ''} ${darkMode ? 'dark-input' : ''}`}
               placeholder="Descreva a condição do paciente e necessidades especiais"
             />
           </div>
 
           <div className="form-group">
-            <label>Data</label>
+            <label className={darkMode ? 'dark-label' : ''}>Data</label>
             <input
               type="date"
               value={data}
@@ -182,19 +203,19 @@ const ServicosExtras = () => {
                 setData(e.target.value);
                 setMissingFields(prev => prev.filter(f => f !== 'data'));
               }}
-              className={isFieldMissing('data') ? 'campo-obrigatorio' : ''}
+              className={`${isFieldMissing('data') ? 'campo-obrigatorio' : ''} ${darkMode ? 'dark-input' : ''}`}
             />
           </div>
 
           <div className="form-group">
-            <label>Hora</label>
+            <label className={darkMode ? 'dark-label' : ''}>Hora</label>
             <select
               value={hora}
               onChange={(e) => {
                 setHora(e.target.value);
                 setMissingFields(prev => prev.filter(f => f !== 'hora'));
               }}
-              className={isFieldMissing('hora') ? 'campo-obrigatorio' : ''}
+              className={`${isFieldMissing('hora') ? 'campo-obrigatorio' : ''} ${darkMode ? 'dark-input' : ''}`}
             >
               <option value="">Selecione um horário</option>
               {horariosDisponiveis.map(horario => (
@@ -202,6 +223,7 @@ const ServicosExtras = () => {
                   key={horario.value}
                   value={horario.value}
                   disabled={horario.disabled}
+                  className={darkMode ? 'dark-option' : ''}
                 >
                   {horario.label}
                 </option>
@@ -209,19 +231,17 @@ const ServicosExtras = () => {
             </select>
           </div>
 
-          <button type="submit" className="submit-btn">
+          <button 
+            type="submit" 
+            className={`submit-btn ${darkMode ? 'dark-btn' : ''}`}
+          >
             Agendar Serviço
           </button>
         </form>
       </div>
 
-
-
-
-
-
-      <Footer />
-    </>
+      <Footer darkMode={darkMode} />
+    </div>
   );
 };
 
