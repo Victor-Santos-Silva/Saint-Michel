@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 import './PerfilPage.css';
 import {
   FaPhone, FaMapMarkerAlt, FaEnvelope, FaEdit,
@@ -11,6 +12,7 @@ import {
 
 function PerfilPage() {
   const [userData, setUserData] = useState(null);
+  const [dependenteData, setDependenteData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showDependentModal, setShowDependentModal] = useState(false);
   const { token, id } = useAuth();
@@ -56,28 +58,62 @@ function PerfilPage() {
 
   const adicionarDependente = async (e) => {
     e.preventDefault();
+
+    const generoSelecionado = e.target.genero.value;
+    const generoImagem =
+      generoSelecionado === 'Masculino'
+        ? '/img/pacienteM.png'
+        : generoSelecionado === 'Feminino'
+          ? '/img/pacienteF.png'
+          : '/img/pacienteOutro.png';
+
     try {
       const novoDependente = {
-        nome: e.target.nome.value,
+        usuario_id: id,
+        nomeCompleto: e.target.nome.value,
         parentesco: e.target.parentesco.value,
         dataNascimento: e.target.dataNascimento.value,
         cpf: e.target.cpf.value,
-        tipoSanguineo: e.target.tipoSanguineo.value
+        tipoSanguineo: e.target.tipoSanguineo.value,
+        genero: generoSelecionado,
+        imagemGenero: generoImagem
       };
 
-      await axios.post(`http://localhost:5000/paciente/${id}/dependentes`, novoDependente, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      await axios.post(`http://localhost:5000/dependente`, novoDependente, {
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       const resposta = await axios.get(`http://localhost:5000/paciente/${id}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
+
       setUserData(resposta.data.usuario);
       setShowDependentModal(false);
+      toast.success('Dependente cadastrado com sucesso!');
     } catch (erro) {
       console.error("Erro ao adicionar dependente:", erro);
+      toast.error('Erro ao cadastrar dependente');
     }
   };
+
+
+  useEffect(() => {
+    const fetchDependente = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/dependente/dependenteAdicionado/${id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        setDependenteData(response.data);
+        console.log("Dependente:", response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dependente:", error);
+      }
+    };
+
+    if (id) {
+      fetchDependente();
+    }
+  }, [id]);
 
   if (!userData) {
     return <div className="carregando"><p>Carregando...</p></div>;
@@ -103,27 +139,71 @@ function PerfilPage() {
                 </div>
                 <div className='form-grupo'>
                   <label>Parentesco</label>
-                  <input type="text" name="parentesco" required />
+                  <select name="parentesco" required>
+                    <option value="">Selecione</option>
+                    <option value="Pai">Pai</option>
+                    <option value="Mãe">Mãe</option>
+                    <option value="Irmão">Irmão</option>
+                    <option value="Irmã">Irmã</option>
+                    <option value="Cônjuge">Cônjuge</option>
+                    <option value="Filho">Filho</option>
+                    <option value="Filha">Filha</option>
+                    <option value="Outro">Outro</option>
+                  </select>
                 </div>
                 <div className='form-grupo'>
                   <label>Data de Nascimento</label>
-                  <input type="date" name="dataNascimento" required />
+                  <input
+                    type="date"
+                    name="dataNascimento"
+                    required
+                    max={new Date().toISOString().split('T')[0]}
+                  />
                 </div>
+
                 <div className='form-grupo'>
                   <label>CPF</label>
-                  <input type="text" name="cpf" required />
+                  <input
+                    type="text"
+                    name="cpf"
+                    required
+                    pattern="\d{11}"
+                    maxLength="11"
+                    title="Digite os 11 números do CPF, sem pontos ou traços"
+                  />
+                </div>
+
+                <div className='form-grupo'>
+                  <label>Tipo Sanguineo</label>
+                  <select name="tipoSanguineo" required>
+                    <option value="">Selecione</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
                 </div>
                 <div className='form-grupo'>
-                  <label>Tipo Sanguíneo</label>
-                  <input type="text" name="tipoSanguineo" required />
+                  <label>Gênero</label>
+                  <select name="genero" required>
+                    <option value="">Selecione</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Outro">Outro</option>
+                  </select>
                 </div>
+
               </div>
               <div className='form-botoes-dependente'>
                 <button type="submit" className="salvarDependente">
                   <FaSave /> Salvar
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="cancelarDependente"
                   onClick={() => setShowDependentModal(false)}
                 >
@@ -136,8 +216,8 @@ function PerfilPage() {
       )}
 
       {isEditing ? (
-        <form 
-          className='form-editar' 
+        <form
+          className='form-editar'
           onSubmit={(e) => {
             e.preventDefault();
             salvarEdicao({
@@ -156,10 +236,10 @@ function PerfilPage() {
           }}
         >
           <div className='perfil-topo'>
-            <img 
-              src={userData.imagemGenero} 
-              className='perfil-foto' 
-              alt="Perfil" 
+            <img
+              src={userData.imagemGenero}
+              className='perfil-foto'
+              alt="Perfil"
             />
             <div className='form-grupo'>
               <label>Nome Completo</label>
@@ -231,10 +311,10 @@ function PerfilPage() {
         <div className='perfil-visualizar'>
           <div className='perfil-cartao'>
             <div className='perfil-topo'>
-              <img 
-                src={userData.imagemGenero} 
-                className='perfil-foto' 
-                alt="Perfil" 
+              <img
+                src={userData.imagemGenero}
+                className='perfil-foto'
+                alt="Perfil"
               />
               <div className='perfil-info'>
                 <h2>{userData.nomeCompleto}</h2>
@@ -243,7 +323,7 @@ function PerfilPage() {
                 <p><FaMapMarkerAlt /> {userData.endereco || 'Não informado'}</p>
               </div>
             </div>
-            
+
             <div className='perfil-botoes'>
               <button className='botao botao-primario' onClick={() => setIsEditing(true)}>
                 <FaEdit /> Editar Perfil
@@ -319,6 +399,23 @@ function PerfilPage() {
           </div>
         </div>
       )}
+
+
+      <div className='perfil-dependentes'>
+        <h3>Dependentes</h3>
+        {dependenteData && dependenteData.length > 0 ? (
+          <ul>
+            {dependenteData.map((dependente) => (
+              <li key={dependente.id}>
+                <strong>{dependente.nomeCompleto}</strong> - {dependente.parentesco} - {dependente.dataNascimento}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Nenhum dependente cadastrado.</p>
+        )}
+      </div>
+
     </div>
   );
 }
