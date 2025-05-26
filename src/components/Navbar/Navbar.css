@@ -734,21 +734,3 @@ body {
 .btn-sair-perfil {
   color: white !important;
 }
-
-/* Ícones na navbar */
-.icon-img,
-.botao-notificacao svg {
-  color: white !important;
-}
-
-/* Remove qualquer regra de dark mode que afete a cor do texto na navbar */
-.dark-mode .navbar,
-.dark-mode .nav-link,
-.dark-mode .nome-usuario,
-.dark-mode .login-button,
-.dark-mode .cadastro-button,
-.dark-mode .btn-sair-perfil,
-.dark-mode .icon-img,
-.dark-mode .botao-notificacao svg {
-  color: white !important;
-}
