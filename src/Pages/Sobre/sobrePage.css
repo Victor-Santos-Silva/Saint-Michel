@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap');
 
@@ -94,13 +95,8 @@
     transition: background-color 0.3s ease;
 }
 
-.titulo-sobre, .subTitulo-sobre, .texto-sobre {
-    color: #2d2d2d;
-}
 
-.titulo-sobre {
-    color: var(--color-light-blue); /* Mantenha sua cor original do modo claro */
-}
+
 
 /* Modo Escuro - Mantém a mesma cor */
 .sobre-page.dark .titulo-sobre {

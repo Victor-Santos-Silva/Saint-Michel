@@ -98,11 +98,22 @@ export default function Navbar() {
         </div>
 
         <div className="contact-info">
+      <div className="contact-info">
           <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
             <FaPhone className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
             <div>
               <strong>EMERGÊNCIA</strong>
               <br /> (11) 6818-1255
+            </div>
+          </div>
+          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
+            <FaClock className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
+            <div>
+              <strong>HORÁRIO DE FUNCIONAMENTO</strong>
+              <br /> 24 HORAS POR DIA
+            </div>
+          </div>
+          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
             </div>
           </div>
           <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
@@ -145,6 +156,14 @@ export default function Navbar() {
             {darkMode ? <FaSun color="white" /> : <FaMoon color="white" />}
           </button>
 
+
+          <button 
+            onClick={toggleTheme} 
+            className={`theme-toggle ${darkMode ? 'dark-toggle' : ''}`}
+            style={{ transition: 'all 0.3s ease-in-out' }}
+          >
+            {darkMode ? '🌞' : '🌙'}
+          </button>
 
           {isLoggedIn ? (
             <div className="perfil-usuario">

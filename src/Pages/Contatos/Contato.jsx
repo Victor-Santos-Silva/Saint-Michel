@@ -5,11 +5,8 @@ import './Contato.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
 import Contato from '../../components/Contato/Contato';
-import { useTheme } from '../../context/ThemeContext'; // Importado o contexto
 
 const Contatos = () => {
-  const { darkMode } = useTheme(); // Usando o contexto do modo escuro
-
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [assunto, setAssunto] = useState('');
@@ -80,6 +77,7 @@ const Contatos = () => {
         progress: undefined,
       });
 
+      // Limpar campos
       setNome('');
       setEmail('');
       setAssunto('');
@@ -115,73 +113,70 @@ const Contatos = () => {
       />
 
       <Navbar />
+      <img src="../img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
+      <br /><br />
+      <div className="map-container">
+        <iframe
+          title="Localização"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.1234567890123!2d-46.4110!3d-23.5000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0!2sAv.+Marechal+Tito,+3400!5e0!3m2!1sen!2sbr!4v1615395398274!5m2!1sen!2sbr"
+          width="100%"
+          height="450"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+        ></iframe>
+      </div>
 
-      <div className={`contato-page ${darkMode ? 'dark' : ''}`}>
-        <img src="../img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
-        <br /><br />
-        <div className="map-container">
-          <iframe
-            title="Localização"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.1234567890123!2d-46.4110!3d-23.5000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0!2sAv.+Marechal+Tito,+3400!5e0!3m2!1sen!2sbr!4v1615395398274!5m2!1sen!2sbr"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-        </div>
-
-        <br />
-        <div className="contato-container">
-          <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
-          <h3 className="subtitulo-contato">Contato</h3>
-          <form className="contato-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="input-group">
-                <input
-                  type="text"
-                  name="nome"
-                  placeholder="Nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                />
-              </div>
-              <div className="input-group">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
+      <br />
+      <div className="contato-container">
+        <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
+        <h3 className="subtitulo-contato">Contato</h3>
+        <form className="contato-form" onSubmit={handleSubmit}>
+          <div className="form-row">
             <div className="input-group">
               <input
                 type="text"
-                name="assunto"
-                placeholder="Assunto"
-                value={assunto}
-                onChange={(e) => setAssunto(e.target.value)}
+                name="nome"
+                placeholder="Nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
               />
             </div>
             <div className="input-group">
-              <textarea
-                name="mensagem"
-                placeholder="Mensagem"
-                value={mensagem}
-                onChange={(e) => setMensagem(e.target.value)}
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Enviando...' : 'ENVIAR'}
-            </button>
-          </form>
-        </div>
-
-        <Contato />
-        <Footer />
+          </div>
+          <div className="input-group">
+            <input
+              type="text"
+              name="assunto"
+              placeholder="Assunto"
+              value={assunto}
+              onChange={(e) => setAssunto(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <textarea
+              name="mensagem"
+              placeholder="Mensagem"
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+            />
+          </div>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Enviando...' : 'ENVIAR'}
+          </button>
+        </form>
       </div>
+
+      <Contato />
+      <Footer />
     </>
   );
 };
