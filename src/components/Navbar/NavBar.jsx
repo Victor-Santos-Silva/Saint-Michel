@@ -157,13 +157,6 @@ export default function Navbar() {
           </button>
 
 
-          <button 
-            onClick={toggleTheme} 
-            className={`theme-toggle ${darkMode ? 'dark-toggle' : ''}`}
-            style={{ transition: 'all 0.3s ease-in-out' }}
-          >
-            {darkMode ? '🌞' : '🌙'}
-          </button>
 
           {isLoggedIn ? (
             <div className="perfil-usuario">
