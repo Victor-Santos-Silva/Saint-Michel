@@ -272,13 +272,13 @@ const AgendamentosDependentes = () => {
                 X
               </button>
               <h2 className="tittle-contato">O serviço é para você ou outra pessoa?</h2>
-              <button 
+              <button
                 className={`modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={() => handleSelecionar('consulta')}
               >
                 Para mim
               </button>
-              <button 
+              <button
                 className={`modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={() => handleSelecionar('Outra pessoa')}
               >
@@ -300,13 +300,13 @@ const AgendamentosDependentes = () => {
                 X
               </button>
               <h2 className="tittle-contato">Que tipo de serviço deseja agendar?</h2>
-              <button 
+              <button
                 className={`modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={() => handleServiceTypeSelect('consulta')}
               >
                 Consulta Médica
               </button>
-              <button 
+              <button
                 className={`modal-button ${darkMode ? 'dark' : ''}`}
                 onClick={() => handleServiceTypeSelect('exame')}
               >
@@ -317,10 +317,11 @@ const AgendamentosDependentes = () => {
         </div>
       )}
 
-      <img 
-        src="../img/Faça um agendamento.png" 
-        className={`img-servicos ${darkMode ? 'dark-img' : ''}`} 
-        alt="Logo Servicos" 
+      {/* Codigo começa aqui */}
+      <img
+        src="../img/Faça um agendamento.png"
+        className={`img-servicos ${darkMode ? 'dark-img' : ''}`}
+        alt="Logo Servicos"
       />
 
       <div className={`calendar-container ${darkMode ? 'dark-mode' : ''}`}>
@@ -396,8 +397,8 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('genero') ? 'campo-obrigatorio' : ''}`}>
             <label>Gênero</label>
-            <select 
-              value={genero} 
+            <select
+              value={genero}
               onChange={(e) => setGenero(e.target.value)}
               className={darkMode ? 'dark-select' : ''}
             >
@@ -410,8 +411,8 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('etnia') ? 'campo-obrigatorio' : ''}`}>
             <label>Etnia</label>
-            <select 
-              value={etnia} 
+            <select
+              value={etnia}
               onChange={(e) => setEtnia(e.target.value)}
               className={darkMode ? 'dark-select' : ''}
             >
@@ -436,8 +437,8 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('parentesco') ? 'campo-obrigatorio' : ''}`}>
             <label>Parentesco</label>
-            <select 
-              value={parentesco} 
+            <select
+              value={parentesco}
               onChange={(e) => setParentesco(e.target.value)}
               className={darkMode ? 'dark-select' : ''}
             >
@@ -479,8 +480,8 @@ const AgendamentosDependentes = () => {
 
           <div className={`form-group ${isCampoFaltante('especialidade') ? 'campo-obrigatorio' : ''}`}>
             <label>Especialidade</label>
-            <select 
-              value={especialidade} 
+            <select
+              value={especialidade}
               onChange={(e) => setEspecialidade(e.target.value)}
               className={darkMode ? 'dark-select' : ''}
             >
@@ -559,7 +560,7 @@ const AgendamentosDependentes = () => {
               ))}
             </select>
           </div>
-    
+
           <button
             className={`submit-btn-dependente ${darkMode ? 'dark-btn' : ''}`}
             onClick={handleAgendar}

@@ -26,12 +26,14 @@ const Agendamentos = () => {
   const [especialidade, setEspecialidade] = useState('');
   const [medicos, setMedicos] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
+  const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
+  
   const [medicoSelecionado, setMedicoSelecionado] = useState('');
   const [error, setError] = useState('');
   const [missingFields, setMissingFields] = useState([]);
-  const [horariosDisponiveis, setHorariosDisponiveis] = useState([]);
   const [tipoExame, setTipoExame] = useState('');
   const [exameSelecionado, setExameSelecionado] = useState('');
   const [pedidoMedico, setPedidoMedico] = useState(null);
@@ -120,7 +122,7 @@ const Agendamentos = () => {
 
   const handleSelecionar = (opcao) => {
     if (opcao === 'Outra pessoa') {
-      navigate('/agendamentos/dependente');
+      navigate('/agendamentos/AgendamentoDependente');
       return;
     }
     

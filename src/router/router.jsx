@@ -10,9 +10,10 @@ import Contatos from '../Pages/Contatos/Contato.jsx';
 import Cadastro from '../Pages/Cadastro/Cadastro.jsx';
 import Login from '../Pages/Login/LoginPage.jsx';
 import ErroPage from '../components/PaginaDeErro/ErrorPage.jsx';
-import AgendamentosDependentes from "../Pages/Agendamentos/dependente/dependente.jsx";
+import AgendamentosDependentess from "../Pages/Agendamentos/dependente/dependente.jsx";
 import Perfil from '../Pages/Perfil/Perfil.jsx';
 import ServicosExtras from '../Pages/Agendamentos/servico/ServicosExtras.jsx';
+import AgendamentoDependenteCadastrado from '../Pages/Agendamentos/AgendamentoDependenteCadastrado/AgendamentoDependenteCadastrado.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
       { path: "/doutores", element: <Doutores /> },
       { path: "/contato", element: <Contatos /> },
       { path: "/agendamentos", element: <Agendamentos /> },
-      { path: "/agendamentos/dependente", element: <AgendamentosDependentes /> },
+      { path: "/agendamentos/dependente", element: <AgendamentosDependentess /> },
+      { path: "/agendamentos/AgendamentoDependente", element: <AgendamentoDependenteCadastrado /> },
       { path: "/agendamentos/servico", element: <ServicosExtras /> },
       { path: "/cadastro", element: <Cadastro /> },
       { path: "/login", element: <Login /> },
