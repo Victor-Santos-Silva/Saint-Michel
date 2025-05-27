@@ -106,13 +106,7 @@ export default function Navbar() {
               <br /> (11) 6818-1255
             </div>
           </div>
-          <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
-            <FaClock className={`icon-img ${darkMode ? 'dark-icon' : ''}`} />
-            <div>
-              <strong>HORÁRIO DE FUNCIONAMENTO</strong>
-              <br /> 24 HORAS POR DIA
-            </div>
-          </div>
+          
           <div className={`info-item modern-item ${darkMode ? 'dark-item' : ''}`}>
             </div>
           </div>

@@ -5,8 +5,10 @@ import './Contato.css';
 import Navbar from '../../components/Navbar/NavBar';
 import Footer from '../../components/Footer/Footer';
 import Contato from '../../components/Contato/Contato';
+import { useTheme } from '../../context/ThemeContext';
 
 const Contatos = () => {
+  const { darkMode } = useTheme();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [assunto, setAssunto] = useState('');
@@ -34,6 +36,7 @@ const Contatos = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        theme: darkMode ? 'dark' : 'light'
       }));
       return false;
     }
@@ -75,6 +78,7 @@ const Contatos = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        theme: darkMode ? 'dark' : 'light'
       });
 
       // Limpar campos
@@ -92,6 +96,7 @@ const Contatos = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        theme: darkMode ? 'dark' : 'light'
       });
     } finally {
       setIsSubmitting(false);
@@ -99,7 +104,7 @@ const Contatos = () => {
   };
 
   return (
-    <>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -110,12 +115,17 @@ const Contatos = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        theme={darkMode ? "dark" : "light"}
       />
 
       <Navbar />
-      <img src="../img/Contatos.png" className="img-servicos" alt="Logo Servicos" />
+      <img 
+        src="../img/Contatos.png" 
+        className={`img-servicos ${darkMode ? 'dark-img' : ''}`} 
+        alt="Logo Servicos" 
+      />
       <br /><br />
-      <div className="map-container">
+      <div className={`map-container ${darkMode ? 'dark' : ''}`}>
         <iframe
           title="Localização"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.1234567890123!2d-46.4110!3d-23.5000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0!2sAv.+Marechal+Tito,+3400!5e0!3m2!1sen!2sbr!4v1615395398274!5m2!1sen!2sbr"
@@ -128,10 +138,10 @@ const Contatos = () => {
       </div>
 
       <br />
-      <div className="contato-container">
-        <h2 className="titulo-contato">ENTRE EM CONTATO</h2>
-        <h3 className="subtitulo-contato">Contato</h3>
-        <form className="contato-form" onSubmit={handleSubmit}>
+      <div className={`contato-container ${darkMode ? 'dark' : ''}`}>
+        <h2 className={`titulo-contato ${darkMode ? 'dark-text' : ''}`}>ENTRE EM CONTATO</h2>
+        <h3 className={`subtitulo-contato ${darkMode ? 'dark-text' : ''}`}>Contato</h3>
+        <form className={`contato-form ${darkMode ? 'dark-form' : ''}`} onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="input-group">
               <input
@@ -140,6 +150,7 @@ const Contatos = () => {
                 placeholder="Nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
+                className={darkMode ? 'dark-input' : ''}
               />
             </div>
             <div className="input-group">
@@ -149,6 +160,7 @@ const Contatos = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className={darkMode ? 'dark-input' : ''}
               />
             </div>
           </div>
@@ -159,6 +171,7 @@ const Contatos = () => {
               placeholder="Assunto"
               value={assunto}
               onChange={(e) => setAssunto(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
           <div className="input-group">
@@ -167,17 +180,22 @@ const Contatos = () => {
               placeholder="Mensagem"
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
+              className={darkMode ? 'dark-input' : ''}
             />
           </div>
-          <button type="submit" disabled={isSubmitting}>
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className={darkMode ? 'dark-btn' : ''}
+          >
             {isSubmitting ? 'Enviando...' : 'ENVIAR'}
           </button>
         </form>
       </div>
 
-      <Contato />
-      <Footer />
-    </>
+      <Contato darkMode={darkMode} />
+      <Footer darkMode={darkMode} />
+    </div>
   );
 };
 
