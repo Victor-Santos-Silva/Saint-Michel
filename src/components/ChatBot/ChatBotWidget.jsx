@@ -10,6 +10,7 @@ function ChatBotWidget() {
   const [loading, setLoading] = useState(false);
   const [welcomeSent, setWelcomeSent] = useState(false);
   const [mode, setMode] = useState(null);
+  const [awaitingContinue, setAwaitingContinue] = useState(false); // novo estado para controle
   const messagesEndRef = useRef(null);
 
   const predefinedAnswers = {
@@ -69,6 +70,40 @@ function ChatBotWidget() {
     ]);
   };
 
+  // Função que mostra o prompt para continuar o chat
+  const askContinueChat = () => {
+    setAwaitingContinue(true);
+    setMessages((prev) => [
+      ...prev,
+      {
+        from: "bot",
+        type: "options",
+        text: "Quer continuar o chat?",
+        options: [
+          { label: "Sim", value: "continue_yes" },
+          { label: "Não", value: "continue_no" },
+        ],
+      },
+    ]);
+  };
+
+  const handleContinueResponse = (value) => {
+    setAwaitingContinue(false);
+    if (value === "continue_yes") {
+      showHospitalOptions();
+    } else {
+      setMessages((prev) => [
+        ...prev,
+        {
+          from: "bot",
+          type: "text",
+          text: "Tudo bem! Se precisar de algo, é só chamar 😊",
+        },
+      ]);
+      setMode(null); // Pode fechar ou resetar o modo se quiser
+    }
+  };
+
   const handleOptionSelect = (selectedMode) => {
     setMode(selectedMode);
     setMessages((prev) => [
@@ -76,7 +111,10 @@ function ChatBotWidget() {
       {
         from: "user",
         type: "text",
-        text: selectedMode === "hospital" ? "Quero saber sobre o hospital" : "Quero usar o chat livre",
+        text:
+          selectedMode === "hospital"
+            ? "Quero saber sobre o hospital"
+            : "Quero usar o chat livre",
       },
     ]);
 
@@ -108,7 +146,7 @@ function ChatBotWidget() {
 
     if (predefinedAnswers[question]) {
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: predefinedAnswers[question] }]);
-      showHospitalOptions();
+      askContinueChat(); // mudou aqui: pergunta se quer continuar
       return;
     }
 
@@ -116,7 +154,7 @@ function ChatBotWidget() {
     try {
       const response = await axios.post("http://localhost:5000/chatbot/chat", { message: question });
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);
-      showHospitalOptions();
+      askContinueChat(); // mudou aqui: pergunta se quer continuar
     } catch (err) {
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: "❌ Erro ao obter resposta." }]);
     }
@@ -155,6 +193,7 @@ function ChatBotWidget() {
       }
 
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);
+      askContinueChat(); // pergunta se quer continuar após resposta
     } catch (err) {
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: "❌ Erro ao enviar mensagem." }]);
     }
@@ -166,7 +205,6 @@ function ChatBotWidget() {
 
   return (
     <div className="chatbot-widget">
-      {/* Botão com animação ping */}
       <div className="chatbot-button ping-animation" onClick={toggleWidget}>
         💬
         <span className="ping-ring" />
@@ -175,7 +213,11 @@ function ChatBotWidget() {
       {isOpen && (
         <div className="chatbot-window">
           <div className="chatbot-header">
-            <img src="/img/Mascote-SaintMichel-removebg-preview.png" alt="Mascote do ChatSaint" className="mascote-img-large" />
+            <img
+              src="/img/Mascote-SaintMichel-removebg-preview.png"
+              alt="Mascote do ChatSaint"
+              className="mascote-img-large"
+            />
             ChatSaint • Assistente de Saúde
           </div>
 
@@ -199,7 +241,11 @@ function ChatBotWidget() {
                               <button
                                 key={idx}
                                 onClick={() =>
-                                  msg.options.some((o) => o.value === "hospital" || o.value === "chat")
+                                  awaitingContinue
+                                    ? handleContinueResponse(opt.value)
+                                    : msg.options.some(
+                                        (o) => o.value === "hospital" || o.value === "chat"
+                                      )
                                     ? handleOptionSelect(opt.value)
                                     : handlePredefinedQuestion(opt.value)
                                 }
@@ -217,9 +263,7 @@ function ChatBotWidget() {
                 return (
                   <div key={i} className="message user">
                     {msg.type === "text" && msg.text}
-                    {msg.type === "image" && (
-                      <img src={msg.url} alt="imagem enviada" className="chat-image" />
-                    )}
+                    {msg.type === "image" && <img src={msg.url} alt="imagem enviada" className="chat-image" />}
                   </div>
                 );
               }
@@ -239,11 +283,7 @@ function ChatBotWidget() {
               />
               <label className="custom-file-upload" title="Anexar imagem">
                 <span>📎 Anexar</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files[0])}
-                />
+                <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
               </label>
               <button onClick={handleSend}>Enviar</button>
             </div>
