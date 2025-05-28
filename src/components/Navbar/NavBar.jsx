@@ -31,7 +31,7 @@ export default function Navbar() {
   const buscarNotificacoes = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/notificacoes', {
+      const response = await axios.get('http://localhost:5000/notificacoesPaciente/${email}', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
