@@ -10,9 +10,11 @@ function ChatBotWidget() {
   const [loading, setLoading] = useState(false);
   const [welcomeSent, setWelcomeSent] = useState(false);
   const [mode, setMode] = useState(null);
-  const [awaitingContinue, setAwaitingContinue] = useState(false); // novo estado para controle
+  const [awaitingContinue, setAwaitingContinue] = useState(false);
   const messagesEndRef = useRef(null);
+  const widgetRef = useRef(null);
 
+  // Mantive as opções só como sugestões, sem restrições
   const predefinedAnswers = {
     "🕒 Quais são os horários de atendimento?": "Nosso hospital funciona de segunda a sexta, das 7h às 18h.",
     "📍 Qual o endereço do hospital?": "Estamos localizados na Av. Central, 1234 - Centro.",
@@ -26,22 +28,7 @@ function ChatBotWidget() {
 
   useEffect(() => {
     if (isOpen && !welcomeSent) {
-      setMessages([
-        {
-          from: "bot",
-          type: "text",
-          text: "Olá, eu sou o ChatSaint! Como posso ajudar você hoje?",
-        },
-        {
-          from: "bot",
-          type: "options",
-          text: "Deseja saber mais sobre o hospital ou iniciar um chat livre?",
-          options: [
-            { label: "🏥 Saber sobre o hospital", value: "hospital" },
-            { label: "💬 Chat livre", value: "chat" },
-          ],
-        },
-      ]);
+      showInitialOptions();
       setWelcomeSent(true);
     }
   }, [isOpen, welcomeSent]);
@@ -52,13 +39,44 @@ function ChatBotWidget() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (widgetRef.current && !widgetRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  const showInitialOptions = () => {
+    setMessages([
+      {
+        from: "bot",
+        type: "text",
+        text: "Olá, eu sou o ChatSaint! Como posso ajudar você hoje?",
+      },
+      {
+        from: "bot",
+        type: "options",
+        text: "Você pode escolher uma opção ou fazer qualquer pergunta:",
+        options: [
+          { label: "🏥 Saber sobre o hospital", value: "hospital" },
+          { label: "💬 Chat livre", value: "chat" },
+        ],
+      },
+    ]);
+  };
+
   const showHospitalOptions = () => {
     setMessages((prev) => [
       ...prev,
       {
         from: "bot",
         type: "options",
-        text: "Posso te ajudar com mais alguma coisa? Escolha uma opção:",
+        text: "Aqui estão algumas perguntas frequentes sobre o hospital. Mas sinta-se à vontade para perguntar o que quiser:",
         options: [
           ...Object.keys(predefinedAnswers).map((question) => ({
             label: question,
@@ -70,7 +88,6 @@ function ChatBotWidget() {
     ]);
   };
 
-  // Função que mostra o prompt para continuar o chat
   const askContinueChat = () => {
     setAwaitingContinue(true);
     setMessages((prev) => [
@@ -90,17 +107,37 @@ function ChatBotWidget() {
   const handleContinueResponse = (value) => {
     setAwaitingContinue(false);
     if (value === "continue_yes") {
-      showHospitalOptions();
+      if (mode === "hospital") {
+        showHospitalOptions();
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            from: "bot",
+            type: "text",
+            text: "Pode continuar perguntando o que quiser! 😊",
+          },
+        ]);
+      }
     } else {
       setMessages((prev) => [
         ...prev,
         {
           from: "bot",
           type: "text",
-          text: "Tudo bem! Se precisar de algo, é só chamar 😊",
+          text: "Tudo bem! Selecione abaixo como deseja continuar:",
+        },
+        {
+          from: "bot",
+          type: "options",
+          text: "Escolha uma opção:",
+          options: [
+            { label: "🏥 Saber sobre o hospital", value: "hospital" },
+            { label: "💬 Chat livre", value: "chat" },
+          ],
         },
       ]);
-      setMode(null); // Pode fechar ou resetar o modo se quiser
+      setMode(null);
     }
   };
 
@@ -121,7 +158,11 @@ function ChatBotWidget() {
     if (selectedMode === "hospital") {
       setMessages((prev) => [
         ...prev,
-        { from: "bot", type: "text", text: "Ótimo! Aqui estão algumas perguntas que posso responder:" },
+        {
+          from: "bot",
+          type: "text",
+          text: "Aqui estão algumas perguntas frequentes sobre o hospital:",
+        },
       ]);
       showHospitalOptions();
     } else {
@@ -130,7 +171,7 @@ function ChatBotWidget() {
         {
           from: "bot",
           type: "text",
-          text: "Você está no modo de chat livre! Pode me perguntar o que quiser 😊",
+          text: "Você está no modo de chat livre! Pergunte o que quiser 😊",
         },
       ]);
     }
@@ -144,17 +185,11 @@ function ChatBotWidget() {
 
     setMessages((prev) => [...prev, { from: "user", type: "text", text: question }]);
 
-    if (predefinedAnswers[question]) {
-      setMessages((prev) => [...prev, { from: "bot", type: "text", text: predefinedAnswers[question] }]);
-      askContinueChat(); // mudou aqui: pergunta se quer continuar
-      return;
-    }
-
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:5000/chatbot/chat", { message: question });
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);
-      askContinueChat(); // mudou aqui: pergunta se quer continuar
+      askContinueChat();
     } catch (err) {
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: "❌ Erro ao obter resposta." }]);
     }
@@ -163,6 +198,8 @@ function ChatBotWidget() {
 
   const handleSend = async () => {
     if (!message && !image) return;
+
+    setMessage("");
 
     const newMessages = [...messages];
 
@@ -193,18 +230,17 @@ function ChatBotWidget() {
       }
 
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);
-      askContinueChat(); // pergunta se quer continuar após resposta
+      askContinueChat();
     } catch (err) {
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: "❌ Erro ao enviar mensagem." }]);
     }
 
-    setMessage("");
     setImage(null);
     setLoading(false);
   };
 
   return (
-    <div className="chatbot-widget">
+    <div className="chatbot-widget" ref={widgetRef}>
       <div className="chatbot-button ping-animation" onClick={toggleWidget}>
         💬
         <span className="ping-ring" />
@@ -218,7 +254,7 @@ function ChatBotWidget() {
               alt="Mascote do ChatSaint"
               className="mascote-img-large"
             />
-            ChatSaint • Assistente de Saúde
+            ChatSaint • Assistente Virtual
           </div>
 
           <div className="chatbot-messages">
@@ -263,7 +299,9 @@ function ChatBotWidget() {
                 return (
                   <div key={i} className="message user">
                     {msg.type === "text" && msg.text}
-                    {msg.type === "image" && <img src={msg.url} alt="imagem enviada" className="chat-image" />}
+                    {msg.type === "image" && (
+                      <img src={msg.url} alt="imagem enviada" className="chat-image" />
+                    )}
                   </div>
                 );
               }
@@ -273,17 +311,27 @@ function ChatBotWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {mode === "chat" && (
+          {(mode === "chat" || mode === "hospital") && (
             <div className="chatbot-input">
               <input
                 type="text"
-                placeholder="Digite sua pergunta de saúde..."
+                placeholder="Digite sua pergunta..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
               />
               <label className="custom-file-upload" title="Anexar imagem">
                 <span>📎 Anexar</span>
-                <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
               </label>
               <button onClick={handleSend}>Enviar</button>
             </div>
