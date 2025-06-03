@@ -7,6 +7,7 @@ import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from '../../context/ThemeContext';
 import { FaSun, FaMoon } from "react-icons/fa";
+import axios from "axios";
 
 export default function Navbar() {
   const { isLoggedIn, nomeCompleto, logout } = useAuth();

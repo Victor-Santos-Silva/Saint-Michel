@@ -89,8 +89,8 @@ const ServicosExtras = () => {
 
     try {
       const formData = {
-        tipo_servico: serviceType,
-        detalhes: patientDetails,
+        servicoExtra: serviceType,
+        descricao: patientDetails,
         data,
         hora,
         ...(serviceType === 'Atendimento Domiciliar' && { endereco })
@@ -112,7 +112,7 @@ const ServicosExtras = () => {
         });
         navigate('/');
       }
-      
+
     } catch (error) {
       console.error('Erro:', error);
       const errorMessage = error.response?.data?.message || 'Erro ao processar agendamento';
@@ -127,16 +127,16 @@ const ServicosExtras = () => {
   return (
     <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
       <Navbar />
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         theme={darkMode ? "dark" : "light"}
       />
-      <img 
-        src="../img/Faça um agendamento.png" 
-        className={`img-servicos ${darkMode ? 'dark-img' : ''}`} 
-        alt="Logo Serviços" 
-        data-aos="fade-down" 
+      <img
+        src="../img/Faça um agendamento.png"
+        className={`img-servicos ${darkMode ? 'dark-img' : ''}`}
+        alt="Logo Serviços"
+        data-aos="fade-down"
       />
 
       <div className={`servicos-container ${darkMode ? 'dark' : ''}`}>
@@ -231,8 +231,8 @@ const ServicosExtras = () => {
             </select>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={`submit-btn ${darkMode ? 'dark-btn' : ''}`}
           >
             Agendar Serviço
