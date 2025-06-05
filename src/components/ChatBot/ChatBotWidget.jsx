@@ -14,7 +14,6 @@ function ChatBotWidget() {
   const messagesEndRef = useRef(null);
   const widgetRef = useRef(null);
 
-  // Mantive as opções só como sugestões, sem restrições
   const predefinedAnswers = {
     "🕒 Quais são os horários de atendimento?": "Nosso hospital funciona de segunda a sexta, das 7h às 18h.",
     "📍 Qual o endereço do hospital?": "Estamos localizados na Av. Central, 1234 - Centro.",
@@ -185,6 +184,17 @@ function ChatBotWidget() {
 
     setMessages((prev) => [...prev, { from: "user", type: "text", text: question }]);
 
+    // Responde imediatamente se for uma pergunta pré-definida
+    if (predefinedAnswers[question]) {
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", type: "text", text: predefinedAnswers[question] },
+      ]);
+      askContinueChat();
+      return;
+    }
+
+    // Caso contrário, envia para o backend
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:5000/chatbot/chat", { message: question });
