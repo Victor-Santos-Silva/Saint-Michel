@@ -157,17 +157,20 @@ export default function LoginPage() {
                         {error.senha && <p className="error-message">Campo obrigatório</p>}
                     </div>
 
-                    <button type="submit" className={`btn-login ${darkMode ? 'dark' : ''}`}>
-                        Entrar
-                    </button>
+                    <div className='button-group'>
+
+                        <button type="submit" className={`btn-login ${darkMode ? 'dark' : ''}`}>
+                            Entrar
+                        </button>
+                        <button
+                            className={`btn-login ${darkMode ? 'dark' : ''}`}
+                            onClick={() => setShowForgotPassword(true)}
+                        >
+                            Esqueci a senha
+                        </button>
+                    </div>
                 </form>
 
-                <button
-                    className={`btn-forgot-password ${darkMode ? 'dark' : ''}`}
-                    onClick={() => setShowForgotPassword(true)}
-                >
-                    Esqueci a senha
-                </button>
 
                 {showForgotPassword && (
                     <div className={`forgot-password-popup ${darkMode ? 'dark' : ''}`}>
@@ -208,8 +211,8 @@ export default function LoginPage() {
                                     <button type="submit" className={`btn-confirm ${darkMode ? 'dark' : ''}`}>
                                         Redefinir Senha
                                     </button>
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         className={`btn-cancel ${darkMode ? 'dark' : ''}`}
                                         onClick={() => {
                                             setShowForgotPassword(false);

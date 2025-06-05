@@ -143,13 +143,15 @@ export default function Navbar() {
         </div>
 
         <div className="container-login-cadastro">
-          <button
+
+          {/* Botao de tema */}
+          {/* <button
             onClick={toggleTheme}
             className="theme-toggle"
             style={{ transition: 'all 0.3s ease-in-out' }}
           >
             {darkMode ? <FaSun color="white" /> : <FaMoon color="white" />}
-          </button>
+          </button> */}
 
 
 

@@ -32,8 +32,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title-login {
@@ -127,21 +134,34 @@
 
 .btn-forgot-password {
   margin-top: 15px;
+  padding: 15px;
   background: none;
-  border: none;
+  border-radius: 10px;
   color: #4d56df;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   transition: color 0.3s ease;
-  text-align: center;
-  display: block;
-  width: 100%;
+  width: 50%;
 }
 
 .btn-forgot-password:hover {
   color: #3d46c5;
   text-decoration: underline;
+}
+
+.btn-forgot-password-new {
+  margin-top: 15px;
+  margin-left: 25%;
+  padding: 15px;
+  background: none;
+  border-radius: 10px;
+  color: #1F2B6C;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+  width: 50%;
 }
 
 /* Popup de esqueci a senha */
@@ -196,6 +216,8 @@
   display: flex;
   gap: 15px;
   margin-top: 30px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .btn-confirm {
@@ -242,69 +264,69 @@
 
 /* Modo Escuro */
 .container-page-login.dark {
-    background-color: #1a1a1a;
-    color: #ffffff;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .container-formulario-login.dark {
-    background-color: #2d2d2d;
-    border: 1px solid #444444;
+  background-color: #2d2d2d;
+  border: 1px solid #444444;
 }
 
 .title-login.dark {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .form-login.dark .input-login.dark {
-    background-color: #3d3d3d;
-    color: #ffffff;
-    border-color: #555555;
+  background-color: #3d3d3d;
+  color: #ffffff;
+  border-color: #555555;
 }
 
 .form-login.dark .input-login.dark::placeholder {
-    color: #cccccc;
+  color: #cccccc;
 }
 
 .btn-login.dark {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4CAF50;
+  color: white;
 }
 
 .btn-forgot-password.dark {
-    color: #90caf9;
+  color: #90caf9;
 }
 
 .forgot-password-popup.dark {
-    background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .forgot-password-content.dark {
-    background-color: #2d2d2d;
-    border: 1px solid #444444;
-    color: #ffffff;
+  background-color: #2d2d2d;
+  border: 1px solid #444444;
+  color: #ffffff;
 }
 
 .forgot-password-content.dark h2 {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .forgot-password-content.dark .input-login.dark {
-    background-color: #3d3d3d;
-    color: #ffffff;
+  background-color: #3d3d3d;
+  color: #ffffff;
 }
 
 .button-group .btn-confirm.dark {
-    background-color: #2196F3;
-    color: white;
+  background-color: #2196F3;
+  color: white;
 }
 
 .button-group .btn-cancel.dark {
-    background-color: #f44336;
-    color: white;
+  background-color: #f44336;
+  color: white;
 }
 
 .error-message {
-    color: #ff4444;
+  color: #ff4444;
 }
 
 /* Responsividade */
@@ -343,15 +365,15 @@
   .title-login {
     font-size: 1.4rem;
   }
-  
+
   .input-login {
     padding: 12px 14px;
   }
-  
+
   .text-field label {
     font-size: 0.9rem;
   }
-  
+
   .forgot-password-content {
     padding: 20px 15px;
   }
