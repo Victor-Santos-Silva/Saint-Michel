@@ -22,7 +22,7 @@ export default function Medico() {
 
     const fetchMedicos = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/medico`);
+        const response = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/medico`);
         setMedicos(response.data);
         setCarregando(false);
       } catch (error) {
@@ -77,7 +77,7 @@ export default function Medico() {
             {medicos.map((medico) => (
               <Doutores
                 key={medico.id}
-                foto={`http://localhost:5000${medico.foto}`}
+                foto={`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net${medico.foto}`}
                 nome={medico.nome_completo}
                 especialidade={medico.especialidade}
                 crm={medico.crm}

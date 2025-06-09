@@ -97,7 +97,7 @@ const ServicosExtras = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:5000/servicos-extras',
+        'https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/servicos-extras',
         formData,
         {
           headers: {

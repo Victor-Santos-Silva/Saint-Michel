@@ -71,7 +71,7 @@ const AgendamentoDependenteCadastrado = () => {
             setLoading(true);
             setError('');
             try {
-                const response = await axios.get(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`);
+                const response = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/medico/medicos?especialidade=${especialidade}`);
                 setMedicos(response.data);
                 console.log(response.data);
                 console.log("ID do usuário:", id);
@@ -112,7 +112,7 @@ const AgendamentoDependenteCadastrado = () => {
                 return;
             }
             try {
-                const response = await axios.get(`http://localhost:5000/dependente/dependenteAdicionado/${id}`, {
+                const response = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/dependente/dependenteAdicionado/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setDependentes(response.data);
@@ -140,7 +140,7 @@ const AgendamentoDependenteCadastrado = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/agendarDependente', {
+            const response = await axios.post('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/agendarDependente', {
                 usuario_id: id,
                 especialidade,
                 medico_id: medicoSelecionado,

@@ -197,7 +197,7 @@ function ChatBotWidget() {
     // Caso contrário, envia para o backend
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/chatbot/chat", { message: question });
+      const response = await axios.post("https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/chatbot/chat", { message: question });
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);
       askContinueChat();
     } catch (err) {
@@ -232,11 +232,11 @@ function ChatBotWidget() {
         formData.append("message", message);
         formData.append("image", image);
 
-        response = await axios.post("http://localhost:5000/chatbot/image-chat", formData, {
+        response = await axios.post("https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/chatbot/image-chat", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       } else {
-        response = await axios.post("http://localhost:5000/chatbot/chat", { message });
+        response = await axios.post("https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/chatbot/chat", { message });
       }
 
       setMessages((prev) => [...prev, { from: "bot", type: "text", text: response.data.reply }]);

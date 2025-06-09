@@ -46,7 +46,7 @@ function PerfilPage() {
   useEffect(() => {
     const buscarDados = async () => {
       try {
-        const resposta = await axios.get(`http://localhost:5000/paciente/${id}`, {
+        const resposta = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         setUserData(resposta.data.usuario);
@@ -60,7 +60,7 @@ function PerfilPage() {
 
   const salvarEdicao = async (dadosAtualizados) => {
     try {
-      await axios.put(`http://localhost:5000/paciente/${id}`, dadosAtualizados, {
+      await axios.put(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/${id}`, dadosAtualizados, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setUserData(prev => ({ ...prev, ...dadosAtualizados }));
@@ -93,11 +93,11 @@ function PerfilPage() {
         imagemGenero: generoImagem
       };
 
-      await axios.post(`http://localhost:5000/dependente`, novoDependente, {
+      await axios.post(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/dependente`, novoDependente, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const resposta = await axios.get(`http://localhost:5000/paciente/${id}`, {
+      const resposta = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -113,7 +113,7 @@ function PerfilPage() {
   useEffect(() => {
     const fetchDependente = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/dependente/dependenteAdicionado/${id}`, {
+        const response = await axios.get(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/dependente/dependenteAdicionado/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         setDependenteData(response.data);

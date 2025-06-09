@@ -114,7 +114,7 @@ const AgendamentosDependentes = () => {
   useEffect(() => {
     if (especialidade) {
       setLoading(true);
-      fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
+      fetch(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/medico/medicos?especialidade=${especialidade}`)
         .then(response => {
           if (!response.ok) throw new Error('Erro ao buscar médicos');
           return response.json();
@@ -184,7 +184,7 @@ const AgendamentosDependentes = () => {
       }
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/agendamentoDocente/agendarDocente', {
+      const response = await fetch('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/agendamentoDocente/agendarDocente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

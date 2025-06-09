@@ -32,7 +32,7 @@ export default function Navbar() {
   const buscarNotificacoes = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/notificacoesPaciente/${email}', {
+      const response = await axios.get('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/notificacoesPaciente/${email}', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -51,7 +51,7 @@ export default function Navbar() {
   const marcarComoLida = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5000/notificacoes/${id}/ler`, {
+      await fetch(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/notificacoes/${id}/ler`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -66,7 +66,7 @@ export default function Navbar() {
   const limparNotificacoes = async () => {
     try {
       const token = localStorage.getItem('token');
-      await fetch('http://localhost:5000/notificacoes/limpar', {
+      await fetch('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/notificacoes/limpar', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

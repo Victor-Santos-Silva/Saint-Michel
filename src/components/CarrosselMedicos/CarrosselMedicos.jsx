@@ -17,7 +17,7 @@ function CarouselMedico() {
   useEffect(() => {
     const fetchMedicos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/medico');
+        const response = await axios.get('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/medico');
         setMedicos(response.data);
         setLoading(false);
       } catch (err) {
@@ -62,7 +62,7 @@ function CarouselMedico() {
               <div className={`card-medico ${darkMode ? 'dark' : ''}`}>
                 <div className="info-medico">
                   <img 
-                    src={`http://localhost:5000${medico.foto}`} 
+                    src={`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net${medico.foto}`} 
                     alt="" 
                     className='img-carrosel'
                   />

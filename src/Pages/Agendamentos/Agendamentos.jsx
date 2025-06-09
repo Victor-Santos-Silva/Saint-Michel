@@ -68,7 +68,7 @@ const Agendamentos = () => {
   useEffect(() => {
     if (especialidade && serviceType === 'consulta') {
       setLoading(true);
-      fetch(`http://localhost:5000/medico/medicos?especialidade=${especialidade}`)
+      fetch(`https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/medico/medicos?especialidade=${especialidade}`)
         .then(response => {
           if (!response.ok) throw new Error('Erro ao buscar médicos');
           return response.json();
@@ -202,7 +202,7 @@ const Agendamentos = () => {
       hora
     };
 
-    fetch('http://localhost:5000/agendamento/agendar', {
+    fetch('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/agendamento/agendar', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -261,7 +261,7 @@ const Agendamentos = () => {
       formData.append('pedidoMedico', pedidoMedico);
     }
 
-    axios.post('http://localhost:5000/exame/criarexame', formData, {
+    axios.post('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/exame/criarexame', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
