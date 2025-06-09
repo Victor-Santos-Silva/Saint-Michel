@@ -62,7 +62,7 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/paciente/login', formData);
+            const response = await axios.post('apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/login', formData);
             login(response.data.usuario, response.data.token, response.data.id);
             setFormData({ email: '', senha: '' });
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
         }
 
         try {
-            await axios.patch('http://localhost:5000/paciente/esqueciSenha', {
+            await axios.patch('apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/esqueciSenha', {
                 email: forgotPasswordData.email,
                 senhaNova: forgotPasswordData.senhaNova
             });
