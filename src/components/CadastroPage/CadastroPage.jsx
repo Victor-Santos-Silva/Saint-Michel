@@ -118,7 +118,7 @@ function CadastroPage() {
                 '/img/pacienteOutro.png';
     
         try {
-            const response = await axios.post('apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/cadastro', 
+            const response = await axios.post('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/cadastro', 
                 { 
                     ...formData, 
                     imagemGenero: generoImagem 
