@@ -100,7 +100,7 @@ export default function LoginPage() {
         }
 
         try {
-            await axios.patch('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/esqueciSenha', {
+            await axios.patch('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/esqueci-senha', {
                 email: forgotPasswordData.email,
                 senhaNova: forgotPasswordData.senhaNova
             });
