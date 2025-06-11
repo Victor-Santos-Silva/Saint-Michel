@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,6 +6,7 @@ import './CadastroPage.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import { useTheme } from '../../context/ThemeContext';
+import { IMask } from 'react-imask';
 
 function CadastroPage() {
     const navigate = useNavigate();
@@ -45,21 +46,21 @@ function CadastroPage() {
             if (formData.rg.length < 7 || formData.rg.length > 10) return "RG deve ter entre 7 e 10 dígitos.";
             return null;
         }
-        
+
         if (currentStep === 2) {
             if (!formData.endereco.trim()) return "O campo Endereço é obrigatório.";
             if (formData.telefone.length !== 11) return "Telefone deve ter 11 dígitos.";
             if (!formData.tipoSanguineo) return "O campo Tipo Sanguíneo é obrigatório.";
             return null;
         }
-        
+
         if (currentStep === 3) {
             if (!formData.genero) return "O campo Gênero é obrigatório.";
             if (!formData.convenioMedico) return "O campo Convênio Médico é obrigatório.";
             if (formData.convenioMedico && !formData.planoConvenio) return "O campo Plano do Convênio é obrigatório.";
             return null;
         }
-        
+
         return null;
     };
 
@@ -92,7 +93,7 @@ function CadastroPage() {
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        
+
         if (age < 18 || isNaN(birthDate.getTime())) return "Você deve ter pelo menos 18 anos para se cadastrar.";
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,26 +108,26 @@ function CadastroPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationError = validateFinalFields();
-    
+
         if (validationError) {
             toast.error(validationError);
             return;
         }
-    
+
         const generoImagem = formData.genero === 'Masculino' ? '/img/pacienteM.png' :
             formData.genero === 'Feminino' ? '/img/pacienteF.png' :
                 '/img/pacienteOutro.png';
-    
+
         try {
-            const response = await axios.post('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/cadastro', 
-                { 
-                    ...formData, 
-                    imagemGenero: generoImagem 
+            const response = await axios.post('https://apisaintmichel-a2fjc0c4d3bygmhe.eastus2-01.azurewebsites.net/paciente/cadastro',
+                {
+                    ...formData,
+                    imagemGenero: generoImagem
                 },
-                { 
-                    headers: { 
-                        'Content-Type': 'application/json' 
-                    } 
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
 
@@ -137,12 +138,12 @@ function CadastroPage() {
             } else {
                 toast.error(response.data.message || 'Erro ao realizar cadastro');
             }
-    
+
         } catch (error) {
             console.error('Erro no cadastro:', error);
-            const errorMessage = error.response?.data?.message || 
-                              error.response?.data?.error || 
-                              'Erro ao conectar com o servidor';
+            const errorMessage = error.response?.data?.message ||
+                error.response?.data?.error ||
+                'Erro ao conectar com o servidor';
             toast.error(errorMessage);
         }
     };
@@ -157,6 +158,51 @@ function CadastroPage() {
         "Porto Seguro Saúde": ["Bronze", "Prata", "Ouro", "Diamante"],
         "Golden Cross": ["Essencial", "Clássico", "Especial"]
     };
+
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            const mask = IMask(inputRef.current, {
+                mask: '000.000.000-00', // Formato do CPF
+            });
+
+            // Atualiza o estado com o valor SEM máscara
+            mask.on('accept', () => {
+                handleChange({
+                    target: {
+                        name: 'cpf',
+                        value: mask.unmaskedValue // Remove pontos e traço
+                    }
+                });
+            });
+
+            // Limpeza ao desmontar
+            return () => mask.destroy();
+        }
+    }, []); // Executa apenas no mount
+
+    const rgRef = useRef(null);
+
+    useEffect(() => {
+        if (rgRef.current) {
+            const mask = IMask(rgRef.current, {
+                mask: '00.000.000-0', // Formato do RG
+            });
+
+            // Atualiza o estado com o valor SEM máscara
+            mask.on('accept', () => {
+                handleChange({
+                    target: {
+                        name: 'rg',
+                        value: mask.unmaskedValue // Remove pontos e traço
+                    }
+                });
+            });
+
+            return () => mask.destroy();
+        }
+    }, []);
 
     const renderStep = () => {
         switch (step) {
@@ -188,11 +234,10 @@ function CadastroPage() {
                         <div className='text-field'>
                             <label className={darkMode ? 'dark' : ''}>CPF</label>
                             <input
+                                ref={inputRef}
                                 type="text"
                                 name="cpf"
-                                value={formData.cpf}
-                                onChange={handleChange}
-                                maxLength="11"
+                                defaultValue={formData.cpf} // Use defaultValue ao invés de value
                                 className={`input-cadastro ${darkMode ? 'dark' : ''}`}
                                 required
                             />
@@ -200,11 +245,10 @@ function CadastroPage() {
                         <div className='text-field'>
                             <label className={darkMode ? 'dark' : ''}>RG</label>
                             <input
+                                ref={rgRef}
                                 type="text"
                                 name="rg"
-                                value={formData.rg}
-                                onChange={handleChange}
-                                maxLength="10"
+                                defaultValue={formData.rg}
                                 className={`input-cadastro ${darkMode ? 'dark' : ''}`}
                                 required
                             />
@@ -340,7 +384,7 @@ function CadastroPage() {
                                 className={`input-cadastro ${darkMode ? 'dark' : ''}`}
                                 required
                             />
-                            
+
                         </div>
 
                     </>
@@ -353,7 +397,7 @@ function CadastroPage() {
     return (
         <div className={`container-page-cadastro ${darkMode ? 'dark' : ''}`}>
             <ToastContainer theme={darkMode ? 'dark' : 'light'} />
-            
+
             <div className={`container-formulario-cadastro ${darkMode ? 'dark' : ''}`}>
                 <h1 className={`title-cadastro ${darkMode ? 'dark' : ''}`}>Cadastro (Passo {step} de 4)</h1>
 
