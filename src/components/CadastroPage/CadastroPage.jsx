@@ -6,7 +6,7 @@ import './CadastroPage.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import { useTheme } from '../../context/ThemeContext';
-import { IMask } from 'react-imask';
+import { IMask, IMaskInput } from 'react-imask';
 
 function CadastroPage() {
     const navigate = useNavigate();
@@ -271,16 +271,18 @@ function CadastroPage() {
                         </div>
                         <div className='text-field'>
                             <label className={darkMode ? 'dark' : ''}>Telefone</label>
-                            <input
-                                type="text"
+                            <IMaskInput
+                                mask="(00) 00000-0000"
                                 name="telefone"
                                 value={formData.telefone}
-                                onChange={handleChange}
-                                maxLength="11"
+                                onAccept={(value) =>
+                                    setFormData((prev) => ({ ...prev, telefone: value }))
+                                }
                                 className={`input-cadastro ${darkMode ? 'dark' : ''}`}
                                 required
                             />
                         </div>
+
                         <div className='text-field'>
                             <label className={darkMode ? 'dark' : ''}>Tipo Sanguíneo</label>
                             <select
