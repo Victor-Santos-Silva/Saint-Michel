@@ -273,6 +273,7 @@ function CadastroPage() {
                             <label className={darkMode ? 'dark' : ''}>Telefone</label>
                             <IMaskInput
                                 mask="(00) 00000-0000"
+                                unmask={true}
                                 name="telefone"
                                 value={formData.telefone}
                                 onAccept={(value) =>
