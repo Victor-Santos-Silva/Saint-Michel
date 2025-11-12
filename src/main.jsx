@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <ThemeProvider>
         <RouterProvider router={router} />
-        <ChatBotWidget />
+        {/* <ChatBotWidget /> */}
       </ThemeProvider>
     </AuthProvider>
   </StrictMode>
